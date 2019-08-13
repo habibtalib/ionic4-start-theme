@@ -12,6 +12,9 @@ import { SearchFilterPage } from '../../pages/modal/search-filter/search-filter.
 import { ImagePage } from './../modal/image/image.page';
 // Call notifications test by Popover and Custom Component.
 import { NotificationsComponent } from './../../components/notifications/notifications.component';
+import { RegisterPage } from '../register/register.page';
+import { LoginPage } from '../login/login.page';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home-results',
@@ -23,24 +26,58 @@ export class HomeResultsPage {
   yourLocation = '123 Test Street';
   themeCover = 'assets/img/ionic4-Start-Theme-cover.jpg';
 
+  mySlideOptions = {
+    initialSlide: 1,
+    loop: true
+  };
+
+  // @ViewChild('mySlider') slider: Slides;
+
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
     public popoverCtrl: PopoverController,
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private authService: AuthService,
   ) {
 
   }
 
   ionViewWillEnter() {
+    this.authService.getToken().then(() => {
+      console.log('isLoggedin',this.authService.isLoggedIn);
+      if (this.authService.isLoggedIn) {
+        this.navCtrl.navigateRoot('/home-results');
+      }
+    });
+    this.authService.user().subscribe(
+      data => {
+        console.log('user',data);
+      },
+    )
     this.menuCtrl.enable(true);
   }
 
   settings() {
     this.navCtrl.navigateForward('settings');
   }
+
+  async register() {
+    const registerModal = await this.modalCtrl.create({
+      component: RegisterPage
+    });
+    return await registerModal.present();
+  }
+
+  async login() {
+    const loginModal = await this.modalCtrl.create({
+      component: LoginPage,
+    });
+    return await loginModal.present();
+  }
+
 
   async alertLocation() {
     const changeLocation = await this.alertCtrl.create({
@@ -97,13 +134,14 @@ export class HomeResultsPage {
   }
 
   async notifications(ev: any) {
-    const popover = await this.popoverCtrl.create({
-      component: NotificationsComponent,
-      event: ev,
-      animated: true,
-      showBackdrop: true
-    });
-    return await popover.present();
+    // const popover = await this.popoverCtrl.create({
+    //   component: NotificationsComponent,
+    //   event: ev,
+    //   animated: true,
+    //   showBackdrop: true
+    // });
+    // return await popover.present();
+    this.navCtrl.navigateForward('cart');
   }
 
 }

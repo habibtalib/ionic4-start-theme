@@ -8,6 +8,14 @@ const routes: Routes = [
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
   { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' },
   { path: 'home-results', loadChildren: './pages/home-results/home-results.module#HomeResultsPageModule' },
+  { path: 'scanner', loadChildren: './pages/scanner/scanner.module#ScannerPageModule' },
+  { path: 'genealogy', loadChildren: './pages/genealogy/genealogy.module#GenealogyPageModule' },
+  { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
+  { path: 'orders', loadChildren: './pages/orders/orders.module#OrdersPageModule' },
+  { path: 'history', loadChildren: './pages/history/history.module#HistoryPageModule' },
+  { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
+  { path: 'merchandise', loadChildren: './pages/merchandise/merchandise.module#MerchandisePageModule' },
+  { path: 'products', loadChildren: './pages/products/products.module#ProductsPageModule' },
 ];
 
 @NgModule({

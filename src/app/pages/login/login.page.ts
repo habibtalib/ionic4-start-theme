@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, MenuController, ToastController, AlertController, LoadingController } from '@ionic/angular';
+import { ModalController, NavController, MenuController, ToastController, AlertController, LoadingController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
+import { AlertService } from 'src/app/services/alert.service';
+import { RegisterPage } from '../register/register.page';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +20,51 @@ export class LoginPage implements OnInit {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modalController: ModalController,
+    private authService: AuthService,
+    private alertService: AlertService
   ) { }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
+  }
+
+  // Dismiss Login Modal
+  dismissLogin() {
+    this.modalController.dismiss();
+  }
+
+  // On Register button tap, dismiss login modal and open register modal
+  async registerModal() {
+    this.dismissLogin();
+    const registerModal = await this.modalController.create({
+      component: RegisterPage
+    });
+    return await registerModal.present();
+  }
+
+  login(form: NgForm) {
+    this.authService.login(form.value.email, form.value.password).subscribe(
+      data => {
+        this.alertService.presentToast("Logged In");
+      },
+      error => {
+        console.log(error);
+        if(error.status === 401) {
+          this.alertService.presentToast("Wrong Email or Password");
+        }
+        if (error.status === 422) {
+          this.alertService.presentToast("Invalid Format");
+        } else  {
+          this.alertService.presentToast("Error: " + error.message);
+        }
+      },
+      () => {
+        this.dismissLogin();
+        this.navCtrl.navigateRoot('/home-results');
+      }
+    );
   }
 
   ngOnInit() {

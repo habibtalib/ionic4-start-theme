@@ -1,20 +1,20 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu>
-      <ion-header>
+      <!-- <ion-header>
         <ion-toolbar color="dark" class="user-profile">
 
           <ion-item margin-bottom>
             <ion-avatar slot="start" class="user-avatar">
-              <img src="assets/img/avatar.jpeg">
+              <img src="{{ user.photo }}">
             </ion-avatar>
             <ion-label>
               <ion-text color="medium">
-                <h1><strong>João Firmino</strong></h1>
+                <h1><strong>{{ user.name }}</strong></h1>
               </ion-text>
               <ion-text color="secondary">
                 <h3>
-                  São Paulo, Brazil
+                  {{ user.city }} {{ user.state }}
                 </h3>
               </ion-text>
               <ion-menu-toggle class="mto" auto-hide="false">
@@ -35,11 +35,11 @@
           </ion-item>
 
         </ion-toolbar>
-      </ion-header>
+      </ion-header> -->
 
       <ion-content class="bg-profile">
         <ion-list>
-          <ion-list-header color="dark">
+          <ion-list-header color="primary">
             <ion-label>Menu</ion-label>
           </ion-list-header>
 
