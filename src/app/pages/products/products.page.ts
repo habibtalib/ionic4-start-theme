@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
+import { CartService } from "../../services/cart.service";
 import { tap } from 'rxjs/operators';
 import {
   NavController
@@ -18,16 +19,23 @@ export class ProductsPage implements OnInit {
   };
   products: any;
   token: any;
+  cart = [];
 
   themeCover = "assets/img/ionic4-Start-Theme-cover.jpg";
   constructor(
     public navCtrl: NavController,
     private http: HttpClient,
-    private env: EnvService
+    private env: EnvService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
+    this.cart = this.cartService.getCart();
     this.getProducts();
+  }
+
+  addToCart(product) {
+    this.cartService.addProduct(product);
   }
 
   getProducts() {
@@ -56,8 +64,7 @@ export class ProductsPage implements OnInit {
                 this.products = [
                   {
                     name: "Meeracle Gemstone Cleanser",
-                    image:
-                      "img/HMd6fBiAGfcOVUnVZeEyh6H9oUUfmqPPTnVDw3L9.jpeg",
+                    image: "img/HMd6fBiAGfcOVUnVZeEyh6H9oUUfmqPPTnVDw3L9.jpeg",
                     price: 49,
                     product: {
                       price: 29.4,
@@ -70,7 +77,8 @@ export class ProductsPage implements OnInit {
             );
         },
         error => {
-          console.log("error", error);}
+          console.log("error", error);
+        }
       );
   }
 

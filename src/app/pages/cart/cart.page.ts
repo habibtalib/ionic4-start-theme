@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from "../../services/cart.service";
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.page.html',
-  styleUrls: ['./cart.page.scss'],
+  selector: "app-cart",
+  templateUrl: "./cart.page.html",
+  styleUrls: ["./cart.page.scss"]
 })
 export class CartPage implements OnInit {
+  selectedItems = [];
 
-  constructor() { }
+  total = 0;
+
+  constructor(private cartService: CartService) {}
 
   ngOnInit() {
+    let items = this.cartService.getCart();
+    let selected = {};
+    for (let obj of items) {
+      console.log(obj);
+      if (selected[obj.id]) {
+        selected[obj.id].count++;
+      } else {
+        selected[obj.id] = { ...obj, count: 1 };
+      }
+    }
+    this.selectedItems = Object.keys(selected).map(key => selected[key]);
+    this.total = this.selectedItems.reduce(
+      (a, b) => a + b.count * b.role_price.price,
+      0
+    );
   }
-
 }
