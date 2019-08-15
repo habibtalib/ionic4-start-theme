@@ -9,4 +9,17 @@
 
 <ion-content padding>
 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Barcode</ion-card-title>
+    </ion-card-header>
+    <ion-card-content> {{barcode}} </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Serial</ion-card-title>
+    </ion-card-header>
+    <ion-card-content> {{ serial }} </ion-card-content>
+  </ion-card>
+  <ion-button color="primary" (click)=scan()>Scanner</ion-button>
 </ion-content>

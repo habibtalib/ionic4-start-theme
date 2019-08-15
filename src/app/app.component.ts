@@ -4,7 +4,7 @@ import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from 'src/app/services/auth.service';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { Pages } from './interfaces/pages';
 import { error } from '@angular/compiler/src/util';

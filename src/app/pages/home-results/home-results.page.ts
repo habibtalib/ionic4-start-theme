@@ -133,14 +133,18 @@ export class HomeResultsPage {
     return await modal.present();
   }
 
-  async notifications(ev: any) {
-    // const popover = await this.popoverCtrl.create({
-    //   component: NotificationsComponent,
-    //   event: ev,
-    //   animated: true,
-    //   showBackdrop: true
-    // });
-    // return await popover.present();
+  // async notifications(ev: any) {
+  //   const popover = await this.popoverCtrl.create({
+  //     component: NotificationsComponent,
+  //     event: ev,
+  //     animated: true,
+  //     showBackdrop: true
+  //   });
+  //   return await popover.present();
+  //   this.navCtrl.navigateForward('cart');
+  // }
+
+  notifications() {
     this.navCtrl.navigateForward('cart');
   }
 

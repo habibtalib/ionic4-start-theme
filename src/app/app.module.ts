@@ -17,7 +17,8 @@ import { SearchFilterPageModule } from './pages/modal/search-filter/search-filte
 
 // Components
 import { NotificationsComponent } from './components/notifications/notifications.component';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     StatusBar,
     SplashScreen,
     NativeStorage,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
