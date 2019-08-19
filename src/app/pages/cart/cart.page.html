@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
@@ -17,4 +17,99 @@
       Total: <span slot="end">{{ total | currency:'RM':'symbol' }}</span>
     </ion-item>
   </ion-list>
+</ion-content> -->
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="light">Cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding-top color="light">
+  <div class="mid" *ngIf="selectedItems.length == 0">
+    <ion-row size="12" justify-content-center disabled="true">
+      <button class="circle">
+        <ion-icon name="cart" size="large"></ion-icon>
+      </button>
+    </ion-row>
+    <ion-row size="12" justify-content-center disabled="true">
+      <ion-text><strong>Your cart is empty</strong></ion-text>
+    </ion-row>
+    <ion-row size="12" justify-content-center disabled="true">
+      <ion-button fill="clear" color="primary" (click)="browse()">Browse Products</ion-button>
+    </ion-row>
+  </div>
+  <div *ngIf="selectedItems.length > 0">
+    <ion-row margin-horizontal margin-bottom>
+      <ion-text><strong class="text">Items in Cart</strong></ion-text>
+    </ion-row>
+    <ion-list #slidingList>
+      <ion-item-sliding no-padding *ngFor="let item of selectedItems; let j = index" class="card" no-margin>
+        <ion-item lines="none">
+          <ion-row>
+            <ion-col size="3" text-center>
+              <img [src]="'http://sys.meeracle.com.my/storage/' + item.image" alt="item.name" />
+              <ion-text color="danger" class="small" (click)="remove(j, item)">Remove</ion-text>
+            </ion-col>
+            <ion-col size="6">
+              <h3 no-margin class="item-name">{{ item.name }}</h3>
+              <h5 no-margin class="item-def">
+              </h5>
+            </ion-col>
+            <ion-col size="3" float-right>
+              <ion-row text-end justify-content-end>
+                <h3 no-margin class="item-name" text-end>
+                {{ (item.price * item.count) | currency:'RM':'symbol' }}
+                </h3>
+              </ion-row>
+              <ion-row justify-content-end>
+                <ion-select placeholder="-" interface="popover" [interfaceOptions]="customAlertOptions"
+                  [(ngModel)]="selectedItems[j].count" (ionChange)="changeQuantity(selectedItems[j])" class="select"
+                  #val>
+                  <ion-select-option *ngFor="let q of qty" [(value)]="q" text-center>{{ q }}</ion-select-option>
+                </ion-select>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="remove(j)">
+            <ion-icon name="trash" size="large"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <ion-row size="12" justify-content-center disabled="true">
+      <ion-button fill="outline" color="primary" (click)="browse()">Continue shopping</ion-button>
+    </ion-row>
+    <ion-row margin>
+      <ion-text><strong class="text">Order Summary</strong></ion-text>
+    </ion-row>
+    <div lines="none" class="card" no-margin padding-bottom>
+      <!-- <ion-row class="full" padding-horizontal>
+        <ion-col size="9">
+          <ion-text>Shipping</ion-text>
+        </ion-col>
+        <ion-col size="3" text-end>
+          <ion-text>&#36; 25</ion-text>
+        </ion-col>
+      </ion-row> -->
+      <ion-row class="full" padding-horizontal>
+        <ion-col size="9">
+          <ion-text>Item Total</ion-text>
+        </ion-col>
+        <ion-col size="3" text-end>
+          <ion-text>{{ total | currency:'RM':'symbol' }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <div class="sep"></div>
+    </div>
+  </div>
 </ion-content>
+<ion-footer *ngIf="selectedItems.length > 0" (click)="checkout()">
+  <ion-toolbar color="success">
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-footer>

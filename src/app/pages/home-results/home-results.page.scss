@@ -1,6 +1,8 @@
 :host {
     ion-content {
-        --background: var(--ion-color-light);
+        // --background: var(--ion-color-light);
+         --background: url('/assets/img/background.png');
+        // --background-image: url('/assets/img/background.png') no-repeat 100% 100%;
     }
 
     ion-item {
@@ -12,5 +14,6 @@
         &.no-radius {
             border-radius: 0;
         }
+         background:rgba(255,255,255,0.5);
     }
 }

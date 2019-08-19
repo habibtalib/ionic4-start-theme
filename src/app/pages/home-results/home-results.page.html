@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-menu-button color="secondary"></ion-menu-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title>
         <ion-text color="light">
@@ -11,7 +11,7 @@
     <ion-buttons slot="end">
       <ion-button size="small" shape="round" color="medium" (click)="notifications()">
         <ion-icon name="cart"></ion-icon>
-        <ion-badge color="dark" slot="end">2</ion-badge>
+        <ion-badge color="dark" slot="end" *ngIf="cart && cart.length > 0">{{ cart.length }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -27,29 +27,22 @@
 
 <ion-content>
   <ion-slides #mySlider [options]="mySlideOptions" pager="true">
-    <ion-slide>
+    <ion-slide *ngFor="let item of masterStockist">
       <ion-card class="bg-white">
-          <ion-img [src]="themeCover"></ion-img>
-          <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin>
-            Modal 1: Modal Image
+        <ion-text >
+          <p>{{ item.text }}</p>
+        </ion-text>
+          <ion-button expand="full" color="light" (click)="presentImage(themeCover)" no-margin>
+            {{ item.name }}
           </ion-button>
+          {{ item.title }}
+          <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button>
+              <ion-img [src]="'http://api.meeracle.ml' + item.image"></ion-img>
+            </ion-fab-button>
+          </ion-fab>
         </ion-card>
-    </ion-slide>
-    <ion-slide>
-    <ion-card class="bg-white">
-      <ion-img [src]="themeCover"></ion-img>
-      <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin>
-        Modal 2: Modal Image
-      </ion-button>
-    </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card class="bg-white">
-        <ion-img [src]="themeCover"></ion-img>
-        <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin>
-          Modal 3: Modal Image
-        </ion-button>
-      </ion-card>
+
     </ion-slide>
   </ion-slides>
   <!-- <ion-card no-margin class="no-radius">

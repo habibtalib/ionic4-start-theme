@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title>Products</ion-title>
     <ion-buttons slot="end">
@@ -14,25 +14,51 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #mySlider [options]="mySlideOptions" scroll="true">
+  <ion-slides #mySlider [options]="mySlideOptions" scroll="true" pager="true">
     <ion-slide *ngFor="let p of products">
-      <ion-card class="bg-white">
-        <ion-item>
-          <ion-label>{{ p.name }}</ion-label>
-        </ion-item>
-        <ion-img [src]="'http://sys.meeracle.com.my/storage/' +p.image"></ion-img>
-        <ion-item>
-          <ion-label>Retail Pice: RM{{ p.price }}</ion-label>
-        </ion-item>
-        <ion-item *ngIf="p.role_price.price">
-          <ion-label>Your Pice: RM{{ p.role_price.price  }}</ion-label>
-        </ion-item>
-      </ion-card>
+      <div>
+        <img [src]="'http://sys.meeracle.com.my/storage/' +p.image" />
+      </div>
+      <div>
+        <h2>{{ p.name }}</h2>
+        <p>Retail Pice - RM{{ p.price }}</p>
+        <p *ngIf="p.role_price.price">Your Pice - RM{{ p.role_price.price  }}</p>
+      </div>
+      
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button  (click)="addToCart(p)">
+        <ion-fab-button (click)="addToCart(p)">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
+      <!-- <ion-card class="bg-white">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="6">
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-label>{{ p.name }}</ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-label>Retail Pice: RM{{ p.price }}</ion-label>
+                  </ion-col>
+                  <ion-col size="12">
+                  <ion-label>Your Pice: RM{{ p.role_price.price  }}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+            <ion-col size="6">
+              <ion-img [src]="'http://sys.meeracle.com.my/storage/' +p.image"></ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card> -->
+      <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button  (click)="addToCart(p)">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab> -->
     </ion-slide>
   </ion-slides>
 </ion-content>

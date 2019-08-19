@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
 
   // On Register button tap, dismiss login modal and open register modal
   async registerModal() {
-    this.dismissLogin();
+    // this.dismissLogin();
     const registerModal = await this.modalController.create({
       component: RegisterPage
     });
@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
   login(form: NgForm) {
     this.authService.login(form.value.email, form.value.password).subscribe(
       data => {
-        this.alertService.presentToast("Logged In");
+        // this.alertService.presentToast("Logged In");
       },
       error => {
         console.log(error);
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
         }
       },
       () => {
-        this.dismissLogin();
+        // this.dismissLogin();
         this.navCtrl.navigateRoot('/home-results');
       }
     );

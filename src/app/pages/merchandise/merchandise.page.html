@@ -1,19 +1,22 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title>Merchandise</ion-title>
     <ion-buttons slot="end">
       <ion-button size="small" shape="round" color="medium" (click)="notifications()">
         <ion-icon name="cart"></ion-icon>
-        <ion-badge color="dark" slot="end">2</ion-badge>
+        <ion-badge color="dark" slot="end" *ngIf="cart.length > 0">{{ cart.length }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <div *ngIf="products == undefined || products.length === 0 " class="spinner">
+    <ion-spinner name="lines"></ion-spinner>
+  </div>
   <ion-slides #mySlider [options]="mySlideOptions" scroll="true">
     <ion-slide *ngFor="let p of products">
       <ion-card class="bg-white">
@@ -29,9 +32,8 @@
         </ion-item>
       </ion-card>
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button>
-
-          <ion-icon name="add"></ion-icon>
+        <ion-fab-button (click)="addToCart(p)">
+          <ion-icon name="add" ></ion-icon>
         </ion-fab-button>
       </ion-fab>
     </ion-slide>

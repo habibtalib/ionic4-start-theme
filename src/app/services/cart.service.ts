@@ -20,6 +20,16 @@ export class CartService {
   }
 
   addProduct(product) {
-    this.cart.push(product);
+    let card = null
+    if(card = this.cart.filter(item=>{
+      return item.id === product.id
+    })) {
+      console.log(card);
+      this.cart[card].count += 1
+      console.log(this.cart[card].count);
+    } else {
+      this.cart.push(product);
+    }
+    
   }
 }

@@ -113,6 +113,7 @@ ion-item {
   // Custom toolbar (overriding Shadow DOM)
   ion-toolbar {
     &.ion-color-primary {
+      // --ion-color-base: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary)) !important;
       --ion-color-base: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary)) !important;
     }
   }
@@ -156,7 +157,7 @@ ion-item {
         height: 60px;
         margin: 20px auto 8px;
         border-radius: 10%;
-        background: url("/assets/img/ionic4start-ico.png") no-repeat;
+        background: url("/assets/icon/android-icon-192x192.png") no-repeat;
         background-size: 100%;
       }
   

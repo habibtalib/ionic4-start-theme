@@ -35,58 +35,58 @@ export class AppComponent {
   ) {
     this.appPages = [
       {
-        title: 'Home',
-        url: '/home-results',
-        direct: 'root',
-        icon: 'home'
+        title: "Home",
+        url: "/home-results",
+        direct: "root",
+        icon: "home"
       },
       {
-        title: 'Scanner',
-        url: '/scanner',
-        direct: 'forward',
-        icon: 'qr-scanner'
+        title: "Scanner",
+        url: "/scanner",
+        direct: "forward",
+        icon: "qr-scanner"
       },
       {
-        title: 'Manage Orders',
-        url: '/orders',
-        direct: 'forward',
-        icon: 'clipboard'
+        title: "Manage Orders",
+        url: "/orders",
+        direct: "forward",
+        icon: "clipboard"
       },
       {
-        title: 'Products',
-        url: '/products',
-        direct: 'forward',
-        icon: 'pricetags'
+        title: "Products",
+        url: "/products",
+        direct: "forward",
+        icon: "pricetags"
       },
       {
-        title: 'Merchandise',
-        url: '/merchandise',
-        direct: 'forward',
-        icon: 'pricetags'
+        title: "Merchandise",
+        url: "/merchandise",
+        direct: "forward",
+        icon: "pricetags"
       },
       {
-        title: 'Genealogy',
-        url: '/genealogy',
-        direct: 'forward',
-        icon: 'people'
+        title: "Genealogy",
+        url: "/genealogy",
+        direct: "forward",
+        icon: "people"
       },
       {
-        title: 'Invite Members',
-        url: '/invite',
-        direct: 'forward',
-        icon: 'person-add'
+        title: "Invite Members",
+        url: "/invite",
+        direct: "forward",
+        icon: "person-add"
       },
       {
-        title: 'Purchased History',
-        url: '/history',
-        direct: 'forward',
-        icon: 'clock'
+        title: "Purchased History",
+        url: "/history",
+        direct: "forward",
+        icon: "clock"
       },
       {
-        title: 'Settings',
-        url: '/settings',
-        direct: 'forward',
-        icon: 'cog'
+        title: "Settings",
+        url: "/edit-profile",
+        direct: "forward",
+        icon: "cog"
       }
     ];
 

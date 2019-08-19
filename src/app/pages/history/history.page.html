@@ -1,12 +1,35 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title>History</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+<ion-grid no-padding>
+  <ion-row >
+    <ion-col>Date</ion-col>
+    <ion-col>Total</ion-col>
+    <ion-col>Action</ion-col>
+  </ion-row>
+  <ion-row *ngFor="let order of orders">
+    <ion-col>
+      <div>
+        {{ order.created_at }}
+      </div>
+    </ion-col>
+    <ion-col>
+      <div>
+        {{ order.total | currency:'RM':'symbol' }}
+      </div>
+    </ion-col>
+    <ion-col>
+      <div>
+        View
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 </ion-content>
