@@ -6,7 +6,7 @@
     <div padding-horizontal text-center class="animated fadeInDown">
       <div class="logo"></div>
       <h4 no-margin>
-        <ion-text color="light" class="fw700">
+        <ion-text color="primary" class="fw700">
           MEEERACLE
         </ion-text>
       </h4>
@@ -15,11 +15,13 @@
     <!-- Login form -->
     <form #form="ngForm" [formGroup]="onLoginForm" (ngSubmit)="login(form)" class="list-form" method="post">
       <ion-item no-padding class="animated fadeInUp">
-        <ion-label position="floating">
-          <ion-icon name="mail" item-start></ion-icon>
+        <ion-label color="primary" position="floating">
+          <ion-icon color="primary" name="mail" item-start></ion-icon>
+          <ion-text color="primary" >
           Email
+          </ion-text>
         </ion-label>
-        <ion-input ngModel name="email" color="secondary" type="email" formControlName="email"></ion-input>
+        <ion-input ngModel name="email" color="primary" type="email" formControlName="email"></ion-input>
       </ion-item>
       <p ion-text class="text08" *ngIf="onLoginForm.get('email').touched && onLoginForm.get('email').hasError('required')">
         <ion-text color="warning">
@@ -28,11 +30,13 @@
       </p>
 
       <ion-item no-padding class="animated fadeInUp">
-        <ion-label position="floating">
-          <ion-icon name="lock" item-start></ion-icon>
+        <ion-label color="primary" position="floating">
+          <ion-icon color="primary" name="lock" item-start></ion-icon>
+          <ion-text color="primary">
           Password
+          </ion-text>
         </ion-label>
-        <ion-input ngModel name="password" color="secondary" type="password" formControlName="password"></ion-input>
+        <ion-input ngModel name="password" color="primary" type="password" formControlName="password"></ion-input>
       </ion-item>
       <p ion-text color="warning" class="text08" *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">
         <ion-text color="warning">
@@ -43,7 +47,7 @@
     </form>
 
     <p text-right tappable (click)="forgotPass()" class="paz">
-      <ion-text color="light">
+      <ion-text color="primary">
         <strong>Forgot Pass?</strong>
       </ion-text>
     </p>

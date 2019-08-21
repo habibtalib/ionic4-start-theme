@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Order Details</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Total : {{ total | currency:'RM':'symbol' }}
+      <ion-list>
+        <ion-item *ngFor="let item of items">
+          <ion-label>
+            <h2>{{ item.name }}</h2>
+            <p>Quantity - {{ item.count  }}</p>
+            <p>Price - {{ item.role_price.price | currency:'RM':'symbol' }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Order Information</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Note</ion-label>
+          <ion-textarea [(ngModel)]="note"></ion-textarea>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngFor="let img of images; index as pos" text-wrap>
+          <ion-thumbnail slot="start">
+            <ion-img [src]="img.path"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            {{ img.name }}
+          </ion-label>
+          <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+            <ion-item>
+              <ion-label>Payment</ion-label>
+              <ion-button fill="clear" expand="full" color="primary" (click)="selectImage()">
+                <ion-icon slot="start" name="camera"></ion-icon>
+                Select Image
+              </ion-button>
+            </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <div class="ion-padding">
+    <ion-button expand="block" color="primary" (click)=submit()>Submit</ion-button>
+  </div>
+</ion-content>

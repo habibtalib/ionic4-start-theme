@@ -20,6 +20,13 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
+import { Camera } from '@ionic-native/Camera/ngx';
+import { File } from '@ionic-native/File/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { IonicStorageModule } from '@ionic/storage';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 @NgModule({
   declarations: [AppComponent, NotificationsComponent],
@@ -30,7 +37,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     AppRoutingModule,
     HttpClientModule,
     ImagePageModule,
-    SearchFilterPageModule
+    SearchFilterPageModule,
+    IonicStorageModule.forRoot()
   ],
   entryComponents: [NotificationsComponent],
   providers: [
@@ -38,6 +46,12 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     SplashScreen,
     NativeStorage,
     BarcodeScanner,
+    SocialSharing,
+    Camera,
+    File,
+    WebView,
+    Clipboard,
+    FilePath,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

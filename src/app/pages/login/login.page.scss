@@ -1,10 +1,18 @@
 :host {
     ion-content {
-        --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+        // --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+        --background: url('/assets/img/background.png')  0 0/100% 100% no-repeat;
     }
+    
 }
 
 .paz {
     position: relative;
     z-index: 10;
 }
+ion-item {
+    ion-input {
+        color: --ion-color-primary;
+        border-bottom: 1px solid var(--ion-color-tertiary);
+    }
+  }

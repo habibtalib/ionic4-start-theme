@@ -16,6 +16,12 @@ const routes: Routes = [
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
   { path: 'merchandise', loadChildren: './pages/merchandise/merchandise.module#MerchandisePageModule' },
   { path: 'products', loadChildren: './pages/products/products.module#ProductsPageModule' },
+  { path: 'checkout', loadChildren: './pages/checkout/checkout.module#CheckoutPageModule' },
+  { path: 'user/:id', loadChildren: './pages/user/user.module#UserPageModule' },
+  { path: 'order/:id', loadChildren: './pages/order/order.module#OrderPageModule' },
+  { path: 'scan-order', loadChildren: './pages/scan-order/scan-order.module#ScanOrderPageModule' },
+  { path: 'history-detail', loadChildren: './pages/history-detail/history-detail.module#HistoryDetailPageModule' },
+  { path: 'inbox', loadChildren: './pages/inbox/inbox.module#InboxPageModule' },
 ];
 
 @NgModule({

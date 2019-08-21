@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from "../../services/cart.service";
+import { Storage } from '@ionic/storage';
+
 import {
   NavController,
 } from "@ionic/angular";
@@ -10,9 +12,8 @@ import {
   styleUrls: ["./cart.page.scss"]
 })
 export class CartPage implements OnInit {
-  selectedItems = [];
+  selectedItems: any = [];
   qty = [];
-  baseProducts: any = [];
   code = "";
   show = true;
   // data: Array<Cart> = [];
@@ -22,7 +23,7 @@ export class CartPage implements OnInit {
 
   total = 0;
 
-  constructor(private cartService: CartService, public navCtrl: NavController) {
+  constructor(private cartService: CartService, public navCtrl: NavController, private store: Storage) {
     for (let i = 1; i <= 100; i++) {
       this.qty.push(i);
     }
@@ -30,41 +31,52 @@ export class CartPage implements OnInit {
 
   ngOnInit() {
     let items = this.cartService.getCart();
-    let selected = {};
-    for (let obj of items) {
-      console.log(obj);
-      if (selected[obj.id]) {
-        selected[obj.id].count++;
-      } else {
-        selected[obj.id] = { ...obj, count: 1 };
-      }
-    }
-    this.selectedItems = Object.keys(selected).map(key => selected[key]);
-    this.total = this.selectedItems.reduce(
-      (a, b) => a + b.count * b.role_price.price,
-      0
-    );
+    // let selected = {};
+    // for (let obj of items) {
+    //   if (selected[obj.id]) {
+    //     selected[obj.id].count++;
+    //   } else {
+    //     selected[obj.id] = { ...obj, count: 1 };
+    //   }
+    // }
+    this.selectedItems = Object.keys(items).map(key => items[key]);
+    // this.total = this.selectedItems.reduce(
+    //   (a, b) => a + b.count * b.role_price.price,
+    //   0
+    // );
+    this.calculatePrice();
   }
 
   calculatePrice() {
-    this.sum = 0;
+    this.total = 0;
     let temp = 0;
-    this.baseProducts.forEach(product => {
-      temp = product.price * product.quantity;
-      this.sum += temp;
+    this.selectedItems.forEach(product => {
+      temp = product.role_price.price * product.count;
+      this.total += temp;
     });
-    return this.sum;
   }
 
   changeQuantity(item){
     console.log(item)
+    this.calculatePrice();
   }
 
   checkout() {
-    this.navCtrl.navigateRoot("/home-results");
+    this.store.set('cart', this.selectedItems)
+    this.store.set('total', this.total)
+    this.navCtrl.navigateForward("/checkout");
   }
 
   browse() {
     this.navCtrl.navigateRoot("/products");
+  }
+
+  remove(j, item) {
+    // this.selectedItems = this.selectedItems.filter(function (ele) {
+    //   return ele != item;
+    // });
+    this.selectedItems.splice(j,1);
+    this.cartService.removeCart(j, item);
+    this.calculatePrice()
   }
 }

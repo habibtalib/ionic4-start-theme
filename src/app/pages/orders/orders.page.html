@@ -8,5 +8,38 @@
 </ion-header>
 
 <ion-content padding>
-
+  <!-- <ion-card *ngFor="let order of orders">
+    <ion-card-header>
+      <ion-card-subtitle>#{{ order.id }}</ion-card-subtitle>
+      <ion-card-subtitle>{{ order.created_at | date:'medium' }}</ion-card-subtitle>
+      <ion-card-title>{{ order.total | currency:'RM':'symbol'}}</ion-card-title>
+    </ion-card-header>
+    <ion-button (click)="scanOrder()">
+      <ion-icon slot="start" name="qr-scanner"></ion-icon>
+     Scan Item
+    </ion-button>
+    <ion-button [routerLink]="['/order', order.id]">
+      <ion-icon slot="start" name="add"></ion-icon>
+      View Order
+    </ion-button>
+  </ion-card> -->
+    <ion-list>
+      <ion-item *ngFor="let order of orders">
+        <ion-label>
+          <h2 *ngIf="order.buyer">{{ order.buyer.name }}</h2>
+          <h2 *ngIf="order.customer">{{ order.customer.name }}</h2>
+          <h3>{{ order.status.description }}</h3>
+          <p>{{ order.created_at | date:'medium'}}</p>
+          <p>{{ order.total | currency:'RM':'symbol' }}</p>
+          <ion-button (click)="scanOrder()">
+            <ion-icon slot="start" name="qr-scanner"></ion-icon>
+            Scan Item
+          </ion-button>
+          <ion-button [routerLink]="['/order', order.id]">
+            <ion-icon slot="start" name="paper"></ion-icon>
+            View Details
+          </ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
 </ion-content>

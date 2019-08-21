@@ -1,12 +1,47 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Invite</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+      <div *ngIf="user == undefined" class="spinner">
+        <ion-spinner name="lines"></ion-spinner>
+      </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Invite New Agent</ion-card-subtitle>
+      <ion-card-title *ngIf="user">Your Reference Code is: {{ user.id }}</ion-card-title>
+      <p  *ngIf="user" (click)="copyClipBoard('https://app.meeracle.ml/invite/'+user.id)">
+        https://app.meeracle.ml/invite/{{  user.id  }}
+      </p>
+    </ion-card-header>
+  </ion-card>
+  <div no-padding>
+    <ion-list class="accordion-list" lines="none">
+      <ion-card *ngFor="let share of socialShare; let i = index">
+        <ion-label lines="none" no-padding>
+          <div (click)="toggleGroup(i)" class="parentSection">
+            <div>
+              <ion-img src="{{share.headerImage}}" class="headerImg"></ion-img>
+            </div>
+            <span class="btn-title">{{ share.heading }}</span>
+            <ion-buttons class="button" expand="full" slot="start" [ngClass]="{active: isGroupShown(i)}">
+              <ion-icon slot="icon-only" class="end" [name]="isGroupShown(i) ? 'arrow-dropdown' : 'arrow-dropup'">
+              </ion-icon>
+            </ion-buttons>
+          </div>
+          <ion-list *ngIf="share.shareData && isGroupShown(i)" lines="none">
+            <ion-item *ngFor="let item of share.shareData; let j = index">
+              <h3>{{item.title}}</h3>
+              <ion-button slot="end" class="btnSection" (click)="this[item.clickEvent](item, user)">Share</ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-label>
+      </ion-card>
+    </ion-list>
+  </div>
 </ion-content>

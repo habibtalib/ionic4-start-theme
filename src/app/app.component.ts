@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, NavController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,6 +29,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    public menuCtrl: MenuController,
     public navCtrl: NavController,
     private authService: AuthService,
     private storage: NativeStorage,
@@ -39,6 +40,12 @@ export class AppComponent {
         url: "/home-results",
         direct: "root",
         icon: "home"
+      },
+      {
+        title: "Inbox",
+        url: "/inbox",
+        direct: "forward",
+        icon: "mail"
       },
       {
         title: "Scanner",
@@ -105,6 +112,16 @@ export class AppComponent {
   }
 
   logout() {
+    this.authService.logout().subscribe(
+      data => {
+        // this.alertService.presentToast("Logged In");
+        console.log('Logged Out', data)
+      },
+      error => {
+        console.log('Logged Out Error ', error)
+      }
+    );
+    this.menuCtrl.enable(false);
     this.navCtrl.navigateRoot('/');
   }
 }

@@ -6,5 +6,30 @@
   }
 
   ion-content{
-    --background: url('/assets/img/background.png');
+     --background: url('/assets/img/background.png')  0 0/100% 100% no-repeat;
   }
+
+   h2 {
+    color: #821519;
+ }
+ p {
+     color: #821519;
+ }
+:root {
+      --ion-safe-area-top: 20px;
+      --ion-safe-area-bottom: 22px;
+    }
+    .swiper-slide {
+      display: block;
+    }
+    ion-slide > h2 {
+      margin-top: 2.8rem;
+    }
+    ion-slide > img {
+      max-height: 50%;
+      max-width: 60%;
+      margin: 36px 0;
+    }
+  .myImage {
+   height: 512px;
+}

@@ -1,0 +1,48 @@
+.col{
+background: gray;
+border: think solid black;
+}
+
+ion-content{
+     --background: url('/assets/img/background.png')  0 0/100% 100% no-repeat;
+    }
+
+.spinner {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+ion-card{
+    --background: white;
+    padding: 10px 10px 20px 10px;
+}
+
+ion-list {
+  --background: transparent;
+  background: transparent;
+}
+
+.btnSection {
+  min-height: 40px;
+}
+
+.btn-title {
+  width: 100%;
+  font-size: 22px;
+  padding-left: 20px;
+}
+
+.parentSection {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  align-items: center;
+}
+
+.headerImg {
+  width: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+}

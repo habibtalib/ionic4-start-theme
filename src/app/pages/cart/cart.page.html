@@ -21,7 +21,7 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-menu-button color="light"></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title color="light">Cart</ion-title>
   </ion-toolbar>
@@ -61,21 +61,22 @@
             <ion-col size="3" float-right>
               <ion-row text-end justify-content-end>
                 <h3 no-margin class="item-name" text-end>
-                {{ (item.price * item.count) | currency:'RM':'symbol' }}
+                {{ (item.role_price.price * item.count) | currency:'RM':'symbol' }}
                 </h3>
               </ion-row>
               <ion-row justify-content-end>
-                <ion-select placeholder="-" interface="popover" [interfaceOptions]="customAlertOptions"
-                  [(ngModel)]="selectedItems[j].count" (ionChange)="changeQuantity(selectedItems[j])" class="select"
+                <ion-input color="primary" type="number" [(ngModel)]="item.count" (ionChange)="changeQuantity(item)" inputmode="numeric"></ion-input>
+                <!-- <ion-select placeholder="-" interface="popover" [interfaceOptions]="customAlertOptions"
+                  [(ngModel)]="item.count" (ionChange)="changeQuantity(item)" class="select"
                   #val>
                   <ion-select-option *ngFor="let q of qty" [(value)]="q" text-center>{{ q }}</ion-select-option>
-                </ion-select>
+                </ion-select> -->
               </ion-row>
             </ion-col>
           </ion-row>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="remove(j)">
+          <ion-item-option color="danger" (click)="remove(item)">
             <ion-icon name="trash" size="large"></ion-icon>
           </ion-item-option>
         </ion-item-options>
@@ -104,7 +105,7 @@
           <ion-text>{{ total | currency:'RM':'symbol' }}</ion-text>
         </ion-col>
       </ion-row>
-      <div class="sep"></div>
+      <!-- <div class="sep"></div> -->
     </div>
   </div>
 </ion-content>

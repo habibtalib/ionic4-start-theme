@@ -27,7 +27,12 @@ export class LoginPage implements OnInit {
   ) { }
 
   ionViewWillEnter() {
-    this.menuCtrl.enable(false);
+    this.authService.getToken().then(() => {
+      if (this.authService.isLoggedIn) {
+        // this.navCtrl.navigateRoot("/home-results");
+      }
+    });
+    this.menuCtrl.enable(true);
   }
 
   // Dismiss Login Modal
@@ -66,6 +71,7 @@ export class LoginPage implements OnInit {
       }
     );
   }
+  
 
   ngOnInit() {
 

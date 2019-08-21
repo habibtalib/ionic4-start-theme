@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>inbox</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding-top color="light">
+    <div class="mid" *ngIf="inboxs.length == 0">
+      <ion-row size="12" justify-content-center disabled="true">
+        <button class="circle">
+          <ion-icon name="mail" size="large"></ion-icon>
+        </button>
+      </ion-row>
+      <ion-row size="12" justify-content-center disabled="true">
+        <ion-text><strong>Your inbox is empty</strong></ion-text>
+      </ion-row>
+    </div>
+  <ion-list *ngIf="inboxs">
+    <ion-item *ngFor="let inbox of inboxs">
+      <ion-label>{{ inbox.title }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

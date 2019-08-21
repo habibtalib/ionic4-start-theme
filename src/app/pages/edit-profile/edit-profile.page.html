@@ -9,10 +9,10 @@
 
 <ion-content class="profile">
   <ion-card no-margin>
-    <ion-card-content class="bg-profile">
+    <ion-card-content *ngIf="user" class="bg-profile">
       <!-- <img src="assets/img/avatar.jpeg"> -->
-      <h1 class="fw500">Eddy</h1>
-      <h2 color="light" margin-bottom>Pearl</h2>
+      <h1 class="fw500">{{ user.name }}</h1>
+      <h2 color="light" margin-bottom>{{ user.role.display_name }}</h2>
       <!-- <ion-button icon-left color="secondary">
         <ion-icon name="photos"></ion-icon> 
         Edit / Add Avatar
@@ -20,27 +20,27 @@
     </ion-card-content>
   
     <ion-grid fixed no-padding>
-      <ion-row>
+      <ion-row *ngIf="user">
         <ion-col size="12" padding>
 
           <ion-list margin-bottom>
             <ion-list-header color="light">
-              <ion-label class="fw700">Form</ion-label>
+              <ion-label class="fw700">Profile</ion-label>
             </ion-list-header>
 
             <ion-item>
               <ion-label color="dark" position="stacked">Name:</ion-label>
-              <ion-input inputmode="text" placeholder="Ex..: Joe Doe" value="Eddy"></ion-input>
+              <ion-input [(ngModel)]="user.name" inputmode="text" placeholder="Ex..: Joe Doe"></ion-input>
             </ion-item>
     
             <ion-item>
               <ion-label color="dark" position="stacked">Email:</ion-label>
-              <ion-input inputmode="email" placeholder="Ex.: joe@doe.com" value="eddy@meeracle.com.my"></ion-input>
+              <ion-input [(ngModel)]="user.email" inputmode="email" placeholder="Ex.: joe@doe.com" ></ion-input>
             </ion-item>
     
             <ion-item>
               <ion-label color="dark" position="stacked">Address:</ion-label>
-              <ion-input inputmode="text" placeholder="Ex.: Abey Road 5"></ion-input>
+              <ion-input [(ngModel)]="user.address" inputmode="text" placeholder="Ex.: Abey Road 5"></ion-input>
             </ion-item>
     
             <!-- <ion-item>
@@ -97,7 +97,7 @@
       </ion-row>
     </ion-grid>
   
-    <ion-button size="large" expand="full" color="dark" (click)="sendData()" no-margin>Edit</ion-button>
+    <ion-button size="large" expand="full" color="dark" (click)="sendData()" no-margin>Update</ion-button>
   </ion-card>
   
   <!-- <div padding>
