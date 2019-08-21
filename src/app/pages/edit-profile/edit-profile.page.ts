@@ -12,6 +12,7 @@ import { EnvService } from "../../services/env.service";
 export class EditProfilePage implements OnInit {
 
   user: any;
+  formData = new FormData();
 
   constructor(
     public navCtrl: NavController,
@@ -51,20 +52,49 @@ export class EditProfilePage implements OnInit {
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
-
-    loader.present();
-    loader.onWillDismiss().then(async l => {
-      const toast = await this.toastCtrl.create({
-        showCloseButton: true,
-        cssClass: 'bg-profile',
-        message: 'Your Data was Edited!',
-        duration: 3000,
-        position: 'bottom'
+    this.formData = new FormData();
+    this.formData.append('user', JSON.stringify(this.user));
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+        Accept: "application/json"
       });
+      this.http
+        .post(this.env.API_URL + "user/" + this.user.id, this.formData, { headers: headers })
+        .subscribe(
+          data => {
+            loader.present();
+            this.getUser()
+            loader.onWillDismiss().then(async l => {
+              const toast = await this.toastCtrl.create({
+                showCloseButton: true,
+                // cssClass: 'bg-profile',
+                message: 'Your Update has Been Submmited!',
+                duration: 3000,
+                position: 'bottom'
+              });
 
-      toast.present();
-      // this.navCtrl.navigateForward('/home-results');
+              toast.present();
+              // this.navCtrl.navigateRoot('/home-results');
+            });
+
+          },
+          error => {
+            console.log(error);
+            loader.present();
+            loader.onWillDismiss().then(async l => {
+              const toast = await this.toastCtrl.create({
+                showCloseButton: true,
+                // cssClass: 'bg-profile',
+                message: 'Your Update failed to Submmit!',
+                duration: 3000,
+                position: 'bottom'
+              });
+
+              toast.present();
+            });
+          }
+        );
     });
   }
-
 }
