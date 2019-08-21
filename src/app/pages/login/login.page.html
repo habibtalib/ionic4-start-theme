@@ -36,7 +36,7 @@
           Password
           </ion-text>
         </ion-label>
-        <ion-input ngModel name="password" color="primary" type="password" formControlName="password"></ion-input>
+        <ion-input ngModel name="password" color="primary" type="password" formControlName="password" (keyup.enter)="login(form)"></ion-input>
       </ion-item>
       <p ion-text color="warning" class="text08" *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">
         <ion-text color="warning">

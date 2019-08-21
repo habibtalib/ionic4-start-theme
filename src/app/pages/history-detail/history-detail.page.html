@@ -1,9 +1,89 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>historyDetail</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>History Detail</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-card *ngIf="orders">
+    <ion-card-header>
+      <ion-card-title>{{ orders.status.description }}</ion-card-title>
+      <ion-card-subtitle>ID: {{ orders.id }}</ion-card-subtitle>
+      <ion-card-subtitle>Total: {{ orders.total | currency:'RM':'symbol'}}</ion-card-subtitle>
+      <ion-card-subtitle>Date: {{ orders.created_at | date:'medium'}}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Prove of Payment</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="orders && orders.payment_slip">
+      <img [src]="'http://api.meeracle.ml/storage/' + orders.payment_slip" />
+    </ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let img of images; index as pos" text-wrap>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="img.path"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          {{ img.name }}
+        </ion-label>
+        <!-- <ion-button slot="end" fill="clear" (click)="startUpload(img)">
+                <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+              </ion-button> -->
+        <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    <div class="ion-padding" *ngIf="orders && orders.status.id === 1">
+      <ion-button expand="block" color="primary" (click)=selectImage()>Upload Picture</ion-button>
+      <ion-button expand="block" color="primary" (click)=update()>Update Order</ion-button>
+    </div>
+  </ion-card>
+
+  <ion-card *ngIf="orders">
+    <ion-card-header>
+      <ion-card-title>Order Items</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of orders.item">
+          <ion-label>
+            <h2>{{ item.product.name }}</h2>
+            <h2>Price : RM{{ item.price }}</h2>
+            <h2>Quantity : {{ item.quantity }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="orders && orders.payment_slip">
+    <ion-card-header>
+      <ion-card-title>Prove of Payment</ion-card-title>
+      <img [src]="'http://sys.meeracle.com.my/storage/' + orders.payment_slip" />
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngIf="orders && orders.tracker.length > 0">
+    <ion-card-header>
+      <ion-card-title>Scanned Items</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of orders.tracker">
+          <ion-label>
+            <h2>{{ item.serial_number}}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
+

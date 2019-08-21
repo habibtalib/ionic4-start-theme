@@ -19,7 +19,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { finalize } from 'rxjs/operators';
 
-const STORAGE_KEY = 'my_images';
+const STORAGE_KEY = 'scanner';
 
 @Component({
   selector: "app-scanner",

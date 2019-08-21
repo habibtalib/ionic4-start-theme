@@ -17,8 +17,11 @@ import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/n
 import { finalize } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CartService } from "../../services/cart.service";
+import { AuthService } from 'src/app/services/auth.service';
+import { EnvService } from "../../services/env.service";
+import { ThrowStmt } from '@angular/compiler';
 
-const STORAGE_KEY = 'my_images';
+const STORAGE_KEY = 'checkout';
 
 @Component({
   selector: 'app-checkout',
@@ -29,7 +32,8 @@ export class CheckoutPage implements OnInit {
   images = [];
   total : any;
   items : any;
-  note : any;
+  note = "";
+  formData = new FormData();
   
   constructor(
     public navCtrl: NavController,
@@ -47,6 +51,8 @@ export class CheckoutPage implements OnInit {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     private cartService: CartService,
+    private authService: AuthService,
+    private env: EnvService,
   ) { }
 
   ngOnInit() {
@@ -57,22 +63,66 @@ export class CheckoutPage implements OnInit {
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
+    // let formData = {
+    //   total: this.total,
+    //   cart: this.items,
+    //   note: this.note,
+    // }
+    this.formData = new FormData();
+    if (this.images.length > 0) {
+      this.startUpload(this.images[0])
+    }
+    this.formData.append('total', this.total)
+    this.formData.append('cart', JSON.stringify(this.items))
+    this.formData.append('note', this.note)
 
-    loader.present();
-    loader.onWillDismiss().then(async l => {
-      const toast = await this.toastCtrl.create({
-        showCloseButton: true,
-        cssClass: 'bg-profile',
-        message: 'Your Order has Been Submmited!',
-        duration: 3000,
-        position: 'bottom'
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+        Accept: "application/json"
       });
+      this.http
+        .post(this.env.API_URL + "order", this.formData, { headers: headers})
+        .subscribe(
+          data => {
+           console.log(data)
+            loader.present();
+            loader.onWillDismiss().then(async l => {
+              const toast = await this.toastCtrl.create({
+                showCloseButton: true,
+                // cssClass: 'bg-profile',
+                message: 'Your Order has Been Submmited!',
+                duration: 3000,
+                position: 'bottom'
+              });
 
-      toast.present();
-      this.storage.remove('total')
-      this.storage.remove('cart')
-      this.cartService.clearCart();
-      this.navCtrl.navigateForward('/home-results');
+              toast.present();
+              this.storage.remove('total')
+              this.storage.remove('cart')
+              this.cartService.clearCart();
+              this.navCtrl.navigateForward('/home-results');
+            });
+          },
+          error => {
+            console.log(error);
+            loader.present();
+            loader.onWillDismiss().then(async l => {
+              const toast = await this.toastCtrl.create({
+                showCloseButton: true,
+                // cssClass: 'bg-profile',
+                message: 'Your Order failed to Submmit!',
+                duration: 3000,
+                position: 'bottom'
+              });
+
+              toast.present();
+              this.storage.remove('total')
+              this.storage.remove('cart')
+              this.cartService.clearCart();
+              this.navCtrl.navigateForward('/home-results');
+            });
+          }
+        );
     });
   }
 
@@ -198,36 +248,36 @@ export class CheckoutPage implements OnInit {
       });
   }
 
-  async uploadImageData(formData: FormData) {
-    const loading = await this.loadingController.create({
-      message: 'Uploading image...',
-    });
-    await loading.present();
+  // async uploadImageData(formData: FormData) {
+  //   const loading = await this.loadingController.create({
+  //     message: 'Uploading image...',
+  //   });
+  //   await loading.present();
 
-    this.http.post("http://localhost:8888/upload.php", formData)
-      .pipe(
-        finalize(() => {
-          loading.dismiss();
-        })
-      )
-      .subscribe(res => {
-        if (res['success']) {
-          this.presentToast('File upload complete.')
-        } else {
-          this.presentToast('File upload failed.')
-        }
-      });
-  }
+  //   this.http.post("http://localhost:8888/upload.php", formData)
+  //     .pipe(
+  //       finalize(() => {
+  //         loading.dismiss();
+  //       })
+  //     )
+  //     .subscribe(res => {
+  //       if (res['success']) {
+  //         this.presentToast('File upload complete.')
+  //       } else {
+  //         this.presentToast('File upload failed.')
+  //       }
+  //     });
+  // }
 
   readFile(file: any) {
     const reader = new FileReader();
     reader.onloadend = () => {
-      const formData = new FormData();
+      // const formData = new FormData();
       const imgBlob = new Blob([reader.result], {
         type: file.type
       });
-      formData.append('file', imgBlob, file.name);
-      this.uploadImageData(formData);
+      this.formData.append('payment_slip', imgBlob, file.name);
+      // this.uploadImageData(formData);
     };
     reader.readAsArrayBuffer(file);
   }

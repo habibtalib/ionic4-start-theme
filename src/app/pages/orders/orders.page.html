@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content padding>
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
   <!-- <ion-card *ngFor="let order of orders">
     <ion-card-header>
       <ion-card-subtitle>#{{ order.id }}</ion-card-subtitle>
@@ -27,11 +30,11 @@
       <ion-item *ngFor="let order of orders">
         <ion-label>
           <h2 *ngIf="order.buyer">{{ order.buyer.name }}</h2>
-          <h2 *ngIf="order.customer">{{ order.customer.name }}</h2>
+          <h2 *ngIf="order.customer">{{ order.customer.name }} [non-member]</h2>
           <h3>{{ order.status.description }}</h3>
           <p>{{ order.created_at | date:'medium'}}</p>
           <p>{{ order.total | currency:'RM':'symbol' }}</p>
-          <ion-button (click)="scanOrder()">
+          <ion-button [routerLink]="['/scan-order', order.id]">
             <ion-icon slot="start" name="qr-scanner"></ion-icon>
             Scan Item
           </ion-button>

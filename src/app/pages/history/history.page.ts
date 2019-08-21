@@ -26,6 +26,15 @@ export class HistoryPage implements OnInit {
     this.getOrders();
   }
 
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.getOrders();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
   getOrders() {
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({

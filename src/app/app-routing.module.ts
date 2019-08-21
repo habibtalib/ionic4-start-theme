@@ -19,8 +19,8 @@ const routes: Routes = [
   { path: 'checkout', loadChildren: './pages/checkout/checkout.module#CheckoutPageModule' },
   { path: 'user/:id', loadChildren: './pages/user/user.module#UserPageModule' },
   { path: 'order/:id', loadChildren: './pages/order/order.module#OrderPageModule' },
-  { path: 'scan-order', loadChildren: './pages/scan-order/scan-order.module#ScanOrderPageModule' },
-  { path: 'history-detail', loadChildren: './pages/history-detail/history-detail.module#HistoryDetailPageModule' },
+  { path: 'scan-order/:id', loadChildren: './pages/scan-order/scan-order.module#ScanOrderPageModule' },
+  { path: 'history-detail/:id', loadChildren: './pages/history-detail/history-detail.module#HistoryDetailPageModule' },
   { path: 'inbox', loadChildren: './pages/inbox/inbox.module#InboxPageModule' },
 ];
 
