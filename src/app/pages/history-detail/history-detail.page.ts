@@ -62,6 +62,21 @@ export class HistoryDetailPage implements OnInit {
     });
   }
 
+  readFile(file: any) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      // const formData = new FormData();
+      this.formData = new FormData();
+      const imgBlob = new Blob([reader.result], {
+        type: file.type
+      });
+      console.log('append payment_slip', imgBlob, file.name);
+      this.formData.append('payment_slip', imgBlob, file.name);
+      this.uploadImageData();
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
   loadStoredImages() {
     this.storage.get(STORAGE_KEY).then(images => {
       if (images) {
@@ -77,13 +92,22 @@ export class HistoryDetailPage implements OnInit {
   }
 
   async update() {
-    await this.images.forEach(element => {
-      this.startUpload(element)
-    });
+    if (this.images.length > 0) {
+      await this.startUpload(this.images[0])
+    } else {
+      const toast = await this.toastController.create({
+        showCloseButton: true,
+        // cssClass: 'bg-profile',
+        message: 'Please Upload Image!',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+    }
   }
 
-  async uploadImageData(formData: FormData) { 
-    console.log('formData', JSON.stringify(formData))
+  async uploadImageData() { 
     const loader = await this.loadingController.create({
       duration: 2000
     });
@@ -93,7 +117,7 @@ export class HistoryDetailPage implements OnInit {
         Accept: "application/json"
       });
       this.http
-        .post(this.env.API_URL + "order/" + this.myId, formData, { headers: headers })
+        .post(this.env.API_URL + "order/" + this.myId, this.formData, { headers: headers })
         .subscribe(
           data => {
             console.log(data)
@@ -171,19 +195,7 @@ export class HistoryDetailPage implements OnInit {
       });
   }
 
-  readFile(file: any) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const formData = new FormData();
-      const imgBlob = new Blob([reader.result], {
-        type: file.type
-      });
-      console.log('append payment_slip', imgBlob, file.name);
-      formData.append('payment_slip', imgBlob, file.name);
-      this.uploadImageData(formData);
-    };
-    reader.readAsArrayBuffer(file);
-  }
+
 
   // async uploadImageData(formData: FormData) {
   //   const loading = await this.loadingController.create({

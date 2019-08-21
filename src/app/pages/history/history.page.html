@@ -39,7 +39,7 @@
     <ion-item *ngFor="let order of orders">
       <ion-label>
         <h2>{{ order.status.description }}</h2>
-        <p>{{ order.created_at | date:'medium'}}</p>
+        <p>{{ order.created_at}}</p>
         <p>{{ order.total | currency:'RM':'symbol' }}</p>
         <ion-button [routerLink]="['/history-detail', order.id]">
           <ion-icon slot="start" name="paper"></ion-icon>

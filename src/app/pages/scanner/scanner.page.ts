@@ -8,6 +8,7 @@ import {
   Platform, LoadingController
 } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { EnvService } from "../../services/env.service";
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { tap } from 'rxjs/operators';
@@ -18,6 +19,9 @@ import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { finalize } from 'rxjs/operators';
+import { AlertService } from 'src/app/services/alert.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 const STORAGE_KEY = 'scanner';
 
@@ -31,10 +35,17 @@ export class ScannerPage implements OnInit {
   public serial: any;
   public serials = [];
   images = [];
+  name: any;
+  address: any;
+  phone: any;
+  email: any;
+  formData = new FormData();
+  
 
   constructor(
     private authService: AuthService,
     public navCtrl: NavController,
+    private env: EnvService, 
     public menuCtrl: MenuController,
     public barcodescanner: BarcodeScanner,
     private http: HttpClient,
@@ -44,10 +55,11 @@ export class ScannerPage implements OnInit {
     private loadingController: LoadingController,
     private ref: ChangeDetectorRef, 
     private filePath: FilePath,
-    private camera: Camera, private file: File,
+    private camera: Camera, 
+    private file: File,
     private webview: WebView,
     private actionSheetController: ActionSheetController, 
-
+    private alertService: AlertService,
   ) {}
 
   ngOnInit() {
@@ -55,6 +67,74 @@ export class ScannerPage implements OnInit {
       this.loadStoredImages();
     });
   }
+
+  async submit() {
+    if(!this.name || !this.address || !this.email || !this.phone) {
+      const toast = await this.toastController.create({
+        showCloseButton: true,
+        // cssClass: 'bg-profile',
+        message: 'Please Complete the form',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+    }
+     else {
+      const loader = await this.loadingController.create({
+        duration: 2000
+      });
+      this.formData.append('serials', JSON.stringify([this.serials]));
+      this.formData.append('name', this.name);
+      this.formData.append('address', this.address);
+      this.formData.append('phone', this.phone);
+      this.formData.append('email', this.email);
+      this.authService.getToken().then(() => {
+        const headers = new HttpHeaders({
+          Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+          Accept: "application/json"
+        });
+        this.http
+          .post(this.env.API_URL + "scanner", this.formData, { headers: headers })
+          .subscribe(
+            data => {
+              loader.present();
+              this.storage.remove(STORAGE_KEY)
+              loader.onWillDismiss().then(async l => {
+                const toast = await this.toastController.create({
+                  showCloseButton: true,
+                  // cssClass: 'bg-profile',
+                  message: 'Your Application has Been Submmited!',
+                  duration: 3000,
+                  position: 'bottom'
+                });
+
+                toast.present();
+                this.navCtrl.navigateRoot('/home-results');
+              });
+              this.images = []
+
+            },
+            error => {
+              console.log(error);
+              loader.present();
+              loader.onWillDismiss().then(async l => {
+                const toast = await this.toastController.create({
+                  showCloseButton: true,
+                  // cssClass: 'bg-profile',
+                  message: 'Your Application failed to Submmit!',
+                  duration: 3000,
+                  position: 'bottom'
+                });
+
+                toast.present();
+              });
+            }
+          );
+      });
+    }
+  }
+  
 
   loadStoredImages() {
     this.storage.get(STORAGE_KEY).then(images => {
@@ -195,10 +275,6 @@ export class ScannerPage implements OnInit {
 
   }
 
-  submit() {
-    console.log('submit')
-  }
-
   pathForImage(img) {
     if (img === null) {
       return '';
@@ -260,11 +336,12 @@ export class ScannerPage implements OnInit {
                 }
               )
               .subscribe(data => {
-                this.serial = JSON.stringify(data);
-                console.log("barcode", this.serial);
-                if (!this.serials.find(serial => serial === this.serial)) {
-                  this.serials.push(this.serial)
-                }
+                this.serial = data;
+                console.log("barcode", this.serial.serialNumber);
+                // if (!this.serials.find(serial => serial === this.serial.serialNumber)) {
+                //   this.serials.push(this.serial.serialNumber)
+                // }
+                this.serials.push(this.serial.serialNumber)
               });
           });
       })

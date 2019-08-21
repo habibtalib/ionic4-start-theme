@@ -12,8 +12,8 @@
     <ion-card-header>
       <ion-card-title>{{ orders.status.description }}</ion-card-title>
       <ion-card-subtitle>ID: {{ orders.id }}</ion-card-subtitle>
-      <ion-card-subtitle>Total: {{ orders.total | currency:'RM':'symbol'}}</ion-card-subtitle>
-      <ion-card-subtitle>Date: {{ orders.created_at | date:'medium'}}</ion-card-subtitle>
+      <ion-card-subtitle *ngIf=" orders.total">Total: {{ orders.total | currency:'RM':'symbol'}}</ion-card-subtitle>
+      <ion-card-subtitle>Date: {{ orders.created_at }}</ion-card-subtitle>
     </ion-card-header>
       <div class="ion-padding"*ngIf="orders">
         <ion-button *ngIf="orders.status.id === 1" expand="block" color="primary" (click)=update(2)>Paid</ion-button>
@@ -27,11 +27,11 @@
         <ion-card-title>{{ orders.customer.name }}</ion-card-title>
         <ion-card-subtitle>[non-member]</ion-card-subtitle>
         <ion-card-subtitle>ID: {{ orders.id }}</ion-card-subtitle>
-        <ion-card-subtitle>Total: RM{{ orders.total }}</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="orders.total">Total: RM{{ orders.total }}</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
 
-    <ion-card *ngIf="orders">
+    <ion-card *ngIf="orders && orders.item.length > 0">
       <ion-card-header>
         <ion-card-title>Order Items</ion-card-title>
       </ion-card-header>
@@ -55,7 +55,7 @@
       </ion-card-header>
     </ion-card>
 
-    <ion-card *ngIf="orders">
+    <ion-card *ngIf="orders && orders.tracker.length > 0">
       <ion-card-header>
         <ion-card-title>Scanned Items</ion-card-title>
       </ion-card-header>

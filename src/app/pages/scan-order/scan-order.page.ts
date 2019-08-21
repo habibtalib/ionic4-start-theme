@@ -21,7 +21,7 @@ import { EnvService } from "../../services/env.service";
 export class ScanOrderPage implements OnInit {
   public barcode: string;
   public serial: any;
-  public serials:any;
+  public serials = [];
   images = [];
   formData = new FormData();
   myId: any;
@@ -117,11 +117,12 @@ export class ScanOrderPage implements OnInit {
                 }
               )
               .subscribe(data => {
-                this.serial = JSON.stringify(data);
-                console.log("barcode", this.serial);
-                if (!this.serials.find(serial => serial === this.serial)) {
-                  this.serials.push(this.serial)
-                }
+                this.serial = data;
+                console.log("barcode", this.serial.serialNumber);
+                // if (!this.serials.find(serial => serial === this.serial.serialNumber)) {
+                //   this.serials.push(this.serial.serialNumber)
+                // }
+                this.serials.push(this.serial.serialNumber)
               });
           });
       })

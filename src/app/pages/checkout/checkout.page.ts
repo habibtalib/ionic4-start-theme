@@ -60,18 +60,35 @@ export class CheckoutPage implements OnInit {
   }
 
   async submit() {
+    // await this.images.forEach(element => {
+    //   this.startUpload(element)
+    // });
+    if(this.images.length > 0) {
+      await this.startUpload(this.images[0])
+    } else {
+      this.uploadImageData();
+    }
+   
+  }
+  
+  readFile(file: any) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      // const formData = new FormData();
+      this.formData = new FormData();
+      const imgBlob = new Blob([reader.result], {
+        type: file.type
+      });
+      this.formData.append('payment_slip', imgBlob, file.name);
+      this.uploadImageData();
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  async uploadImageData(){
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
-    // let formData = {
-    //   total: this.total,
-    //   cart: this.items,
-    //   note: this.note,
-    // }
-    this.formData = new FormData();
-    if (this.images.length > 0) {
-      this.startUpload(this.images[0])
-    }
     this.formData.append('total', this.total)
     this.formData.append('cart', JSON.stringify(this.items))
     this.formData.append('note', this.note)
@@ -82,10 +99,10 @@ export class CheckoutPage implements OnInit {
         Accept: "application/json"
       });
       this.http
-        .post(this.env.API_URL + "order", this.formData, { headers: headers})
+        .post(this.env.API_URL + "order", this.formData, { headers: headers })
         .subscribe(
           data => {
-           console.log(data)
+            console.log(data)
             loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
@@ -269,18 +286,7 @@ export class CheckoutPage implements OnInit {
   //     });
   // }
 
-  readFile(file: any) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      // const formData = new FormData();
-      const imgBlob = new Blob([reader.result], {
-        type: file.type
-      });
-      this.formData.append('payment_slip', imgBlob, file.name);
-      // this.uploadImageData(formData);
-    };
-    reader.readAsArrayBuffer(file);
-  }
+
 
   loadStoredImages() {
     this.storage.get(STORAGE_KEY).then(images => {

@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
         // this.navCtrl.navigateRoot("/home-results");
       }
     });
-    this.menuCtrl.enable(true);
+    this.menuCtrl.enable(false);
   }
 
   // Dismiss Login Modal
