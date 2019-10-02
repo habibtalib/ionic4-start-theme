@@ -33,7 +33,7 @@ export class InvitePage implements OnInit {
         'heading': 'WhatsApp',
         'headerImage': '../../assets/addons3/whatsapp-icon-280x280.png',
         shareData: [
-          { 'title': 'Share text', text: 'Please Click this invite link to Register Meeracle App https://app.meeracle.ml/invite/', clickEvent: 'shareText', shareType: 'shareViaWhatsApp' },
+          { 'title': 'Share via Whatsapp', text: 'Please Click this invite link to Register Meeracle App https://app.meeracle.ml/invite/', clickEvent: 'shareText', shareType: 'shareViaWhatsApp' },
         ]
       }
     ]
@@ -80,8 +80,8 @@ export class InvitePage implements OnInit {
     this.toggleGroup(0)
   }
 
-  async shareText(shareData) {
-    this.socialSharing[`${shareData.shareType}`](shareData.text, null, null)
+  async shareText(shareData, user) {
+    this.socialSharing[`${shareData.shareType}`](shareData.text + user.id, null, null)
       .then((res) => console.log('res', res))
       .catch((e) => console.log('error', e))
   }

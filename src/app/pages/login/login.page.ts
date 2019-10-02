@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { RegisterPage } from '../register/register.page';
 import { NgForm } from '@angular/forms';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { EnvService } from "../../services/env.service";
 
 @Component({
   selector: 'app-login',
@@ -23,7 +25,9 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private modalController: ModalController,
     private authService: AuthService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private env: EnvService,
+    private http: HttpClient,
   ) { }
 
   ionViewWillEnter() {
@@ -106,7 +110,19 @@ export class LoginPage implements OnInit {
           }
         }, {
           text: 'Confirm',
-          handler: async () => {
+          handler: async (value) => {
+            console.log(value)
+            this.http
+            .get(this.env.API_URL + "forget-password/"+value.email)
+            .subscribe(
+              data => {
+                console.log(data);
+              },
+              error => {
+                console.log(error);
+              }
+            );
+
             const loader = await this.loadingCtrl.create({
               duration: 2000
             });
@@ -128,6 +144,10 @@ export class LoginPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async postForgotPassword() {
+    
   }
 
   // // //

@@ -12,7 +12,9 @@
     <ion-card-header>
       <ion-card-title>{{ orders.status.description }}</ion-card-title>
       <ion-card-subtitle>ID: {{ orders.id }}</ion-card-subtitle>
-      <ion-card-subtitle>Total: {{ orders.total | currency:'RM':'symbol'}}</ion-card-subtitle>
+      <ion-card-subtitle
+        >Total: {{ orders.total | currency: "RM":"symbol" }}</ion-card-subtitle
+      >
       <ion-card-subtitle>Date: {{ orders.created_at }}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
@@ -41,8 +43,12 @@
       </ion-item>
     </ion-list>
     <div class="ion-padding" *ngIf="orders && orders.status.id === 1">
-      <ion-button expand="block" color="primary" (click)=selectImage()>Upload Picture</ion-button>
-      <ion-button expand="block" color="primary" (click)=update()>Update Order</ion-button>
+      <ion-button expand="block" color="primary" (click)="selectImage()"
+        >Upload Picture</ion-button
+      >
+      <ion-button expand="block" color="primary" (click)="update()"
+        >Update Order</ion-button
+      >
     </div>
   </ion-card>
 
@@ -63,13 +69,6 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="orders && orders.payment_slip">
-    <ion-card-header>
-      <ion-card-title>Prove of Payment</ion-card-title>
-      <img [src]="'http://sys.meeracle.com.my/storage/' + orders.payment_slip" />
-    </ion-card-header>
-  </ion-card>
-
   <ion-card *ngIf="orders && orders.tracker.length > 0">
     <ion-card-header>
       <ion-card-title>Scanned Items</ion-card-title>
@@ -78,12 +77,10 @@
       <ion-list>
         <ion-item *ngFor="let item of orders.tracker">
           <ion-label>
-            <h2>{{ item.serial_number}}</h2>
+            <h2>{{ item.serial_number }}</h2>
           </ion-label>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
-
 </ion-content>
-

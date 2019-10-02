@@ -26,6 +26,11 @@ export class GenealogyPage implements OnInit {
     this.getUser()
   }
 
+  getClass(item){
+    console.log(item)
+    return 'class-diamond'
+  }
+
   navUser(user){
     console.log('user', user)
     this.navCtrl.navigateForward('/user',user.id)

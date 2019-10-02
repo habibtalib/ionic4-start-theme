@@ -54,7 +54,7 @@
   </ion-card>
 
   <div *ngIf="user">
-  <ion-card *ngFor="let child of user.user.child">
+  <ion-card *ngFor="let child of user.user.child" [ngStyle]="{'background': child.role.color}">
     <ion-card-header routerLink="/user/{{ child.id }}" routerDirection="forward">
       <ion-card-subtitle>MEE{{ child.id }}</ion-card-subtitle>
       <ion-card-subtitle>{{ child.name }}</ion-card-subtitle>

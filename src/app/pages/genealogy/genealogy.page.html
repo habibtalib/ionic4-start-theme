@@ -8,22 +8,34 @@
 </ion-header>
 
 <ion-content padding *ngIf="user">
-<ion-card>
-  <ion-card-header>
-    <ion-card-subtitle>Downline Details</ion-card-subtitle>
-    <ion-card-title></ion-card-title>
-  </ion-card-header>
-  <ion-card-content *ngIf="user">
-    Total Downline : {{ user.child.length }}
-  </ion-card-content>
-</ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Downline Details</ion-card-subtitle>
+      <ion-card-title></ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="user">
+      Total Downline : {{ user.child.length }}
+    </ion-card-content>
+  </ion-card>
 
-<ion-card *ngFor="let child of user.child" >
-  <ion-card-header routerLink="/user/{{ child.id }}" routerDirection="forward">
-    <ion-card-subtitle>MEE{{ child.id }}</ion-card-subtitle>
-    <ion-card-subtitle>{{ child.name }}</ion-card-subtitle>
-    <ion-card-title>{{ child.role.display_name }}</ion-card-title>
-    <ion-card-subtitle color="primary" *ngIf="!child.active">Not Verified</ion-card-subtitle>
-  </ion-card-header>
-</ion-card>
+  <ion-card
+    *ngFor="let child of user.child"
+    [ngStyle]="{ background: child.role.color }"
+  >
+    <ion-card-header
+      routerLink="/user/{{ child.id }}"
+      routerDirection="forward"
+    >
+      <ion-card-subtitle [ngStyle]="{ color: child.role.font_color }"
+        >MEE{{ child.id }}</ion-card-subtitle
+      >
+      <ion-card-subtitle [ngStyle]="{ color: child.role.font_color }">{{
+        child.name
+      }}</ion-card-subtitle>
+      <ion-card-title>{{ child.role.display_name }}</ion-card-title>
+      <ion-card-subtitle color="primary" *ngIf="!child.active"
+        >[Not Verified]</ion-card-subtitle
+      >
+    </ion-card-header>
+  </ion-card>
 </ion-content>
