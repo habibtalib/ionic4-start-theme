@@ -88,9 +88,9 @@ export class HomeResultsPage {
   }
 
   async geSlides() {
-    this.masterStockist = await this.store.get('masterStockist');
+    // this.masterStockist = await this.store.get('masterStockist');
     console.log(this.masterStockist)
-    if(this.masterStockist === null){
+    // if(this.masterStockist === null){
       this.authService.getToken().then(() => {
         const headers = new HttpHeaders({
           Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
@@ -104,7 +104,7 @@ export class HomeResultsPage {
             data => {
               console.log(data)
               this.masterStockist = data["slides"];
-              this.store.set('masterStockist', this.masterStockist);
+              // this.store.set('masterStockist', this.masterStockist);
             },
             error => {
               console.log(error);
@@ -112,7 +112,7 @@ export class HomeResultsPage {
       }).catch(error => {
         console.log('No Token', error)
       });
-    }
+    // }
     
     // this.http
     //   .post(this.env.API_URL + "auth/login", {

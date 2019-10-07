@@ -1,24 +1,42 @@
 <ion-content padding class="animated fadeIn login auth-page">
   <div class="theme-bg"></div>
   <div class="auth-content">
-
     <!-- Logo -->
     <div padding-horizontal text-center class="animated fadeInDown">
       <div class="logo"></div>
     </div>
 
     <!-- Login form -->
-    <form #form="ngForm" [formGroup]="onLoginForm" (ngSubmit)="login(form)" class="list-form" method="post">
+    <form
+      #form="ngForm"
+      [formGroup]="onLoginForm"
+      (ngSubmit)="login(form)"
+      class="list-form"
+      method="post"
+    >
       <ion-item no-padding class="animated fadeInUp">
         <ion-label color="primary" position="floating">
           <ion-icon color="primary" name="mail" item-start></ion-icon>
-          <ion-text color="primary" >
-          Email
+          <ion-text color="primary">
+            Email
           </ion-text>
         </ion-label>
-        <ion-input ngModel name="email" color="primary" type="email" formControlName="email"></ion-input>
+        <ion-input
+          ngModel
+          name="email"
+          color="primary"
+          type="email"
+          formControlName="email"
+        ></ion-input>
       </ion-item>
-      <p ion-text class="text08" *ngIf="onLoginForm.get('email').touched && onLoginForm.get('email').hasError('required')">
+      <p
+        ion-text
+        class="text08"
+        *ngIf="
+          onLoginForm.get('email').touched &&
+          onLoginForm.get('email').hasError('required')
+        "
+      >
         <ion-text color="warning">
           Required Field
         </ion-text>
@@ -28,17 +46,39 @@
         <ion-label color="primary" position="floating">
           <ion-icon color="primary" name="lock" item-start></ion-icon>
           <ion-text color="primary">
-          Password
+            Password
           </ion-text>
         </ion-label>
-        <ion-input ngModel name="password" color="primary" type="password" formControlName="password" (keyup.enter)="login(form)"></ion-input>
+        <ion-input
+          ngModel
+          name="password"
+          color="primary"
+          [type]="passwordType"
+          formControlName="password"
+          (keyup.enter)="login(form)"
+        ></ion-input>
+        <ion-icon
+          item-end
+          [name]="passwordIcon"
+          class="passwordIcon"
+          (click)="hideShowPassword()"
+          item-end
+        ></ion-icon>
       </ion-item>
-      <p ion-text color="warning" class="text08" *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">
+      <p
+        ion-text
+        color="warning"
+        class="text08"
+        *ngIf="
+          onLoginForm.get('password').touched &&
+          onLoginForm.get('password').hasError('required')
+        "
+      >
         <ion-text color="warning">
           Required Field
         </ion-text>
-        </p>
-        <ion-button type="submit" expand="full" color="primary">Login</ion-button>
+      </p>
+      <ion-button type="submit" expand="full" color="primary">Login</ion-button>
     </form>
 
     <p text-right tappable (click)="forgotPass()" class="paz">
@@ -79,7 +119,6 @@
         </ion-row>
       </ion-grid>
       -->
-
     </div>
 
     <!-- Other links -->
@@ -90,6 +129,5 @@
         </ion-text>
       </span>
     </div> -->
-
   </div>
 </ion-content>

@@ -11,7 +11,7 @@
   <ion-card *ngIf="orders">
     <ion-card-header>
       <ion-card-title>{{ orders.status.description }}</ion-card-title>
-      <ion-card-subtitle>ID: {{ orders.id }}</ion-card-subtitle>
+      <ion-card-subtitle>Order ID: {{ orders.id }}</ion-card-subtitle>
       <ion-card-subtitle *ngIf="orders.total"
         >Total: {{ orders.total | currency: "RM":"symbol" }}</ion-card-subtitle
       >
@@ -37,11 +37,26 @@
 
   <ion-card *ngIf="orders && orders.customer">
     <ion-card-header>
-      <ion-card-title>{{ orders.customer.name }}</ion-card-title>
-      <ion-card-subtitle>[non-member]</ion-card-subtitle>
-      <ion-card-subtitle>ID: {{ orders.id }}</ion-card-subtitle>
-      <ion-card-subtitle *ngIf="orders.total"
-        >Total: RM{{ orders.total }}</ion-card-subtitle
+      <ion-card-title>{{ orders.customer.name }} [non-member]</ion-card-title>
+      <ion-card-subtitle>Email : {{ orders.customer.email }}</ion-card-subtitle>
+      <ion-card-subtitle>Phone : {{ orders.customer.phone }}</ion-card-subtitle>
+      <ion-card-subtitle
+        >Address : {{ orders.customer.address }}</ion-card-subtitle
+      >
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngIf="orders && orders.buyer">
+    <ion-card-header>
+      <ion-card-title
+        ><span [routerLink]="['/user', orders.buyer.id]">{{
+          orders.buyer.name
+        }}</span>
+      </ion-card-title>
+      <ion-card-subtitle>Email : {{ orders.buyer.email }}</ion-card-subtitle>
+      <ion-card-subtitle>Phone : {{ orders.buyer.phone }}</ion-card-subtitle>
+      <ion-card-subtitle
+        >Address : {{ orders.buyer.address }}</ion-card-subtitle
       >
     </ion-card-header>
   </ion-card>

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Message</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding-top color="light">
+  <ion-card *ngIf="message">
+    <ion-card-header>
+      <ion-card-title>Subject : {{ message.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ message.message }}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

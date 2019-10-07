@@ -12,67 +12,71 @@
     <ion-card-header>
       <ion-card-title>Serials</ion-card-title>
     </ion-card-header>
-    <ion-card-content> 
+    <ion-card-content>
       <ion-list>
         <ion-item>
           <ion-label *ngIf="barcode">
-            <p>URL : {{barcode}}</p> 
-            <p>SERIAL : {{ serial }}</p>
+            <p>URL : {{ barcode }}</p>
+            <p>SERIAL : {{ serial.serialNumber }}</p>
           </ion-label>
         </ion-item>
         <ion-item *ngFor="let s of serials; index as pos" text-wrap>
           <ion-label>
-            {{ s }}
+            {{ s.serial_number }}
           </ion-label>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
   <div class="ion-padding">
-    <ion-button expand="block" color="primary" (click)=scan()>Scanner</ion-button>
+    <ion-button expand="block" color="primary" (click)="scan()"
+      >Scanner</ion-button
+    >
   </div>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Customer Information</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="floating">Name</ion-label>
-          <ion-input [(ngModel)]="name" type="text" name="name"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Phone Number</ion-label>
-          <ion-input [(ngModel)]="phone" type="text" name="phone"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input [(ngModel)]="email" type="text" name="email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Address</ion-label>
-          <ion-input [(ngModel)]="address" type="text" name="address"></ion-input>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-      <ion-list>
-        <ion-item *ngFor="let img of images.splice(0,1); index as pos" text-wrap>
-          <ion-thumbnail slot="start">
-            <ion-img [src]="img.path"></ion-img>
-          </ion-thumbnail>
-          <ion-label>
-            {{ img.name }}
-          </ion-label>
-          <!-- <ion-button slot="end" fill="clear" (click)="startUpload(img)">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Customer Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input [(ngModel)]="name" type="text" name="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Phone Number</ion-label>
+        <ion-input [(ngModel)]="phone" type="text" name="phone"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [(ngModel)]="email" type="text" name="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Address</ion-label>
+        <ion-input [(ngModel)]="address" type="text" name="address"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-list>
+    <ion-item *ngFor="let img of images.splice(0, 1); index as pos" text-wrap>
+      <ion-thumbnail slot="start">
+        <ion-img [src]="img.path"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        {{ img.name }}
+      </ion-label>
+      <!-- <ion-button slot="end" fill="clear" (click)="startUpload(img)">
             <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
           </ion-button> -->
-          <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
-      <div class="ion-padding">
-        <ion-button expand="block" color="primary" (click)=submit()>Submit</ion-button>
-      </div>
+      <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button expand="block" color="primary" (click)="submit()"
+      >Submit</ion-button
+    >
+  </div>
 </ion-content>
 <!-- <ion-footer>
   <ion-toolbar color="primary">
