@@ -9,12 +9,15 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: "app-login",
+  templateUrl: "./login.page.html",
+  styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
+  passwordType: string = "password";
+  passwordIcon: string = "eye-off";
+  formData = new FormData();
 
   constructor(
     public navCtrl: NavController,
@@ -27,8 +30,13 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private env: EnvService,
-    private http: HttpClient,
-  ) { }
+    private http: HttpClient
+  ) {}
+
+  hideShowPassword() {
+    this.passwordType = this.passwordType === "text" ? "password" : "text";
+    this.passwordIcon = this.passwordIcon === "eye-off" ? "eye" : "eye-off";
+  }
 
   ionViewWillEnter() {
     this.authService.getToken().then(() => {
@@ -60,68 +68,67 @@ export class LoginPage implements OnInit {
       },
       error => {
         console.log(error);
-        if(error.status === 401) {
+        if (error.status === 401) {
           this.alertService.presentToast("Wrong Email or Password");
         }
         if (error.status === 422) {
           this.alertService.presentToast("Invalid Format");
-        } else  {
+        } else {
           this.alertService.presentToast("Error: " + error.message);
         }
       },
       () => {
         // this.dismissLogin();
-        this.navCtrl.navigateRoot('/home-results');
+        this.navCtrl.navigateRoot("/home-results");
       }
     );
   }
-  
 
   ngOnInit() {
-
     this.onLoginForm = this.formBuilder.group({
-      'email': [null, Validators.compose([
-        Validators.required
-      ])],
-      'password': [null, Validators.compose([
-        Validators.required
-      ])]
+      email: [null, Validators.compose([Validators.required])],
+      password: [null, Validators.compose([Validators.required])]
     });
   }
 
   async forgotPass() {
     const alert = await this.alertCtrl.create({
-      header: 'Forgot Password?',
-      message: 'Enter you email address to send a reset link password.',
+      header: "Forgot Password?",
+      message: "Enter you email address to send a reset link password.",
       inputs: [
         {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Email'
+          name: "email",
+          type: "email",
+          placeholder: "Email"
         }
       ],
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
+            console.log("Confirm Cancel");
           }
-        }, {
-          text: 'Confirm',
-          handler: async (value) => {
-            console.log(value)
+        },
+        {
+          text: "Confirm",
+          handler: async value => {
+            console.log(value);
+            this.formData.append("email", value.email);
             this.http
-            .get(this.env.API_URL + "forget-password/"+value.email)
-            .subscribe(
-              data => {
-                console.log(data);
-              },
-              error => {
-                console.log(error);
-              }
-            );
+              .post(
+                this.env.API_URL + "auth/forget-password",
+                this.formData
+              )
+              .subscribe(
+                data => {
+                  console.log(data);
+                },
+                error => {
+                  console.log(error);
+                }
+              );
 
             const loader = await this.loadingCtrl.create({
               duration: 2000
@@ -131,9 +138,9 @@ export class LoginPage implements OnInit {
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
-                message: 'Email was sended successfully.',
+                message: "Email was sended successfully.",
                 duration: 3000,
-                position: 'bottom'
+                position: "bottom"
               });
 
               toast.present();
@@ -146,17 +153,14 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  async postForgotPassword() {
-    
-  }
+  async postForgotPassword() {}
 
   // // //
   goToRegister() {
-    this.navCtrl.navigateRoot('/register');
+    this.navCtrl.navigateRoot("/register");
   }
 
   goToHome() {
-    this.navCtrl.navigateRoot('/home-results');
+    this.navCtrl.navigateRoot("/home-results");
   }
-
 }

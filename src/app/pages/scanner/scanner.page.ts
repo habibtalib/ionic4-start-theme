@@ -79,12 +79,22 @@ export class ScannerPage implements OnInit {
       });
 
       toast.present();
+    } else if(this.serials.length === 0){
+      const toast = await this.toastController.create({
+        showCloseButton: true,
+        // cssClass: 'bg-profile',
+        message: 'Please Scan Item First',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
     }
      else {
       const loader = await this.loadingController.create({
         duration: 2000
       });
-      this.formData.append('serials', JSON.stringify([this.serials]));
+      this.formData.append('serials', JSON.stringify(this.serials));
       this.formData.append('name', this.name);
       this.formData.append('address', this.address);
       this.formData.append('phone', this.phone);
@@ -98,6 +108,7 @@ export class ScannerPage implements OnInit {
           .post(this.env.API_URL + "scanner", this.formData, { headers: headers })
           .subscribe(
             data => {
+              console.log(data);
               loader.present();
               this.storage.remove(STORAGE_KEY)
               loader.onWillDismiss().then(async l => {
@@ -122,7 +133,7 @@ export class ScannerPage implements OnInit {
                 const toast = await this.toastController.create({
                   showCloseButton: true,
                   // cssClass: 'bg-profile',
-                  message: 'Your Application failed to Submmit!',
+                  message: 'Your Application failed to Submmit!, reasone' + error.message,
                   duration: 3000,
                   position: 'bottom'
                 });
@@ -341,7 +352,7 @@ export class ScannerPage implements OnInit {
                 // if (!this.serials.find(serial => serial === this.serial.serialNumber)) {
                 //   this.serials.push(this.serial.serialNumber)
                 // }
-                this.serials.push(this.serial.serialNumber)
+                this.serials.push({'serial_number' : this.serial.serialNumber, 'url' :this.barcode})
               });
           });
       })

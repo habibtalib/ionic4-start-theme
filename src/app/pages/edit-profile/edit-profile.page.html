@@ -10,7 +10,11 @@
 <ion-content class="profile">
   <ion-card no-margin>
     <ion-card-content *ngIf="user" class="bg-profile">
-      <img src="assets/img/avatar.jpeg">
+      <img
+        *ngIf="user.avatar"
+        [src]="'http://api.meeracle.ml/storage/' + user.avatar"
+      />
+      <img *ngIf="!user.avatar" src="assets/img/avatar.jpeg" />
       <h1 class="fw500">{{ user.name }}</h1>
       <h2 color="light" margin-bottom>{{ user.role.display_name }}</h2>
       <!-- <ion-button icon-left color="secondary">
@@ -18,11 +22,10 @@
         Edit / Add Avatar
       </ion-button> -->
     </ion-card-content>
-  
+
     <ion-grid fixed no-padding>
       <ion-row *ngIf="user">
         <ion-col size="12" padding>
-
           <ion-list margin-bottom>
             <ion-list-header color="light">
               <ion-label class="fw700">Profile</ion-label>
@@ -30,24 +33,40 @@
 
             <ion-item>
               <ion-label color="dark" position="stacked">Name:</ion-label>
-              <ion-input [(ngModel)]="user.name" inputmode="text" placeholder="Ex..: Joe Doe"></ion-input>
+              <ion-input
+                [(ngModel)]="user.name"
+                inputmode="text"
+                placeholder="Ex..: Joe Doe"
+              ></ion-input>
             </ion-item>
-    
+
             <ion-item>
               <ion-label color="dark" position="stacked">Email:</ion-label>
-              <ion-input [(ngModel)]="user.email" inputmode="email" placeholder="Ex.: joe@doe.com" ></ion-input>
+              <ion-input
+                [(ngModel)]="user.email"
+                inputmode="email"
+                placeholder="Ex.: joe@doe.com"
+              ></ion-input>
             </ion-item>
-    
+
             <ion-item>
               <ion-label color="dark" position="stacked">Phone:</ion-label>
-              <ion-input [(ngModel)]="user.phone" inputmode="text" placeholder="Ex.: 012313212"></ion-input>
+              <ion-input
+                [(ngModel)]="user.phone"
+                inputmode="text"
+                placeholder="Ex.: 012313212"
+              ></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label color="dark" position="stacked">Address:</ion-label>
-              <ion-input [(ngModel)]="user.address" inputmode="text" placeholder="Ex.: Abey Road 5"></ion-input>
+              <ion-input
+                [(ngModel)]="user.address"
+                inputmode="text"
+                placeholder="Ex.: Abey Road 5"
+              ></ion-input>
             </ion-item>
-    
+
             <!-- <ion-item>
               <ion-label color="dark">City</ion-label>
               <ion-select>
@@ -60,7 +79,7 @@
                 <ion-select-option value="snes">New Delhi</ion-select-option>
               </ion-select>
             </ion-item> -->
-    
+
             <!-- <ion-item>
               <ion-label color="dark">State</ion-label>
               <ion-select>
@@ -74,7 +93,35 @@
               </ion-select>
             </ion-item> -->
           </ion-list>
-
+          <ion-list>
+            <ion-item *ngFor="let img of images; index as pos" text-wrap>
+              <ion-thumbnail slot="start">
+                <ion-img [src]="img.path"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                {{ img.name }}
+              </ion-label>
+              <ion-button
+                slot="end"
+                fill="clear"
+                (click)="deleteImage(img, pos)"
+              >
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <ion-item>
+              <ion-label>Avatar</ion-label>
+              <ion-button
+                fill="clear"
+                expand="full"
+                color="primary"
+                (click)="selectImage()"
+              >
+                <ion-icon slot="start" name="camera"></ion-icon>
+                Select Image
+              </ion-button>
+            </ion-item>
+          </ion-list>
           <ion-list>
             <!-- <ion-radio-group>
               <ion-list-header color="light">
@@ -97,14 +144,20 @@
               <ion-checkbox></ion-checkbox>
             </ion-item> -->
           </ion-list>
-  
         </ion-col>
       </ion-row>
     </ion-grid>
-  
-    <ion-button size="large" expand="full" color="dark" (click)="sendData()" no-margin>Update</ion-button>
+
+    <ion-button
+      size="large"
+      expand="full"
+      color="dark"
+      (click)="sendData()"
+      no-margin
+      >Update</ion-button
+    >
   </ion-card>
-  
+
   <!-- <div padding>
     <ion-text color="dark" no-margin>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum odio placeat incidunt nesciunt atque ratione quisquam, fugit
