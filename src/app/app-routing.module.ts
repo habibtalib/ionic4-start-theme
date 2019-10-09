@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'scan-order/:id', loadChildren: './pages/scan-order/scan-order.module#ScanOrderPageModule' },
   { path: 'history-detail/:id', loadChildren: './pages/history-detail/history-detail.module#HistoryDetailPageModule' },
   { path: 'inbox', loadChildren: './pages/inbox/inbox.module#InboxPageModule' },
+  { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' },
 ];
 
 @NgModule({

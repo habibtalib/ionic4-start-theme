@@ -42,6 +42,12 @@ export class AppComponent {
         icon: "home"
       },
       {
+        title: "Dashboard",
+        url: "/dashboard",
+        direct: "forward",
+        icon: "clipboard"
+      },
+      {
         title: "Inbox",
         url: "/inbox",
         direct: "forward",

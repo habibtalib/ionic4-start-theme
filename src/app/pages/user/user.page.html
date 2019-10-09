@@ -43,6 +43,37 @@
       </ion-list>
     </ion-card>
 
+        <ion-card >
+          <ion-card-header>
+            <ion-card-title>Stocks Available</ion-card-title>
+            <ion-card-subtitle>Total : 3</ion-card-subtitle>
+          </ion-card-header>
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <p>ME123123</p>
+                <p>Meeracle Serum</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <p>ME12311211</p>
+                <p>Meeracle Cleanser</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <p>ME12311211</p>
+                <p>Meeracle Cleanser</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+
   <ion-card *ngIf="user && user.user.child.length > 0">
     <ion-card-header routerLink="/user/{{ user.id }}" routerDirection="forward">
       <ion-card-subtitle>Downline Details</ion-card-subtitle>
