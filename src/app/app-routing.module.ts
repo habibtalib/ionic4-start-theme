@@ -22,11 +22,10 @@ const routes: Routes = [
   { path: 'scan-order/:id', loadChildren: './pages/scan-order/scan-order.module#ScanOrderPageModule' },
   { path: 'history-detail/:id', loadChildren: './pages/history-detail/history-detail.module#HistoryDetailPageModule' },
   { path: 'inbox', loadChildren: './pages/inbox/inbox.module#InboxPageModule' },
-<<<<<<< HEAD
   { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' },
-=======
   { path: 'message/:id', loadChildren: './pages/message/message.module#MessagePageModule' },
->>>>>>> 8e468a6570f9261321ac8e54258af30778f71b27
+  { path: 'forget-password', loadChildren: './pages/forget-password/forget-password.module#ForgetPasswordPageModule' },
+  { path: 'serial-list/:id', loadChildren: './pages/serial-list/serial-list.module#SerialListPageModule' },
 ];
 
 @NgModule({

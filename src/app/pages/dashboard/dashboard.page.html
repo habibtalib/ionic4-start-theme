@@ -11,22 +11,33 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Total Sales</ion-card-title>
-        <ion-card-subtitle>RM 2,000</ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Total Purchased</ion-card-title>
-          <ion-card-subtitle>RM 8,000</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Total Stock Balance</ion-card-title>
-          <ion-card-subtitle>79 pieces</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card *ngIf="sales">
+    <ion-card-header>
+      <ion-card-title>Total Sales</ion-card-title>
+      <ion-card-subtitle>RM {{ sales }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <ion-card *ngIf="purchased">
+    <ion-card-header>
+      <ion-card-title>Total Purchased</ion-card-title>
+      <ion-card-subtitle>RM {{ purchased }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <ion-card *ngIf="stocks">
+    <ion-card-header>
+      <ion-card-title>Total Stock Balance</ion-card-title>
+      <ion-card-subtitle>{{ stocks.length }} pieces</ion-card-subtitle>
+    </ion-card-header>
+    <ion-list *ngFor="let item of stocks">
+      <ion-item>
+        <ion-label>
+          <p>{{ item.serial_number }}</p>
+          <p>{{ item.product }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

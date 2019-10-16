@@ -28,12 +28,21 @@ export class ProductsPage implements OnInit {
     private http: HttpClient,
     private env: EnvService,
     private cartService: CartService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.cart = this.cartService.getCart();
     this.getProducts();
+  }
+
+  doRefresh(event) {
+    console.log("Begin async operation");
+    this.getProducts();
+    setTimeout(() => {
+      console.log("Async operation has ended");
+      event.target.complete();
+    }, 2000);
   }
 
   addToCart(product) {
@@ -42,22 +51,25 @@ export class ProductsPage implements OnInit {
 
   getProducts() {
     this.authService.getToken().then(() => {
-    const headers = new HttpHeaders({
-      Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
-      Accept: "application/json"
-    });
-    this.http
-      .get(this.env.API_URL + "products", {
-        headers: headers
-      })
-      .subscribe(
-        data => {
-          this.products = data["products"];
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
+      });
+      this.http
+        .get(this.env.API_URL + "products", {
+          headers: headers
+        })
+        .subscribe(
+          data => {
+            this.products = data["products"];
+          },
+          error => {
+            console.log(error);
+          }
+        );
     });
     // this.http
     //   .post(this.env.API_URL + "auth/login", {
