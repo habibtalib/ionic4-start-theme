@@ -4,24 +4,39 @@ import { EnvService } from "../../services/env.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
-  selector: 'app-inbox',
-  templateUrl: './inbox.page.html',
-  styleUrls: ['./inbox.page.scss'],
+  selector: "app-inbox",
+  templateUrl: "./inbox.page.html",
+  styleUrls: ["./inbox.page.scss"]
 })
 export class InboxPage implements OnInit {
-
   inboxs: any;
 
-  constructor(private authService: AuthService, private env: EnvService, private http: HttpClient, ) { }
+  constructor(
+    private authService: AuthService,
+    private env: EnvService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
-    this.getMessages()
+    this.getMessages();
+  }
+
+  doRefresh(event) {
+    console.log("Begin async operation");
+    this.getMessages();
+    setTimeout(() => {
+      console.log("Async operation has ended");
+      event.target.complete();
+    }, 2000);
   }
 
   getMessages() {
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
-        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
         Accept: "application/json"
       });
       this.http
@@ -31,7 +46,7 @@ export class InboxPage implements OnInit {
         .subscribe(
           data => {
             this.inboxs = data["messages"];
-            console.log(this.inboxs)
+            console.log(this.inboxs);
           },
           error => {
             console.log(error);
@@ -39,5 +54,4 @@ export class InboxPage implements OnInit {
         );
     });
   }
-
 }

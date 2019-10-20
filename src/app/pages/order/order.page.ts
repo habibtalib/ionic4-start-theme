@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EnvService } from "../../services/env.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ActivatedRoute } from '@angular/router';
+import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
+
 import {
   NavController,
   AlertController,
@@ -12,57 +14,70 @@ import {
   Platform, LoadingController
 } from '@ionic/angular';
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.page.html',
-  styleUrls: ['./order.page.scss'],
+  selector: "app-order",
+  templateUrl: "./order.page.html",
+  styleUrls: ["./order.page.scss"]
 })
 export class OrderPage implements OnInit {
-
   orders: any;
   myId: any;
   formData = new FormData();
 
-  constructor(private authService: AuthService, 
-    private env: EnvService, 
-    private http: HttpClient, 
-    private activatedRoute: ActivatedRoute, 
-    public navCtrl: NavController, 
+  constructor(
+    private authService: AuthService,
+    private env: EnvService,
+    private http: HttpClient,
+    private activatedRoute: ActivatedRoute,
+    public navCtrl: NavController,
     private toastController: ToastController,
-    public loadingController:LoadingController) { }
+    private photoViewer: PhotoViewer,
+    public loadingController: LoadingController
+  ) {}
 
   ngOnInit() {
-    this.myId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getOrders() 
+    this.myId = this.activatedRoute.snapshot.paramMap.get("id");
+    this.getOrders();
   }
-  
+
+  showPreview(){
+    this.photoViewer.show(
+      "http://api.meeracle.ml/storage/" + this.orders.payment_slip
+    );
+  }
+
   async update(status) {
     const loader = await this.loadingController.create({
       duration: 2000
     });
     this.formData = new FormData();
-    this.formData.append('status', status)
+    this.formData.append("status", status);
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
-        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
         Accept: "application/json"
       });
       this.http
-        .post(this.env.API_URL + "order/" + this.myId, this.formData, { headers: headers })
+        .post(this.env.API_URL + "order/" + this.myId, this.formData, {
+          headers: headers
+        })
         .subscribe(
           data => {
-            console.log(data)
+            console.log(data);
             loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastController.create({
                 showCloseButton: true,
                 // cssClass: 'bg-profile',
-                message: 'Your Order has Been Submmited!',
+                message: "Your Order has Been Submmited!",
                 duration: 3000,
-                position: 'bottom'
+                position: "bottom"
               });
 
               toast.present();
-              this.getOrders()
+              this.getOrders();
               // this.navCtrl.navigateRoot('/home-results');
             });
           },
@@ -73,13 +88,13 @@ export class OrderPage implements OnInit {
               const toast = await this.toastController.create({
                 showCloseButton: true,
                 // cssClass: 'bg-profile',
-                message: 'Your Order failed to Submmit!',
+                message: "Your Order failed to Submmit!",
                 duration: 3000,
-                position: 'bottom'
+                position: "bottom"
               });
 
               toast.present();
-              this.getOrders()
+              this.getOrders();
               // this.navCtrl.navigateRoot('/home-results');
             });
           }
@@ -90,7 +105,10 @@ export class OrderPage implements OnInit {
   getOrders() {
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
-        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
         Accept: "application/json"
       });
       this.http
@@ -100,7 +118,7 @@ export class OrderPage implements OnInit {
         .subscribe(
           data => {
             this.orders = data["order"];
-            console.log(this.orders)
+            console.log(this.orders);
           },
           error => {
             console.log(error);
@@ -108,5 +126,4 @@ export class OrderPage implements OnInit {
         );
     });
   }
-
 }

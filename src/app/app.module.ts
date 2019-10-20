@@ -27,6 +27,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
 
 @NgModule({
   declarations: [AppComponent, NotificationsComponent],
@@ -43,6 +44,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
   entryComponents: [NotificationsComponent],
   providers: [
     StatusBar,
+    PhotoViewer,
     SplashScreen,
     NativeStorage,
     BarcodeScanner,

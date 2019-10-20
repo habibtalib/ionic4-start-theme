@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content padding-top color="light">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
   <div class="mid" *ngIf="!inboxs">
     <ion-row size="12" justify-content-center disabled="true">
       <button class="circle">

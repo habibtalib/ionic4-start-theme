@@ -7,72 +7,76 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
-    <ion-card-header *ngIf="user">
+<ion-content class="profile">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="user">
+    <ion-card-content *ngIf="user" class="bg-profile">
+      <img
+        *ngIf="user.user.avatar"
+        [src]="'http://api.meeracle.ml/storage/' + user.user.avatar"
+      />
+      <img *ngIf="!user.user.avatar" src="assets/img/avatar2.jpg" />
+      <h1 class="fw500">{{ user.user.name }}</h1>
+      <h2 class="fw500">MEE{{ user.user.id }}</h2>
+      <h2 color="light" margin-bottom>{{ user.user.role.display_name }}</h2>
+    </ion-card-content>
+    <!-- <ion-card-header>
       <ion-card-subtitle>MEE{{ user.user.id }}</ion-card-subtitle>
       <ion-card-subtitle>{{ user.user.name }}</ion-card-subtitle>
       <ion-card-title>{{ user.user.role.display_name }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content *ngIf="user">
+    </ion-card-header> -->
+    <ion-card-content>
       <ion-item>
         <ion-label>
-         <p>Email: {{ user.user.email }}</p>
-         <p>Phone: {{ user.user.phone }}</p>
-         <p>Address : {{ user.user.address }}</p>
+          <p>Email: {{ user.user.email }}</p>
+          <p>Phone: {{ user.user.phone }}</p>
+          <p>Address : {{ user.user.address }}</p>
         </ion-label>
       </ion-item>
     </ion-card-content>
   </ion-card>
 
+  <ion-card *ngIf="user">
+    <ion-card-header>
+      <ion-card-title>Orders</ion-card-title>
+      <ion-card-subtitle
+        >Total Sales : RM{{ user.total_sales }}</ion-card-subtitle
+      >
+      <ion-card-subtitle>Total Orders : RM{{ user.total }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-list>
+      <ion-item *ngFor="let item of user.ordered">
+        <ion-label>
+          <p>{{ item.status.description }}</p>
+          <p>Date: {{ item.created_at }}</p>
+          <p>Total: RM{{ item.total }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 
-    <ion-card *ngIf="user">
-      <ion-card-header>
-        <ion-card-title>Orders</ion-card-title>
-        <ion-card-subtitle>Total Sales : RM{{ user.total_sales }}</ion-card-subtitle>
-        <ion-card-subtitle>Total Orders : RM{{ user.total }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-list>
-        <ion-item *ngFor="let item of user.ordered">
-          <ion-label>
-            <p>{{ item.status.description }}</p>
-            <p>Date: {{ item.created_at }}</p>
-            <p>Total: RM{{ item.total }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-
-        <ion-card >
-          <ion-card-header>
-            <ion-card-title>Stocks Available</ion-card-title>
-            <ion-card-subtitle>Total : 3</ion-card-subtitle>
-          </ion-card-header>
-          <ion-list>
-            <ion-item>
-              <ion-label>
-                <p>ME123123</p>
-                <p>Meeracle Serum</p>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-          <ion-list>
-            <ion-item>
-              <ion-label>
-                <p>ME12311211</p>
-                <p>Meeracle Cleanser</p>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-          <ion-list>
-            <ion-item>
-              <ion-label>
-                <p>ME12311211</p>
-                <p>Meeracle Cleanser</p>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-card>
+  <ion-card *ngIf="stocks">
+    <ion-card-header>
+      <ion-card-title>Stocks Available</ion-card-title>
+      <ion-card-subtitle>Total : {{ stocks.length }}</ion-card-subtitle>
+      <ion-card-subtitle
+        *ngIf="user"
+        routerLink="/serial-list/{{ user.user.id }}"
+        >View All</ion-card-subtitle
+      >
+    </ion-card-header>
+    <ion-list *ngFor="let item of stocks.slice(0, 3)">
+      <ion-item>
+        <ion-label>
+          <p>{{ item.serial_number }}</p>
+          <p>{{ item.product }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 
   <ion-card *ngIf="user && user.user.child.length > 0">
     <ion-card-header routerLink="/user/{{ user.id }}" routerDirection="forward">
@@ -85,16 +89,21 @@
   </ion-card>
 
   <div *ngIf="user">
-  <ion-card *ngFor="let child of user.user.child" [ngStyle]="{'background': child.role.color}">
-    <ion-card-header routerLink="/user/{{ child.id }}" routerDirection="forward">
-      <ion-card-subtitle>MEE{{ child.id }}</ion-card-subtitle>
-      <ion-card-subtitle>{{ child.name }}</ion-card-subtitle>
-      <ion-card-title>{{ child.role.display_name }}</ion-card-title>
-      <ion-card-subtitle color="primary" *ngIf="!child.active">Not Verified</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
+    <ion-card
+      *ngFor="let child of user.user.child"
+      [ngStyle]="{ background: child.role.color }"
+    >
+      <ion-card-header
+        routerLink="/user/{{ child.id }}"
+        routerDirection="forward"
+      >
+        <ion-card-subtitle>MEE{{ child.id }}</ion-card-subtitle>
+        <ion-card-subtitle>{{ child.name }}</ion-card-subtitle>
+        <ion-card-title>{{ child.role.display_name }}</ion-card-title>
+        <ion-card-subtitle color="primary" *ngIf="!child.active"
+          >Not Verified</ion-card-subtitle
+        >
+      </ion-card-header>
+    </ion-card>
   </div>
-
-
-
 </ion-content>

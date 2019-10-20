@@ -89,21 +89,23 @@ export class CheckoutPage implements OnInit {
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
-    this.formData.append('total', this.total)
+    this.formData.append("total", this.total.toFixed(2));
     this.formData.append('cart', JSON.stringify(this.items))
     this.formData.append('note', this.note)
 
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
         Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
-        Accept: "application/json"
+        Accept: "application/json",
+        ContentType:"application/json",
       });
+      loader.present();
       this.http
         .post(this.env.API_URL + "order", this.formData, { headers: headers })
         .subscribe(
           data => {
             console.log(data)
-            loader.present();
+            // loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
@@ -117,12 +119,11 @@ export class CheckoutPage implements OnInit {
               this.storage.remove('total')
               this.storage.remove('cart')
               this.cartService.clearCart();
-              this.navCtrl.navigateForward('/home-results');
+              this.navCtrl.navigateForward("/history");
             });
           },
           error => {
             console.log(error);
-            loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
@@ -133,10 +134,10 @@ export class CheckoutPage implements OnInit {
               });
 
               toast.present();
-              this.storage.remove('total')
-              this.storage.remove('cart')
-              this.cartService.clearCart();
-              this.navCtrl.navigateForward('/home-results');
+              // this.storage.remove('total')
+              // this.storage.remove('cart')
+              // this.cartService.clearCart();
+              // this.navCtrl.navigateForward('/home-results');
             });
           }
         );
