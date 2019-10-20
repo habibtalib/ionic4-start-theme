@@ -20,6 +20,7 @@ import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { finalize } from 'rxjs/operators';
+import { OrderPage } from '../order/order.page';
 const STORAGE_KEY = 'history_detail';
 @Component({
   selector: 'app-history-detail',
@@ -91,6 +92,64 @@ export class HistoryDetailPage implements OnInit {
     });
   }
 
+  async cancelOrder(){
+     const loader = await this.loadingController.create({
+       duration: 2000
+     });
+     this.authService.getToken().then(() => {
+       const headers = new HttpHeaders({
+         Authorization:
+           this.authService.token["token_type"] +
+           " " +
+           this.authService.token["access_token"],
+         Accept: "application/json"
+       });
+       loader.present();
+       this.http
+         .post(this.env.API_URL + "delete-order/" + this.myId, this.formData, {
+           headers: headers
+         })
+         .subscribe(
+           data => {
+             console.log(data);
+             // loader.present();
+             this.getOrders();
+             this.storage.remove(STORAGE_KEY);
+             loader.onWillDismiss().then(async l => {
+               const toast = await this.toastController.create({
+                 showCloseButton: true,
+                 // cssClass: 'bg-profile',
+                 message: "Your Cancelling Order has been Submitted!",
+                 duration: 3000,
+                 position: "bottom"
+               });
+
+               toast.present();
+               this.navCtrl.navigateRoot("/history");
+             });
+             this.images = [];
+           },
+           error => {
+             console.log(error);
+             // loader.present();
+             this.getOrders();
+             loader.onWillDismiss().then(async l => {
+               const toast = await this.toastController.create({
+                 showCloseButton: true,
+                 // cssClass: 'bg-profile',
+                 message: "Your Cancelling Order failed to Submmit!",
+                 duration: 3000,
+                 position: "bottom"
+               });
+
+               toast.present();
+               // this.navCtrl.navigateForward('/home-results');
+             });
+           }
+         );
+     });
+  }
+
   async update() {
     if (this.images.length > 0) {
       await this.startUpload(this.images[0])
@@ -116,12 +175,13 @@ export class HistoryDetailPage implements OnInit {
         Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
         Accept: "application/json"
       });
+      loader.present();
       this.http
         .post(this.env.API_URL + "order/" + this.myId, this.formData, { headers: headers })
         .subscribe(
           data => {
             console.log(data)
-            loader.present();
+            // loader.present();
             this.getOrders()
             this.storage.remove(STORAGE_KEY)
             loader.onWillDismiss().then(async l => {
@@ -141,7 +201,7 @@ export class HistoryDetailPage implements OnInit {
           },
           error => {
             console.log(error);
-            loader.present();
+            // loader.present();
             this.getOrders()
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastController.create({

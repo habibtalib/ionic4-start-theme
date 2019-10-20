@@ -119,7 +119,7 @@ export class CheckoutPage implements OnInit {
               this.storage.remove('total')
               this.storage.remove('cart')
               this.cartService.clearCart();
-              this.navCtrl.navigateForward("/history");
+              this.navCtrl.navigateRoot("/history");
             });
           },
           error => {

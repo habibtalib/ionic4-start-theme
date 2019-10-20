@@ -79,7 +79,7 @@ export class OrderPage implements OnInit {
 
               toast.present();
               this.getOrders();
-              // this.navCtrl.navigateRoot('/home-results');
+              this.navCtrl.navigateRoot('/orders');
             });
           },
           error => {
