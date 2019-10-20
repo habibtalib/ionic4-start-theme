@@ -104,12 +104,13 @@ export class ScannerPage implements OnInit {
           Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
           Accept: "application/json"
         });
+        loader.present();
         this.http
           .post(this.env.API_URL + "scanner", this.formData, { headers: headers })
           .subscribe(
             data => {
               console.log(data);
-              loader.present();
+              // loader.present();
               this.storage.remove(STORAGE_KEY)
               loader.onWillDismiss().then(async l => {
                 const toast = await this.toastController.create({
@@ -121,14 +122,14 @@ export class ScannerPage implements OnInit {
                 });
 
                 toast.present();
-                this.navCtrl.navigateRoot('/home-results');
+                this.navCtrl.navigateRoot("/orders");
               });
               this.images = []
 
             },
             error => {
               console.log(error);
-              loader.present();
+              // loader.present();
               loader.onWillDismiss().then(async l => {
                 const toast = await this.toastController.create({
                   showCloseButton: true,
@@ -137,7 +138,6 @@ export class ScannerPage implements OnInit {
                   duration: 3000,
                   position: 'bottom'
                 });
-
                 toast.present();
               });
             }

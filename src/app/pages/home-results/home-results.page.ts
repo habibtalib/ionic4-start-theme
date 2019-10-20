@@ -34,8 +34,8 @@ export class HomeResultsPage {
     initialSlide: 1,
     loop: true
   };
-  masterStockist : any;
- 
+  masterStockist: any;
+
   cart = [];
   token: any;
   // @ViewChild('mySlider') slider: Slides;
@@ -51,7 +51,7 @@ export class HomeResultsPage {
     private cartService: CartService,
     private http: HttpClient,
     private env: EnvService,
-    private store: Storage,
+    private store: Storage
   ) {}
 
   ionViewWillEnter() {
@@ -66,8 +66,16 @@ export class HomeResultsPage {
     this.menuCtrl.enable(true);
   }
 
-  ngOnInit() {
+  doRefresh(event) {
+    console.log("Begin async operation");
+    this.geSlides();
+    setTimeout(() => {
+      console.log("Async operation has ended");
+      event.target.complete();
+    }, 2000);
   }
+
+  ngOnInit() {}
 
   settings() {
     this.navCtrl.navigateForward("settings");
@@ -89,11 +97,16 @@ export class HomeResultsPage {
 
   async geSlides() {
     // this.masterStockist = await this.store.get('masterStockist');
-    console.log(this.masterStockist)
+    console.log(this.masterStockist);
     // if(this.masterStockist === null){
-      this.authService.getToken().then(() => {
+    this.authService
+      .getToken()
+      .then(() => {
         const headers = new HttpHeaders({
-          Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+          Authorization:
+            this.authService.token["token_type"] +
+            " " +
+            this.authService.token["access_token"],
           Accept: "application/json"
         });
         this.http
@@ -102,18 +115,20 @@ export class HomeResultsPage {
           })
           .subscribe(
             data => {
-              console.log(data)
+              console.log(data);
               this.masterStockist = data["slides"];
               // this.store.set('masterStockist', this.masterStockist);
             },
             error => {
               console.log(error);
-            });
-      }).catch(error => {
-        console.log('No Token', error)
+            }
+          );
+      })
+      .catch(error => {
+        console.log("No Token", error);
       });
     // }
-    
+
     // this.http
     //   .post(this.env.API_URL + "auth/login", {
     //     email: "cyberx11@gmail.com",

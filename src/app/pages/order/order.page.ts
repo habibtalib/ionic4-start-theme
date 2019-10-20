@@ -59,6 +59,7 @@ export class OrderPage implements OnInit {
           this.authService.token["access_token"],
         Accept: "application/json"
       });
+      loader.present();
       this.http
         .post(this.env.API_URL + "order/" + this.myId, this.formData, {
           headers: headers
@@ -66,7 +67,7 @@ export class OrderPage implements OnInit {
         .subscribe(
           data => {
             console.log(data);
-            loader.present();
+            // loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastController.create({
                 showCloseButton: true,
@@ -83,7 +84,7 @@ export class OrderPage implements OnInit {
           },
           error => {
             console.log(error);
-            loader.present();
+            // loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastController.create({
                 showCloseButton: true,
