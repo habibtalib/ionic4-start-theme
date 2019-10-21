@@ -99,13 +99,13 @@ export class CheckoutPage implements OnInit {
         Accept: "application/json",
         ContentType:"application/json",
       });
-      loader.present();
+      // loader.present();
       this.http
         .post(this.env.API_URL + "order", this.formData, { headers: headers })
         .subscribe(
           data => {
-            console.log(data)
-            // loader.present();
+            console.log("order success", data);
+            loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
@@ -123,7 +123,8 @@ export class CheckoutPage implements OnInit {
             });
           },
           error => {
-            console.log(error);
+            console.log("order failed", error);
+            loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
