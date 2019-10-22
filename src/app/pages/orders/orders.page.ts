@@ -4,25 +4,32 @@ import { EnvService } from "../../services/env.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.page.html',
-  styleUrls: ['./orders.page.scss'],
+  selector: "app-orders",
+  templateUrl: "./orders.page.html",
+  styleUrls: ["./orders.page.scss"]
 })
 export class OrdersPage implements OnInit {
-
   orders: any;
 
-  constructor(private authService: AuthService, private env: EnvService, private http: HttpClient,) { }
+  constructor(
+    private authService: AuthService,
+    private env: EnvService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
-    this.getOrders()
+    // this.getOrders();
+  }
+
+  ionViewWillEnter() {
+    this.getOrders();
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
+    console.log("Begin async operation");
     this.getOrders();
     setTimeout(() => {
-      console.log('Async operation has ended');
+      console.log("Async operation has ended");
       event.target.complete();
     }, 2000);
   }
@@ -30,7 +37,10 @@ export class OrdersPage implements OnInit {
   getOrders() {
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
-        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
         Accept: "application/json"
       });
       this.http
@@ -40,7 +50,7 @@ export class OrdersPage implements OnInit {
         .subscribe(
           data => {
             this.orders = data["orders"];
-            console.log(this.orders)
+            console.log(this.orders);
           },
           error => {
             console.log(error);
@@ -48,5 +58,4 @@ export class OrdersPage implements OnInit {
         );
     });
   }
-
 }

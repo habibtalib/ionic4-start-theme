@@ -16,21 +16,25 @@ export class HistoryPage implements OnInit {
     private http: HttpClient,
     private env: EnvService,
     private cartService: CartService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   orders: any;
   token: any;
 
   ngOnInit() {
+    // this.getOrders();
+  }
+
+  ionViewWillEnter() {
     this.getOrders();
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
+    console.log("Begin async operation");
     this.getOrders();
     setTimeout(() => {
-      console.log('Async operation has ended');
+      console.log("Async operation has ended");
       event.target.complete();
     }, 2000);
   }
@@ -38,7 +42,10 @@ export class HistoryPage implements OnInit {
   getOrders() {
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
-        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
         Accept: "application/json"
       });
       this.http
@@ -48,7 +55,7 @@ export class HistoryPage implements OnInit {
         .subscribe(
           data => {
             this.orders = data["orders"];
-            console.log(this.orders)
+            console.log(this.orders);
           },
           error => {
             console.log(error);

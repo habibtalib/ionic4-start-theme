@@ -32,6 +32,11 @@ export class ProductsPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.cart = this.cartService.getCart();
+    // this.getProducts();
+  }
+
+  ionViewWillEnter() {
     this.cart = this.cartService.getCart();
     this.getProducts();
   }

@@ -16,7 +16,7 @@
     <ion-card-content *ngIf="user" class="bg-profile">
       <img
         *ngIf="user.user.avatar"
-        [src]="'http://api.meeracle.ml/storage/' + user.user.avatar"
+        [src]="'https://api.meeracle.com.my/storage/' + user.user.avatar"
       />
       <img *ngIf="!user.user.avatar" src="assets/img/avatar2.jpg" />
       <h1 class="fw500">{{ user.user.name }}</h1>

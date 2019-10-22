@@ -24,7 +24,7 @@
       <ion-card-title>Prove of Payment</ion-card-title>
     </ion-card-header>
     <ion-card-content *ngIf="orders && orders.payment_slip">
-      <img [src]="'http://api.meeracle.ml/storage/' + orders.payment_slip" />
+      <img [src]="'https://api.meeracle.com.my/storage/' + orders.payment_slip" />
     </ion-card-content>
     <ion-list>
       <ion-item *ngFor="let img of images; index as pos" text-wrap>

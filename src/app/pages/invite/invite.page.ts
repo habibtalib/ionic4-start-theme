@@ -33,7 +33,7 @@ export class InvitePage implements OnInit {
         'heading': 'WhatsApp',
         'headerImage': '../../assets/addons3/whatsapp-icon-280x280.png',
         shareData: [
-          { 'title': 'Share via Whatsapp', text: 'Please Click this invite link to Register Meeracle App https://app.meeracle.ml/invite/', clickEvent: 'shareText', shareType: 'shareViaWhatsApp' },
+          { 'title': 'Share via Whatsapp', text: 'Please Click this invite link to Register Meeracle App https://app.meeracle.com.my/invite/', clickEvent: 'shareText', shareType: 'shareViaWhatsApp' },
         ]
       }
     ]

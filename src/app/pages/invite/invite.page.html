@@ -15,8 +15,8 @@
     <ion-card-header>
       <ion-card-subtitle>Invite New Agent</ion-card-subtitle>
       <ion-card-title *ngIf="user">Your Reference Code is: {{ user.id }}</ion-card-title>
-      <p  *ngIf="user" (click)="copyClipBoard('https://app.meeracle.ml/invite/'+user.id)">
-        https://app.meeracle.ml/invite/{{  user.id  }}
+      <p  *ngIf="user" (click)="copyClipBoard('https://app.meeracle.com.my/invite/'+user.id)">
+        https://app.meeracle.con.my/invite/{{  user.id  }}
       </p>
     </ion-card-header>
   </ion-card>

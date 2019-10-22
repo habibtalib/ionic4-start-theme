@@ -18,6 +18,10 @@ export class InboxPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.getMessages();
+  }
+
+  ionViewWillEnter() {
     this.getMessages();
   }
 

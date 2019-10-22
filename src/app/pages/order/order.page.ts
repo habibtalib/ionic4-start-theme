@@ -41,7 +41,7 @@ export class OrderPage implements OnInit {
 
   showPreview(){
     this.photoViewer.show(
-      "http://api.meeracle.ml/storage/" + this.orders.payment_slip
+      "https://api.meeracle.com.my/storage/" + this.orders.payment_slip
     );
   }
 
