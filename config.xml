@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="my.com.meeracle" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="my.com.meeracle" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MEERACLE</name>
     <description>MEERACLE</description>
     <author email="cyberx11@gmail.com" href="https://meeracle.com.my">MEERACLE</author>
@@ -94,4 +94,10 @@
     <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
         <string>Allow us to Use Your Camera for QR Code Reader</string>
     </edit-config>
+    <platform name="android">
+        <preference name="CodePushDeploymentKey" value=" QZ6dYY2oZ5gPh74om4gWjxZOM1sG3a096db7-ccf4-48a4-851f-53e09a32ff56" />
+    </platform>
+    <platform name="ios">
+        <preference name="CodePushDeploymentKey" value="r1fW06fl74e1Fm_Wft_MbyqQdleP3a096db7-ccf4-48a4-851f-53e09a32ff56" />
+    </platform>
 </widget>

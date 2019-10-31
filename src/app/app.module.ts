@@ -20,6 +20,8 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
+import { CodePush } from '@ionic-native/code-push/ngx';
+
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -28,6 +30,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
+
 
 @NgModule({
   declarations: [AppComponent, NotificationsComponent],
@@ -44,6 +47,7 @@ import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
   entryComponents: [NotificationsComponent],
   providers: [
     StatusBar,
+    CodePush,
     PhotoViewer,
     SplashScreen,
     NativeStorage,

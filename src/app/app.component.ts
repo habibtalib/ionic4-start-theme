@@ -8,6 +8,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { Pages } from './interfaces/pages';
 import { error } from '@angular/compiler/src/util';
+import { CodePush, InstallMode, SyncStatus } from '@ionic-native/code-push/ngx';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,7 @@ export class AppComponent {
     public navCtrl: NavController,
     private authService: AuthService,
     private storage: NativeStorage,
+    private codePush: CodePush,
   ) {
     this.appPages = [
       {
@@ -110,11 +112,32 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.checkCodePush(); //Use the plugin always after platform.ready()
     }).catch(() => {});
   }
 
   goToEditProgile() {
     this.navCtrl.navigateForward('edit-profile');
+  }
+
+  checkCodePush() {
+
+    this.codePush.sync({
+      updateDialog: {
+        appendReleaseDescription: true,
+        descriptionPrefix: "\n\nChange log:\n"
+      },
+      installMode: InstallMode.IMMEDIATE
+    }).subscribe(
+      (data) => {
+        console.log('CODE PUSH SUCCESSFUL: ' + data);
+
+      },
+      (err) => {
+        console.log('CODE PUSH ERROR: ' + err);
+
+      }
+    );
   }
 
   logout() {
