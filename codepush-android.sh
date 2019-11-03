@@ -1,1 +1,2 @@
-code-push release meeracle-ios ./platforms/ios/www/ 0.0.1 --description "Your awesome change description" -d "Production"
+ionic cordova prepare android
+code-push release meeracle-android ./platforms/android/app/src/main/assets/www/ 1.0.4 --description "Bug Fixes" -d "Production"

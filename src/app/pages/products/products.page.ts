@@ -5,7 +5,8 @@ import { CartService } from "../../services/cart.service";
 import { AuthService } from 'src/app/services/auth.service';
 import { tap } from 'rxjs/operators';
 import {
-  NavController
+  NavController,
+  AlertController
 } from '@ionic/angular';
 
 @Component({
@@ -19,6 +20,7 @@ export class ProductsPage implements OnInit {
     loop: true
   };
   products: any;
+  user: any;
   token: any;
   cart = [];
 
@@ -28,7 +30,8 @@ export class ProductsPage implements OnInit {
     private http: HttpClient,
     private env: EnvService,
     private cartService: CartService,
-    private authService: AuthService
+    private authService: AuthService,
+    public alertCtrl: AlertController,
   ) {}
 
   ngOnInit() {
@@ -36,9 +39,34 @@ export class ProductsPage implements OnInit {
     // this.getProducts();
   }
 
+  getUser() {
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
+      });
+      this.http
+        .get(this.env.API_URL + "auth/user", {
+          headers: headers
+        })
+        .subscribe(
+          data => {
+            this.user = data;
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+
   ionViewWillEnter() {
     this.cart = this.cartService.getCart();
     this.getProducts();
+    this.getUser();
   }
 
   doRefresh(event) {
@@ -50,8 +78,20 @@ export class ProductsPage implements OnInit {
     }, 2000);
   }
 
-  addToCart(product) {
-    this.cartService.addProduct(product);
+  async addToCart(product) {
+    
+    if (this.user.active) {
+      this.cartService.addProduct(product);
+    } else {
+      const alert = await this.alertCtrl.create({
+        header: 'Sorry',
+        subHeader: 'Your Account not Active',
+        message: 'Please wait untill your account is Active.',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
+    
   }
 
   getProducts() {
