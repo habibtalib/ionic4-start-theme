@@ -48,7 +48,7 @@
             <ion-label></ion-label>
             <ion-label></ion-label>
             <ion-label>
-              <ion-button (click)="addToCart(p)">
+              <ion-button [disabled]="!p.role_price.price || p.role_price.price === 0" (click)="addToCart(p)">
                 <ion-icon slot="start" name="add"></ion-icon>
                 Add Cart
               </ion-button>
