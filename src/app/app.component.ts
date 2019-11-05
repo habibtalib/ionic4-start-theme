@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, NavController, MenuController } from '@ionic/angular';
+import { Platform, NavController, MenuController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from 'src/app/services/auth.service';
@@ -34,6 +34,7 @@ export class AppComponent {
     public navCtrl: NavController,
     private authService: AuthService,
     private storage: NativeStorage,
+    public toastCtrl: ToastController,
     private codePush: CodePush,
   ) {
     this.appPages = [
@@ -131,14 +132,26 @@ export class AppComponent {
     }).subscribe(
       (data) => {
         console.log('CODE PUSH SUCCESSFUL: ' + data);
-
       },
       (err) => {
         console.log('CODE PUSH ERROR: ' + err);
 
       }
     );
+
+    // const downloadProgress = (progress) => { console.log(`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`); }
+    this.codePush.sync({}, this.downloadProgress).subscribe((syncStatus) => console.log(syncStatus));
   }
+
+
+  async downloadProgress (progress) {
+    let toast = await this.toastCtrl.create({
+      message: `Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`,
+      duration: 500,
+      position: 'bottom'
+    });
+    toast.present();
+  };
 
   logout() {
     this.authService.logout().subscribe(
