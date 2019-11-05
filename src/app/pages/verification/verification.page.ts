@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import {
   NavController,
+  AlertController,
   ToastController,
   ActionSheetController,
   Platform,
@@ -22,11 +23,11 @@ import {
 const STORAGE_KEY = "profile";
 
 @Component({
-  selector: "app-edit-profile",
-  templateUrl: "./edit-profile.page.html",
-  styleUrls: ["./edit-profile.page.scss"]
+  selector: 'app-verification',
+  templateUrl: './verification.page.html',
+  styleUrls: ['./verification.page.scss'],
 })
-export class EditProfilePage implements OnInit {
+export class VerificationPage implements OnInit {
   user: any;
   images = [];
   formData = new FormData();
@@ -36,6 +37,7 @@ export class EditProfilePage implements OnInit {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     private authService: AuthService,
+    public alertCtrl: AlertController,
     private env: EnvService,
     private http: HttpClient,
     private ref: ChangeDetectorRef,
@@ -47,7 +49,7 @@ export class EditProfilePage implements OnInit {
     private file: File,
     private webview: WebView,
     private toastController: ToastController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getUser();
@@ -85,7 +87,7 @@ export class EditProfilePage implements OnInit {
       const imgBlob = new Blob([reader.result], {
         type: file.type
       });
-      this.formData.append("avatar", imgBlob, file.name);
+      this.formData.append("img", imgBlob, file.name);
       this.uploadImageData();
     };
     reader.readAsArrayBuffer(file);
@@ -250,7 +252,7 @@ export class EditProfilePage implements OnInit {
         Accept: "application/json"
       });
       this.http
-        .post(this.env.API_URL + "user/" + this.user.id, this.formData, {
+        .post(this.env.API_URL + "verification/" + this.user.id, this.formData, {
           headers: headers
         })
         .subscribe(
@@ -258,31 +260,31 @@ export class EditProfilePage implements OnInit {
             console.log(data);
             loader.present();
             loader.onWillDismiss().then(async l => {
-              const toast = await this.toastCtrl.create({
-                showCloseButton: true,
-                // cssClass: 'bg-profile',
-                message: "Your Profile has been Updated!",
-                duration: 3000,
-                position: "bottom"
+              const alert = await this.alertCtrl.create({
+                header: 'Document Uploaded',
+                subHeader: 'You Document being verify',
+                message: 'It take up to 3 days to verify, we will notify you once Approved.',
+                buttons: [{
+                  text: 'OK',
+                  handler: () => {
+                    this.navCtrl.navigateRoot("/home-results");
+                  }
+                }]
               });
-
-              toast.present();
-               this.getUser();
+              await alert.present();
             });
           },
           error => {
             console.log(error);
             loader.present();
             loader.onWillDismiss().then(async l => {
-              const toast = await this.toastCtrl.create({
-                showCloseButton: true,
-                // cssClass: 'bg-profile',
-                message: "Your Update failed to Submmit!",
-                duration: 3000,
-                position: "bottom"
+              const alert = await this.alertCtrl.create({
+                header: 'Sorry',
+                subHeader: 'Upload Failed',
+                message: 'Please try again',
+                buttons: ['OK']
               });
-
-              toast.present();
+              await alert.present();
             });
           }
         );
@@ -320,56 +322,6 @@ export class EditProfilePage implements OnInit {
     } else {
       this.uploadImageData();
     }
-    // const loader = await this.loadingCtrl.create({
-    //   duration: 2000
-    // });
-    // this.formData = new FormData();
-    // this.formData.append("user", JSON.stringify(this.user));
-    // this.authService.getToken().then(() => {
-    //   const headers = new HttpHeaders({
-    //     Authorization:
-    //       this.authService.token["token_type"] +
-    //       " " +
-    //       this.authService.token["access_token"],
-    //     Accept: "application/json"
-    //   });
-    //   this.http
-    //     .post(this.env.API_URL + "user/" + this.user.id, this.formData, {
-    //       headers: headers
-    //     })
-    //     .subscribe(
-    //       data => {
-    //         loader.present();
-    //         this.getUser();
-    //         loader.onWillDismiss().then(async l => {
-    //           const toast = await this.toastCtrl.create({
-    //             showCloseButton: true,
-    //             // cssClass: 'bg-profile',
-    //             message: "Your Update has Been Submmited!",
-    //             duration: 3000,
-    //             position: "bottom"
-    //           });
-
-    //           toast.present();
-    //           // this.navCtrl.navigateRoot('/home-results');
-    //         });
-    //       },
-    //       error => {
-    //         console.log(error);
-    //         loader.present();
-    //         loader.onWillDismiss().then(async l => {
-    //           const toast = await this.toastCtrl.create({
-    //             showCloseButton: true,
-    //             // cssClass: 'bg-profile',
-    //             message: "Your Update failed to Submmit!",
-    //             duration: 3000,
-    //             position: "bottom"
-    //           });
-
-    //           toast.present();
-    //         });
-    //       }
-    //     );
-    // });
   }
+
 }

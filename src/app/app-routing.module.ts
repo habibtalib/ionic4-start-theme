@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'message/:id', loadChildren: './pages/message/message.module#MessagePageModule' },
   { path: 'forget-password', loadChildren: './pages/forget-password/forget-password.module#ForgetPasswordPageModule' },
   { path: 'serial-list/:id', loadChildren: './pages/serial-list/serial-list.module#SerialListPageModule' },
+  { path: 'verification', loadChildren: './pages/verification/verification.module#VerificationPageModule' },
 ];
 
 @NgModule({

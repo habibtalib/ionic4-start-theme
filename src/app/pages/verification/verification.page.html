@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile">
+  <ion-card no-margin>
+    <ion-grid fixed no-padding>
+      <ion-row *ngIf="user">
+        <ion-col size="12" padding>
+          <ion-list margin-bottom>
+            <ion-list-header color="light">
+              <ion-label class="fw700">Upload Identity Verification</ion-label>
+            </ion-list-header>
+
+          </ion-list>
+          <ion-list>
+            <ion-item *ngFor="let img of images; index as pos" text-wrap>
+              <ion-thumbnail slot="start">
+                <ion-img [src]="img.path"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                {{ img.name }}
+              </ion-label>
+              <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <ion-item>
+              <ion-label>MyKAD / Passport</ion-label>
+              <ion-button fill="clear" expand="full" color="primary" (click)="selectImage()">
+                <ion-icon slot="start" name="camera"></ion-icon>
+                Select Image
+              </ion-button>
+            </ion-item>
+          </ion-list>
+          <ion-list>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-button size="large" expand="full" color="dark" (click)="sendData()" no-margin>Update</ion-button>
+  </ion-card>
+
+</ion-content>

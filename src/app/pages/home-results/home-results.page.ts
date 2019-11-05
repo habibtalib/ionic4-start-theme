@@ -35,6 +35,7 @@ export class HomeResultsPage {
     loop: true
   };
   masterStockist: any;
+  user: any;
 
   cart = [];
   token: any;
@@ -57,6 +58,7 @@ export class HomeResultsPage {
   ionViewWillEnter() {
     this.cart = this.cartService.getCart();
     this.geSlides();
+    this.getUser()
     this.authService.getToken().then(() => {
       console.log("isLoggedin", this.authService.isLoggedIn);
       if (!this.authService.isLoggedIn) {
@@ -64,6 +66,32 @@ export class HomeResultsPage {
       }
     });
     this.menuCtrl.enable(true);
+  }
+
+  getUser() {
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
+      });
+      this.http
+        .get(this.env.API_URL + "auth/user", {
+          headers: headers
+        })
+        .subscribe(
+          data => {
+            this.user = data;
+            console.log(this.user)
+            this.checkVerified();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
   }
 
   doRefresh(event) {
@@ -79,6 +107,23 @@ export class HomeResultsPage {
 
   settings() {
     this.navCtrl.navigateForward("settings");
+  }
+
+  async checkVerified() {
+    if(!this.user.img_data){
+      const alert = await this.alertCtrl.create({
+        header: 'Sorry',
+        subHeader: 'Your Account not Verfied yet',
+        message: 'Please Upload Your Document to Verified.',
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.navCtrl.navigateForward("/verification");
+          }
+        }]
+      });
+      await alert.present();
+    }
   }
 
   async register() {
