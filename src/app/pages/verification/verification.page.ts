@@ -316,6 +316,10 @@ export class VerificationPage implements OnInit {
     await actionSheet.present();
   }
 
+  logout() {
+    this.navCtrl.navigateRoot('/');
+  }
+
   async sendData() {
     if (this.images.length > 0) {
       await this.startUpload(this.images[0]);

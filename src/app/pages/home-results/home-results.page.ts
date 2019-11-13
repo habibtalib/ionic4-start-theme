@@ -110,7 +110,7 @@ export class HomeResultsPage {
   }
 
   async checkVerified() {
-    if(!this.user.img_data){
+    if (!this.user.id_img){
       const alert = await this.alertCtrl.create({
         header: 'Sorry',
         subHeader: 'Your Account not Verfied yet',
