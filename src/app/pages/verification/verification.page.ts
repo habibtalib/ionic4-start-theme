@@ -141,37 +141,53 @@ export class VerificationPage implements OnInit {
     var options: CameraOptions = {
       quality: 100,
       sourceType: sourceType,
+      destinationType: this.camera.DestinationType.DATA_URL,
       saveToPhotoAlbum: false,
       correctOrientation: true
     };
 
     this.camera.getPicture(options).then(imagePath => {
-      if (
-        this.plt.is("android") &&
-        sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
-      ) {
-        this.filePath.resolveNativePath(imagePath).then(filePath => {
-          let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
-          let currentName = imagePath.substring(
-            imagePath.lastIndexOf("/") + 1,
-            imagePath.lastIndexOf("?")
-          );
-          this.copyFileToLocalDir(
-            correctPath,
-            currentName,
-            this.createFileName()
-          );
-        });
+      if (this.plt.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+        this.filePath.resolveNativePath(imagePath)
+          .then(filePath => {
+            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+          });
       } else {
-        var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
-        this.copyFileToLocalDir(
-          correctPath,
-          currentName,
-          this.createFileName()
-        );
+        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
     });
+
+    // this.camera.getPicture(options).then(imagePath => {
+    //   if (
+    //     this.plt.is("android") &&
+    //     sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
+    //   ) {
+    //     this.filePath.resolveNativePath(imagePath).then(filePath => {
+    //       let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
+    //       let currentName = imagePath.substring(
+    //         imagePath.lastIndexOf("/") + 1,
+    //         imagePath.lastIndexOf("?")
+    //       );
+    //       this.copyFileToLocalDir(
+    //         correctPath,
+    //         currentName,
+    //         this.createFileName()
+    //       );
+    //     });
+    //   } else {
+    //     var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
+    //     var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
+    //     this.copyFileToLocalDir(
+    //       correctPath,
+    //       currentName,
+    //       this.createFileName()
+    //     );
+    //   }
+    // });
   }
 
   pathForImage(img) {
@@ -241,8 +257,8 @@ export class VerificationPage implements OnInit {
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
+    loader.present();
     this.formData.append("user", JSON.stringify(this.user));
-
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
         Authorization:
@@ -258,7 +274,7 @@ export class VerificationPage implements OnInit {
         .subscribe(
           data => {
             console.log(data);
-            loader.present();
+            
             loader.onWillDismiss().then(async l => {
               const alert = await this.alertCtrl.create({
                 header: 'Document Uploaded',
@@ -324,7 +340,14 @@ export class VerificationPage implements OnInit {
     if (this.images.length > 0) {
       await this.startUpload(this.images[0]);
     } else {
-      this.uploadImageData();
+      const alert = await this.alertCtrl.create({
+        header: 'Warninf',
+        subHeader: 'Image not Selected',
+        message: 'Please upload Image',
+        buttons: ['OK']
+      });
+      await alert.present();
+      // this.uploadImageData();
     }
   }
 

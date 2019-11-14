@@ -240,7 +240,7 @@ export class EditProfilePage implements OnInit {
       duration: 2000
     });
     this.formData.append("user", JSON.stringify(this.user));
-
+    loader.present();
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
         Authorization:
@@ -256,7 +256,7 @@ export class EditProfilePage implements OnInit {
         .subscribe(
           data => {
             console.log(data);
-            loader.present();
+            // loader.present();
             loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
