@@ -35,21 +35,18 @@ export class ForgetPasswordPage implements OnInit {
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
-    this.formData.append("email", JSON.stringify(this.email));
-    this.formData.append("nric", JSON.stringify(this.nric));
+    const headers = new HttpHeaders({
+      Accept: "application/json"
+    });
     loader.present();
-    this.authService.getToken().then(() => {
-      const headers = new HttpHeaders({
-        Authorization:
-          this.authService.token["token_type"] +
-          " " +
-          this.authService.token["access_token"],
-        Accept: "application/json"
-      });
       this.http
-        .post(this.env.API_URL + "forget-password", this.formData, {
-          headers: headers
-        })
+        .post(
+          this.env.API_URL + "auth/forget-password",
+          { email: this.email, nric: this.nric  },
+          {
+            headers: headers
+          }
+        )
         .subscribe(
           data => {
             console.log(data);
@@ -84,7 +81,6 @@ export class ForgetPasswordPage implements OnInit {
             });
           }
         );
-    });
   }
 
 

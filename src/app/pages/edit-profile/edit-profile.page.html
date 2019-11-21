@@ -67,18 +67,28 @@
               ></ion-input>
             </ion-item>
 
+            <ion-item>
+              <ion-label color="dark" position="stacked">City:</ion-label>
+              <ion-input [(ngModel)]="user.city" inputmode="text" placeholder="Ex.: Klang"></ion-input>
+            </ion-item>
+
             <!-- <ion-item>
-              <ion-label color="dark">City</ion-label>
-              <ion-select>
-                <ion-select-option value="nes">New York</ion-select-option>
-                <ion-select-option value="n64">Los Angeles</ion-select-option>
-                <ion-select-option value="ps">London</ion-select-option>
-                <ion-select-option value="genesis">Paris</ion-select-option>
-                <ion-select-option value="saturn">São Paulo</ion-select-option>
-                <ion-select-option value="snes">Tokyo</ion-select-option>
-                <ion-select-option value="snes">New Delhi</ion-select-option>
-              </ion-select>
+              <ion-label color="dark" position="stacked">State:</ion-label>
+              <ion-input [(ngModel)]="user.state" inputmode="text" placeholder="Ex.: Selangor"></ion-input>
             </ion-item> -->
+
+            <ion-item>
+              <ion-label color="dark" position="stacked">Postcode:</ion-label>
+              <ion-input [(ngModel)]="user.postcode" inputmode="text" placeholder="Ex.: 51200"></ion-input>
+            </ion-item>
+
+
+            <ion-item>
+              <ion-label color="dark">State:</ion-label>
+              <ion-select  [(ngModel)]="user.state" >
+                <ion-select-option  *ngFor="let state of states" [value]="state.id" >{{ state.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
 
             <!-- <ion-item>
               <ion-label color="dark">State</ion-label>

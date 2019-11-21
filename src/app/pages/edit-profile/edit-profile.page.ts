@@ -28,6 +28,7 @@ const STORAGE_KEY = "profile";
 })
 export class EditProfilePage implements OnInit {
   user: any;
+  states: any;
   images = [];
   formData = new FormData();
 
@@ -51,6 +52,7 @@ export class EditProfilePage implements OnInit {
 
   ngOnInit() {
     this.getUser();
+    this.getState();
   }
 
   getUser() {
@@ -69,6 +71,30 @@ export class EditProfilePage implements OnInit {
         .subscribe(
           data => {
             this.user = data;
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+
+  getState() {
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
+      });
+      this.http
+        .get(this.env.API_URL + "states", {
+          headers: headers
+        })
+        .subscribe(
+          data => {
+            this.states = data["states"];
           },
           error => {
             console.log(error);
@@ -267,7 +293,7 @@ export class EditProfilePage implements OnInit {
               });
 
               toast.present();
-               this.getUser();
+              this.getUser();
             });
           },
           error => {
