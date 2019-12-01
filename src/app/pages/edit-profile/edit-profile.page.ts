@@ -315,6 +315,73 @@ export class EditProfilePage implements OnInit {
     });
   }
 
+  async changePassword(){
+    if (this.user.password != this.user.confirm_password) {
+      console.log(this.user.password, this.user.confirm_password);
+      const toast = await this.toastCtrl.create({
+        showCloseButton: true,
+        // cssClass: 'bg-profile',
+        message: "Confirm Password not Matched",
+        duration: 3000,
+        position: "bottom"
+      });
+
+      toast.present();
+    } else {
+      this.formData.append("user", JSON.stringify(this.user));
+      const loader = await this.loadingCtrl.create({
+        duration: 2000
+      });
+      loader.present();
+      this.authService.getToken().then(() => {
+        const headers = new HttpHeaders({
+          Authorization:
+            this.authService.token["token_type"] +
+            " " +
+            this.authService.token["access_token"],
+          Accept: "application/json"
+        });
+        this.http
+          .post(this.env.API_URL + "change-password", this.formData, {
+            headers: headers
+          })
+          .subscribe(
+            data => {
+              console.log(data);
+              // loader.present();
+              loader.onWillDismiss().then(async l => {
+                const toast = await this.toastCtrl.create({
+                  showCloseButton: true,
+                  // cssClass: 'bg-profile',
+                  message: "Your Profile has been Updated!",
+                  duration: 3000,
+                  position: "bottom"
+                });
+
+                toast.present();
+                this.getUser();
+              });
+            },
+            error => {
+              console.log(error);
+              loader.present();
+              loader.onWillDismiss().then(async l => {
+                const toast = await this.toastCtrl.create({
+                  showCloseButton: true,
+                  // cssClass: 'bg-profile',
+                  message: "Your Update failed to Submmit!",
+                  duration: 3000,
+                  position: "bottom"
+                });
+
+                toast.present();
+              });
+            }
+          );
+      });
+    }
+  }
+
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",

@@ -153,19 +153,43 @@
               <ion-label class="text-1x">Checkbox test</ion-label>
               <ion-checkbox></ion-checkbox>
             </ion-item> -->
+            <ion-button size="large" expand="full" color="dark" (click)="sendData()" no-margin>Update</ion-button>
           </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-button
-      size="large"
-      expand="full"
-      color="dark"
-      (click)="sendData()"
-      no-margin
-      >Update</ion-button
-    >
+      <ion-grid fixed no-padding>
+        <ion-row *ngIf="user">
+          <ion-col size="12" padding>
+
+            <ion-list margin-bottom>
+              <ion-list-header color="light">
+                <ion-label class="fw700">Change Password</ion-label>
+              </ion-list-header>
+
+              <ion-item>
+                <ion-label color="dark" position="stacked">Password:</ion-label>
+                <ion-input [(ngModel)]="user.password" type="password"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">Confirm Password:</ion-label>
+                <ion-input [(ngModel)]="user.confirm_password"  type="password"></ion-input>
+              </ion-item>
+              <ion-button size="large" expand="full" color="dark" (click)="changePassword()" no-margin>Change Password</ion-button>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid fixed no-padding>
+        <ion-row *ngIf="user">
+          <ion-col size="12" padding>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
   </ion-card>
 
   <!-- <div padding>
