@@ -99,6 +99,30 @@
       </ion-row> -->
       <ion-row class="full" padding-horizontal>
         <ion-col size="9">
+          <ion-text>Total Quantities</ion-text>
+        </ion-col>
+        <ion-col size="3" text-end>
+          <ion-text>{{ count }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="full" padding-horizontal>
+        <ion-col size="9">
+          <ion-text>Subtotal</ion-text>
+        </ion-col>
+        <ion-col size="3" text-end>
+          <ion-text>{{ subtotal | currency:'RM':'symbol' }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="full" padding-horizontal>
+        <ion-col size="9">
+          <ion-text>Postage</ion-text>
+        </ion-col>
+        <ion-col size="3" text-end>
+          <ion-text>{{ postage | currency:'RM':'symbol' }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="full" padding-horizontal>
+        <ion-col size="9">
           <ion-text>Item Total</ion-text>
         </ion-col>
         <ion-col size="3" text-end>

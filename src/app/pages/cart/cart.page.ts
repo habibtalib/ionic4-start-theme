@@ -22,6 +22,9 @@ export class CartPage implements OnInit {
   userId: any;
 
   total = 0;
+  subtotal = 0;
+  postage = 0;
+  count = 0;
 
   constructor(private cartService: CartService, public navCtrl: NavController, private store: Storage) {
     for (let i = 1; i <= 100; i++) {
@@ -31,6 +34,7 @@ export class CartPage implements OnInit {
 
   ngOnInit() {
     let items = this.cartService.getCart();
+    console.log("items",items)
     // let selected = {};
     // for (let obj of items) {
     //   if (selected[obj.id]) {
@@ -40,6 +44,7 @@ export class CartPage implements OnInit {
     //   }
     // }
     this.selectedItems = Object.keys(items).map(key => items[key]);
+    console.log("selectedItems",this.selectedItems)
     // this.total = this.selectedItems.reduce(
     //   (a, b) => a + b.count * b.role_price.price,
     //   0
@@ -49,11 +54,15 @@ export class CartPage implements OnInit {
 
   calculatePrice() {
     this.total = 0;
+    this.postage = 0;
     let temp = 0;
     this.selectedItems.forEach(product => {
+      this.count++;
       temp = product.role_price.price * product.count;
-      this.total += temp;
+      this.subtotal += temp;
+      this.postage += product.role_price.postage * product.count;
     });
+    this.total = this.subtotal + this.postage;
   }
 
   changeQuantity(item){
@@ -64,6 +73,7 @@ export class CartPage implements OnInit {
   checkout() {
     this.store.set('cart', this.selectedItems)
     this.store.set('total', this.total)
+    this.store.set('postage', this.postage)
     this.navCtrl.navigateForward("/checkout");
   }
 

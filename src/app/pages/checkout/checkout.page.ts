@@ -31,6 +31,7 @@ const STORAGE_KEY = 'checkout';
 export class CheckoutPage implements OnInit {
   images = [];
   total : any;
+  postage: any;
   items : any;
   note = "";
   formData = new FormData();
@@ -147,6 +148,7 @@ export class CheckoutPage implements OnInit {
 
   async getStore() {
     this.total = await this.storage.get('total')
+    this.postage = await this.storage.get('postage')
     this.items = await this.storage.get('cart')
   }
 

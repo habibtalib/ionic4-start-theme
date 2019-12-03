@@ -17,6 +17,7 @@
       <img *ngIf="!user.avatar" src="assets/img/avatar2.jpg" />
       <h1 class="fw500">{{ user.name }}</h1>
       <h2 color="light" margin-bottom>{{ user.role.display_name }}</h2>
+      <h2 color="light" margin-bottom>MEE{{ user.id }}</h2>
       <!-- <ion-button icon-left color="secondary">
         <ion-icon name="photos"></ion-icon> 
         Edit / Add Avatar
@@ -38,6 +39,11 @@
                 inputmode="text"
                 placeholder="Ex..: Joe Doe"
               ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="dark" position="stacked">NRIC/Passport:</ion-label>
+              <ion-input [(ngModel)]="user.nric" inputmode="text" disabled></ion-input>
             </ion-item>
 
             <ion-item>

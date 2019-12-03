@@ -39,7 +39,7 @@
             <ion-label color="primary">
               <div class="card-title">{{ p.name }}</div>
               <div class="card-subtitle">Retail Pice - RM{{ p.price }}</div>
-              <div class="card-subtitle" *ngIf="user.active && p.role_price.price">
+              <div class="card-subtitle" *ngIf="user && user.active && p.role_price.price">
                 Your Pice - RM{{ p.role_price.price }}
               </div>
             </ion-label>
