@@ -44,7 +44,7 @@ export class CartPage implements OnInit {
     //   }
     // }
     this.selectedItems = Object.keys(items).map(key => items[key]);
-    console.log("selectedItems",this.selectedItems)
+    console.log("selectedItems",JSON.stringify(this.selectedItems))
     // this.total = this.selectedItems.reduce(
     //   (a, b) => a + b.count * b.role_price.price,
     //   0
@@ -55,9 +55,11 @@ export class CartPage implements OnInit {
   calculatePrice() {
     this.total = 0;
     this.postage = 0;
+    this.subtotal = 0;
     let temp = 0;
+    this.count = 0;
     this.selectedItems.forEach(product => {
-      this.count++;
+      this.count += product.count;
       temp = product.role_price.price * product.count;
       this.subtotal += temp;
       this.postage += product.role_price.postage * product.count;

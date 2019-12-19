@@ -98,7 +98,6 @@ export class CheckoutPage implements OnInit {
       const headers = new HttpHeaders({
         Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
         Accept: "application/json",
-        ContentType:"application/json",
       });
       // loader.present();
       this.http
