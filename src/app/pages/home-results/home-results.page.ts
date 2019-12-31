@@ -1,24 +1,25 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 import {
   NavController,
   AlertController,
   MenuController,
   ToastController,
   PopoverController,
-  ModalController } from '@ionic/angular';
+  ModalController
+} from "@ionic/angular";
 
 // Modals
 // import { SearchFilterPage } from '../../pages/modal/search-filter/search-filter.page';
-import { ImagePage } from './../modal/image/image.page';
+import { ImagePage } from "./../modal/image/image.page";
 // Call notifications test by Popover and Custom Component.
 // import { NotificationsComponent } from './../../components/notifications/notifications.component';
-import { RegisterPage } from '../register/register.page';
-import { LoginPage } from '../login/login.page';
-import { AuthService } from 'src/app/services/auth.service';
+import { RegisterPage } from "../register/register.page";
+import { LoginPage } from "../login/login.page";
+import { AuthService } from "src/app/services/auth.service";
 import { CartService } from "../../services/cart.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
-import { Storage } from '@ionic/storage';
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: "app-home-results",
@@ -58,7 +59,7 @@ export class HomeResultsPage {
   ionViewWillEnter() {
     this.cart = this.cartService.getCart();
     this.geSlides();
-    this.getUser()
+    this.getUser();
     this.authService.getToken().then(() => {
       console.log("isLoggedin", this.authService.isLoggedIn);
       if (!this.authService.isLoggedIn) {
@@ -84,7 +85,7 @@ export class HomeResultsPage {
         .subscribe(
           data => {
             this.user = data;
-            console.log(this.user)
+            console.log(this.user);
             this.checkVerified();
           },
           error => {
@@ -110,17 +111,36 @@ export class HomeResultsPage {
   }
 
   async checkVerified() {
-    if (!this.user.id_img){
+    if (!this.user.active) {
+      if (!this.user.id_img) {
+        const alert = await this.alertCtrl.create({
+          header: "Sorry",
+          subHeader: "Your Account not Verfied yet",
+          message: "Please Upload Your Document to Verified.",
+          buttons: [
+            {
+              text: "OK",
+              handler: () => {
+                this.navCtrl.navigateForward("/verification");
+              }
+            }
+          ]
+        });
+        await alert.present();
+      }
+    } else if (!this.user.address || !this.user.state) {
       const alert = await this.alertCtrl.create({
-        header: 'Sorry',
-        subHeader: 'Your Account not Verfied yet',
-        message: 'Please Upload Your Document to Verified.',
-        buttons: [{
-          text: 'OK',
-          handler: () => {
-            this.navCtrl.navigateForward("/verification");
+        header: "Notice",
+        subHeader: "Your Profiel is not Completed",
+        message: "Please Complete your Profile.",
+        buttons: [
+          {
+            text: "OK",
+            handler: () => {
+              this.navCtrl.navigateForward("/edit-profile");
+            }
           }
-        }]
+        ]
       });
       await alert.present();
     }
