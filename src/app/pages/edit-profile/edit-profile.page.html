@@ -233,17 +233,6 @@
             <ion-list-header color="light">
               <ion-label class="fw700">Upgrade Level</ion-label>
             </ion-list-header>
-
-            <ion-item>
-              <ion-label color="dark" position="stacked">Level:</ion-label>
-              <ion-select [(ngModel)]="level">
-                <ion-select-option
-                  *ngFor="let level of levels"
-                  [value]="user.id"
-                  >{{ level.name }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
             <ion-button
               size="large"
               expand="full"

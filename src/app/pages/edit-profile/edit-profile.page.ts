@@ -30,7 +30,6 @@ const STORAGE_KEY = "profile";
 export class EditProfilePage implements OnInit {
   user: any;
   states: any;
-  levels = [{ name: "Ruby" }, { name: "Pearl" }, { nane: "Diamond" }];
   level: any;
   images = [];
   formData = new FormData();
@@ -331,11 +330,67 @@ export class EditProfilePage implements OnInit {
         },
         {
           text: "Confirm",
-          handler: () => {}
+          handler: () => {
+            this.postLevelChange();
+          }
         }
       ]
     });
     await alert.present();
+  }
+
+  async postLevelChange() {
+    this.formData.append("user", JSON.stringify(this.user));
+    const loader = await this.loadingCtrl.create({
+      duration: 2000
+    });
+    loader.present();
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
+      });
+      this.http
+        .post(this.env.API_URL + "upgrade-level", this.formData, {
+          headers: headers
+        })
+        .subscribe(
+          data => {
+            console.log(data);
+            // loader.present();
+            loader.onWillDismiss().then(async l => {
+              const toast = await this.toastCtrl.create({
+                showCloseButton: true,
+                // cssClass: 'bg-profile',
+                message: "Your Profile has been Updated!",
+                duration: 3000,
+                position: "bottom"
+              });
+
+              toast.present();
+              this.getUser();
+            });
+          },
+          error => {
+            console.log(error);
+            loader.present();
+            loader.onWillDismiss().then(async l => {
+              const toast = await this.toastCtrl.create({
+                showCloseButton: true,
+                // cssClass: 'bg-profile',
+                message: "Your Update failed to Submmit!",
+                duration: 3000,
+                position: "bottom"
+              });
+
+              toast.present();
+            });
+          }
+        );
+    });
   }
 
   async changePassword() {
