@@ -33,7 +33,22 @@
       >Scanner</ion-button
     >
   </div>
-  <ion-card>
+  <ion-card *ngIf="user">
+    <ion-card-header>
+      <ion-card-title>Member {{ member }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label color="dark">Member:</ion-label>
+        <ion-select [(ngModel)]="member">
+          <ion-select-option *ngFor="let user of user.child" [value]="user.id"
+            >{{ user.name }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="!member">
     <ion-card-header>
       <ion-card-title>Customer Information</ion-card-title>
     </ion-card-header>
