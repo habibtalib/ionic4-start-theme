@@ -407,17 +407,26 @@ export class ScannerPage implements OnInit {
                   headers: headers
                 }
               )
-              .subscribe(data => {
-                this.serial = data;
-                console.log("barcode", this.serial.serialNumber);
-                // if (!this.serials.find(serial => serial === this.serial.serialNumber)) {
-                //   this.serials.push(this.serial.serialNumber)
-                // }
-                this.serials.push({
-                  serial_number: this.serial.serialNumber,
-                  url: this.barcode
-                });
-              });
+              .subscribe(
+                data => {
+                  this.serial = data;
+                  console.log("barcode", this.serial.serialNumber);
+                  // if (!this.serials.find(serial => serial === this.serial.serialNumber)) {
+                  //   this.serials.push(this.serial.serialNumber)
+                  // }
+                  this.serials.push({
+                    serial_number: this.serial.serialNumber,
+                    url: this.barcode
+                  });
+                },
+                error => {
+                  console.log("Checknow Error ", error);
+                  this.serials.push({
+                    serial_number: this.barcode,
+                    url: ""
+                  });
+                }
+              );
           });
       })
       .catch(err => {
