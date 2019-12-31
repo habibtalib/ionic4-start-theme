@@ -2,11 +2,12 @@ import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import {
   NavController,
   ToastController,
+  AlertController,
   ActionSheetController,
   Platform,
   LoadingController
 } from "@ionic/angular";
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from "src/app/services/auth.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
 import { WebView } from "@ionic-native/ionic-webview/ngx";
@@ -29,6 +30,8 @@ const STORAGE_KEY = "profile";
 export class EditProfilePage implements OnInit {
   user: any;
   states: any;
+  levels = [{ name: "Ruby" }, { name: "Pearl" }, { nane: "Diamond" }];
+  level: any;
   images = [];
   formData = new FormData();
 
@@ -39,6 +42,7 @@ export class EditProfilePage implements OnInit {
     private authService: AuthService,
     private env: EnvService,
     private http: HttpClient,
+    public alertCtrl: AlertController,
     private ref: ChangeDetectorRef,
     private actionSheetController: ActionSheetController,
     private storage: Storage,
@@ -315,7 +319,26 @@ export class EditProfilePage implements OnInit {
     });
   }
 
-  async changePassword(){
+  async upgradeLevel() {
+    const alert = await this.alertCtrl.create({
+      header: "Confirm ?",
+      subHeader: "Ugrade Level",
+      message: "This will notify HQ your Upgrade Application.",
+      buttons: [
+        {
+          text: "Cancel",
+          handler: () => {}
+        },
+        {
+          text: "Confirm",
+          handler: () => {}
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async changePassword() {
     if (this.user.password != this.user.confirm_password) {
       console.log(this.user.password, this.user.confirm_password);
       const toast = await this.toastCtrl.create({
