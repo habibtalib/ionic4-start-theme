@@ -33,7 +33,7 @@
       >Scanner</ion-button
     >
   </div>
-  <ion-card *ngIf="user">
+  <ion-card *ngIf="user && user.child && user.child.length">
     <ion-card-header>
       <ion-card-title>Member {{ member }}</ion-card-title>
     </ion-card-header>
