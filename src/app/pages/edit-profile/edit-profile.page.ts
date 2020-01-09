@@ -464,12 +464,12 @@ export class EditProfilePage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
       buttons: [
-        {
-          text: "Load from Library",
-          handler: () => {
-            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-          }
-        },
+        // {
+        //   text: "Load from Library",
+        //   handler: () => {
+        //     this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+        //   }
+        // },
         {
           text: "Use Camera",
           handler: () => {

@@ -195,12 +195,13 @@ export class CheckoutPage implements OnInit {
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
-      buttons: [{
-        text: 'Load from Library',
-        handler: () => {
-          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-        }
-      },
+      buttons: [
+      // {
+      //   text: 'Load from Library',
+      //   handler: () => {
+      //     this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+      //   }
+      // },
       {
         text: 'Use Camera',
         handler: () => {
