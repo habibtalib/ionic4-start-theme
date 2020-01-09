@@ -356,6 +356,9 @@ export class ScannerPage implements OnInit {
       .scan()
       .then(barcodeData => {
         this.barcode = barcodeData["text"];
+        if(this.barcode.length === 6){
+          this.serials.push({ 'serial_number': this.barcode, 'url': this.barcode });
+        } else {
         this.http
           .post("https://api.checknow.org/api/token", auth)
           .subscribe(data => {
@@ -379,8 +382,10 @@ export class ScannerPage implements OnInit {
                 //   this.serials.push(this.serial.serialNumber)
                 // }
                 this.serials.push({'serial_number' : this.serial.serialNumber, 'url' :this.barcode})
-              });
+              },
+              error => {});
           });
+        }
       })
       .catch(err => {
         this.barcode = JSON.stringify(err);
