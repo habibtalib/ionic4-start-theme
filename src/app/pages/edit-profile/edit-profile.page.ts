@@ -318,6 +318,10 @@ export class EditProfilePage implements OnInit {
     });
   }
 
+  async verifyAccount() {
+    this.navCtrl.navigateForward("/verification");
+  }
+
   async upgradeLevel() {
     const alert = await this.alertCtrl.create({
       header: "Confirm ?",

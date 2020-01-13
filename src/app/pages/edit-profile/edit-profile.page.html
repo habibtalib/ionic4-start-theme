@@ -194,6 +194,23 @@
         <ion-col size="12" padding>
           <ion-list margin-bottom>
             <ion-list-header color="light">
+              <ion-label class="fw700">Verify Account</ion-label>
+            </ion-list-header>
+          <ion-item>
+            <ion-label color="dark" position="stacked">Status: {{ user.active ? 'Active' : 'Not-Active'}}</ion-label>
+          </ion-item>
+            <ion-button size="large" expand="full" color="dark" (click)="verifyAccount()" no-margin>Upload MyKad/Passport
+            </ion-button>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-label fixed no-padding>
+      <ion-row *ngIf="user">
+        <ion-col size="12" padding>
+          <ion-list margin-bottom>
+            <ion-list-header color="light">
               <ion-label class="fw700">Change Password</ion-label>
             </ion-list-header>
 
@@ -224,7 +241,7 @@
           </ion-list>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </ion-label>
 
     <ion-grid fixed no-padding>
       <ion-row *ngIf="user">
