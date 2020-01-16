@@ -166,7 +166,7 @@ export class EditProfilePage implements OnInit {
 
   takePicture(sourceType: PictureSourceType) {
     var options: CameraOptions = {
-      quality: 100,
+      quality: 30,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
       correctOrientation: true
