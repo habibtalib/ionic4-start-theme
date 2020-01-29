@@ -36,7 +36,7 @@
         <p>{{ order.total | currency: "RM":"symbol" }}</p>
         <ion-button
           [routerLink]="['/scan-order', order.id]"
-          *ngIf="order && order.status.id !== 3"
+          *ngIf="order && order.status.id === 2"
         >
           <ion-icon slot="start" name="qr-scanner"></ion-icon>
           Scan Item

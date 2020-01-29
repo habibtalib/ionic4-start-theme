@@ -124,17 +124,20 @@ export class AppComponent {
 
   checkCodePush() {
     this.codePush
-      .sync({
-        updateDialog: {
-          appendReleaseDescription: true,
-          descriptionPrefix: "\n\nChange log:\n"
+      .sync(
+        {
+          updateDialog: {
+            appendReleaseDescription: true,
+            descriptionPrefix: "\n\nChange log:\n"
+          },
+          installMode: InstallMode.IMMEDIATE
         },
-        installMode: InstallMode.IMMEDIATE
-      })
+        this.downloadProgress
+      )
       .subscribe(
         data => {
           console.log("CODE PUSH SUCCESSFUL: " + data);
-          this.presentToast();
+          // this.presentToast();
         },
         err => {
           console.log("CODE PUSH ERROR: " + err);
@@ -142,9 +145,9 @@ export class AppComponent {
       );
 
     // const downloadProgress = (progress) => { console.log(`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`); }
-    this.codePush
-      .sync({}, this.downloadProgress)
-      .subscribe(syncStatus => console.log(syncStatus));
+    // this.codePush
+    //   .sync({}, this.downloadProgress)
+    //   .subscribe(syncStatus => console.log(syncStatus));
   }
 
   async downloadProgress(progress) {
