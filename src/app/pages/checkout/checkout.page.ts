@@ -91,6 +91,7 @@ export class CheckoutPage implements OnInit {
       duration: 2000
     });
     this.formData.append("total", this.total.toFixed(2));
+    this.formData.append("postage", this.postage);
     this.formData.append('cart', JSON.stringify(this.items))
     this.formData.append('note', this.note)
 
