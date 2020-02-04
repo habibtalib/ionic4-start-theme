@@ -31,6 +31,28 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list>
+        <ion-item *ngIf="user">
+          <ion-label position="floating">Name</ion-label>
+          <ion-textarea [(ngModel)]="user.name"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Address</ion-label>
+          <ion-textarea [(ngModel)]="address"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">City</ion-label>
+          <ion-textarea [(ngModel)]="city"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">State</ion-label>
+          <ion-select [(ngModel)]="state">
+            <ion-select-option
+              *ngFor="let state of states"
+              [value]="state.id"
+              >{{ state.name }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
         <ion-item>
           <ion-label position="floating">Note</ion-label>
           <ion-textarea [(ngModel)]="note"></ion-textarea>
@@ -54,13 +76,13 @@
             <ion-icon slot="icon-only" name="trash"></ion-icon>
           </ion-button>
         </ion-item>
-            <ion-item>
-              <ion-label>Prove of Payment</ion-label>
-              <ion-button fill="clear" expand="full" color="primary" (click)="selectImage()">
-                <ion-icon slot="start" name="camera"></ion-icon>
-                Select Image
-              </ion-button>
-            </ion-item>
+        <ion-item>
+          <ion-label>Prove of Payment</ion-label>
+          <ion-button fill="clear" expand="full" color="primary" (click)="selectImage()">
+            <ion-icon slot="start" name="camera"></ion-icon>
+            Select Image
+          </ion-button>
+        </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>

@@ -32,6 +32,11 @@ export class CheckoutPage implements OnInit {
   images = [];
   total : any;
   postage: any;
+  states: any;
+  state: any;
+  city: any;
+  user: any;
+  address: any;
   items : any;
   note = "";
   formData = new FormData();
@@ -57,8 +62,62 @@ export class CheckoutPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getUser();
     this.getStore();
+    this.getState();
   }
+
+  getUser() {
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
+      });
+      this.http
+        .get(this.env.API_URL + "auth/user", {
+          headers: headers
+        })
+        .subscribe(
+          data => {
+            this.user = data;
+            this.address = this.user.address;
+            this.city = this.user.city;
+            this.state = this.user.state;
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+
+  getState() {
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
+      });
+      this.http
+        .get(this.env.API_URL + "states", {
+          headers: headers
+        })
+        .subscribe(
+          data => {
+            this.states = data["states"];
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+
 
   async submit() {
     // await this.images.forEach(element => {
@@ -92,6 +151,9 @@ export class CheckoutPage implements OnInit {
     });
     this.formData.append("total", this.total.toFixed(2));
     this.formData.append("postage", this.postage);
+    this.formData.append("state", this.state);
+    this.formData.append("city", this.city);
+    this.formData.append("address", this.address);
     this.formData.append('cart', JSON.stringify(this.items))
     this.formData.append('note', this.note)
 
@@ -195,7 +257,7 @@ export class CheckoutPage implements OnInit {
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Select Image source",
+      header: "Capture Receipt",
       buttons: [
       // {
       //   text: 'Load from Library',
