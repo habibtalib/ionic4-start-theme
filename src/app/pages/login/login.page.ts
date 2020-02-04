@@ -7,6 +7,7 @@ import { RegisterPage } from '../register/register.page';
 import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: "app-login",
@@ -30,12 +31,18 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private env: EnvService,
-    private http: HttpClient
+    private http: HttpClient,
+    private iab: InAppBrowser
   ) {}
+  
 
   hideShowPassword() {
     this.passwordType = this.passwordType === "text" ? "password" : "text";
     this.passwordIcon = this.passwordIcon === "eye-off" ? "eye" : "eye-off";
+  }
+
+  openBrowser(){
+    this.iab.create('https://ionicframework.com/');
   }
 
   ionViewWillEnter() {

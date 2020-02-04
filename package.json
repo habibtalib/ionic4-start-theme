@@ -30,6 +30,7 @@
     "@ionic-native/file": "^5.0.0",
     "@ionic-native/file-path": "^5.0.0",
     "@ionic-native/file-transfer": "^5.12.0",
+    "@ionic-native/in-app-browser": "^5.20.0",
     "@ionic-native/ionic-webview": "^5.0.0",
     "@ionic-native/native-storage": "^5.12.0",
     "@ionic-native/photo-viewer": "^5.15.1",
@@ -118,7 +119,8 @@
       },
       "com-sarriaroman-photoviewer": {},
       "cordova-plugin-code-push": {},
-      "cordova-plugin-zip": {}
+      "cordova-plugin-zip": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "android",

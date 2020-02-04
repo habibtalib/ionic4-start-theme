@@ -30,6 +30,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
     NativeStorage,
     BarcodeScanner,
     SocialSharing,
+    InAppBrowser,
     Camera,
     File,
     WebView,
