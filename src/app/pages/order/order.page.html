@@ -12,6 +12,9 @@
     <ion-card-header>
       <ion-card-title>{{ orders.status.description }}</ion-card-title>
       <ion-card-subtitle>Order ID: {{ orders.id }}</ion-card-subtitle>
+      <ion-card-subtitle
+        >Tracking No: {{ orders.tracking_number }}</ion-card-subtitle
+      >
       <ion-card-subtitle *ngIf="orders.total"
         >Total: {{ orders.total | currency: "RM":"symbol" }}</ion-card-subtitle
       >
@@ -49,9 +52,9 @@
   <ion-card *ngIf="orders && orders.buyer">
     <ion-card-header>
       <ion-card-title
-        ><span [routerLink]="['/user', orders.buyer.id]">{{
-          orders.buyer.name
-        }}</span>
+        ><span [routerLink]="['/user', orders.buyer.id]"
+          >{{ orders.buyer.name }}</span
+        >
       </ion-card-title>
       <ion-card-subtitle>Email : {{ orders.buyer.email }}</ion-card-subtitle>
       <ion-card-subtitle>Phone : {{ orders.buyer.phone }}</ion-card-subtitle>
@@ -81,7 +84,10 @@
   <ion-card *ngIf="orders && orders.payment_slip">
     <ion-card-header>
       <ion-card-title>Prove of Payment</ion-card-title>
-      <img (click)="showPreview()"[src]="'http://api.meeracle.com.my/storage/' + orders.payment_slip" />
+      <img
+        (click)="showPreview()"
+        [src]="'http://api.meeracle.com.my/storage/' + orders.payment_slip"
+      />
     </ion-card-header>
   </ion-card>
 

@@ -1,13 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, NavController, MenuController, ToastController, AlertController, LoadingController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
-import { AlertService } from 'src/app/services/alert.service';
-import { RegisterPage } from '../register/register.page';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  ModalController,
+  NavController,
+  MenuController,
+  ToastController,
+  AlertController,
+  LoadingController
+} from "@ionic/angular";
+import { AuthService } from "src/app/services/auth.service";
+import { AlertService } from "src/app/services/alert.service";
+import { RegisterPage } from "../register/register.page";
+import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 
 @Component({
   selector: "app-login",
@@ -34,15 +41,14 @@ export class LoginPage implements OnInit {
     private http: HttpClient,
     private iab: InAppBrowser
   ) {}
-  
 
   hideShowPassword() {
     this.passwordType = this.passwordType === "text" ? "password" : "text";
     this.passwordIcon = this.passwordIcon === "eye-off" ? "eye" : "eye-off";
   }
 
-  openBrowser(){
-    this.iab.create('https://ionicframework.com/');
+  openBrowser() {
+    this.iab.create("http://app.meeracle.com.my/password/reset");
   }
 
   ionViewWillEnter() {
@@ -124,10 +130,7 @@ export class LoginPage implements OnInit {
             console.log(value);
             this.formData.append("email", value.email);
             this.http
-              .post(
-                this.env.API_URL + "auth/forget-password",
-                this.formData
-              )
+              .post(this.env.API_URL + "auth/forget-password", this.formData)
               .subscribe(
                 data => {
                   console.log(data);
