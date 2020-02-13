@@ -22,12 +22,12 @@
         <ion-item>
           <ion-label *ngIf="barcode">
             <p>URL : {{barcode}}</p>
-            <p>SERIAL : {{ serial }}</p>
+            <p>SERIAL : {{ serial.serialNumber }}</p>
           </ion-label>
         </ion-item>
         <ion-item *ngFor="let s of serials; index as pos" text-wrap>
           <ion-label>
-            {{ s }}
+            {{ s.serial_number }} | {{ s.url }}
           </ion-label>
         </ion-item>
       </ion-list>
