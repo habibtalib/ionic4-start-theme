@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import {
   NavController,
   AlertController,
@@ -7,59 +7,65 @@ import {
   PopoverController,
   ModalController,
   ActionSheetController,
-  Platform, LoadingController
-} from '@ionic/angular';
-import { File, FileEntry } from '@ionic-native/File/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { Storage } from '@ionic/storage';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
-import { finalize } from 'rxjs/operators';
+  Platform,
+  LoadingController
+} from "@ionic/angular";
+import { File, FileEntry } from "@ionic-native/File/ngx";
+import { WebView } from "@ionic-native/ionic-webview/ngx";
+import { Storage } from "@ionic/storage";
+import { FilePath } from "@ionic-native/file-path/ngx";
+import {
+  Camera,
+  CameraOptions,
+  PictureSourceType
+} from "@ionic-native/Camera/ngx";
+import { finalize } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CartService } from "../../services/cart.service";
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from "src/app/services/auth.service";
 import { EnvService } from "../../services/env.service";
-import { ThrowStmt } from '@angular/compiler';
+import { ThrowStmt } from "@angular/compiler";
 
-const STORAGE_KEY = 'checkout';
+const STORAGE_KEY = "checkout";
 
 @Component({
-  selector: 'app-checkout',
-  templateUrl: './checkout.page.html',
-  styleUrls: ['./checkout.page.scss'],
+  selector: "app-checkout",
+  templateUrl: "./checkout.page.html",
+  styleUrls: ["./checkout.page.scss"]
 })
 export class CheckoutPage implements OnInit {
   images = [];
-  total : any;
+  total: any;
   postage: any;
   states: any;
   state: any;
   city: any;
   user: any;
   address: any;
-  items : any;
+  items: any;
   note = "";
   formData = new FormData();
-  
+
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
     private http: HttpClient,
     private toastController: ToastController,
-    private storage: Storage, 
+    private storage: Storage,
     private plt: Platform,
     private loadingController: LoadingController,
     private ref: ChangeDetectorRef,
     private filePath: FilePath,
-    private camera: Camera, private file: File,
+    private camera: Camera,
+    private file: File,
     private webview: WebView,
-    private actionSheetController: ActionSheetController, 
+    private actionSheetController: ActionSheetController,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     private cartService: CartService,
     private authService: AuthService,
-    private env: EnvService,
-  ) { }
+    private env: EnvService
+  ) {}
 
   ngOnInit() {
     this.getUser();
@@ -118,19 +124,17 @@ export class CheckoutPage implements OnInit {
     });
   }
 
-
   async submit() {
     // await this.images.forEach(element => {
     //   this.startUpload(element)
     // });
-    if(this.images.length > 0) {
-      await this.startUpload(this.images[0])
+    if (this.images.length > 0) {
+      await this.startUpload(this.images[0]);
     } else {
       this.uploadImageData();
     }
-   
   }
-  
+
   readFile(file: any) {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -139,13 +143,13 @@ export class CheckoutPage implements OnInit {
       const imgBlob = new Blob([reader.result], {
         type: file.type
       });
-      this.formData.append('payment_slip', imgBlob, file.name);
+      this.formData.append("payment_slip", imgBlob, file.name);
       this.uploadImageData();
     };
     reader.readAsArrayBuffer(file);
   }
 
-  async uploadImageData(){
+  async uploadImageData() {
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
@@ -154,13 +158,16 @@ export class CheckoutPage implements OnInit {
     this.formData.append("state", this.state);
     this.formData.append("city", this.city);
     this.formData.append("address", this.address);
-    this.formData.append('cart', JSON.stringify(this.items))
-    this.formData.append('note', this.note)
+    this.formData.append("cart", JSON.stringify(this.items));
+    this.formData.append("note", this.note);
 
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
-        Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
-        Accept: "application/json",
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json"
       });
       // loader.present();
       this.http
@@ -173,14 +180,14 @@ export class CheckoutPage implements OnInit {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
                 // cssClass: 'bg-profile',
-                message: 'Your Order has Been Submmited!',
+                message: "Your Order has Been Submmited!",
                 duration: 3000,
-                position: 'bottom'
+                position: "bottom"
               });
 
               toast.present();
-              this.storage.remove('total')
-              this.storage.remove('cart')
+              this.storage.remove("total");
+              this.storage.remove("cart");
               this.cartService.clearCart();
               this.navCtrl.navigateRoot("/history");
             });
@@ -192,9 +199,9 @@ export class CheckoutPage implements OnInit {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
                 // cssClass: 'bg-profile',
-                message: 'Your Order failed to Submmit!',
+                message: "Your Order failed to Submmit!",
                 duration: 3000,
-                position: 'bottom'
+                position: "bottom"
               });
 
               toast.present();
@@ -209,9 +216,9 @@ export class CheckoutPage implements OnInit {
   }
 
   async getStore() {
-    this.total = await this.storage.get('total')
-    this.postage = await this.storage.get('postage')
-    this.items = await this.storage.get('cart')
+    this.total = await this.storage.get("total");
+    this.postage = await this.storage.get("postage");
+    this.items = await this.storage.get("cart");
   }
 
   deleteImage(imgEntry, position) {
@@ -222,10 +229,13 @@ export class CheckoutPage implements OnInit {
       let filtered = arr.filter(name => name != imgEntry.name);
       this.storage.set(STORAGE_KEY, JSON.stringify(filtered));
 
-      var correctPath = imgEntry.filePath.substr(0, imgEntry.filePath.lastIndexOf('/') + 1);
+      var correctPath = imgEntry.filePath.substr(
+        0,
+        imgEntry.filePath.lastIndexOf("/") + 1
+      );
 
       this.file.removeFile(correctPath, imgEntry.name).then(res => {
-        this.presentToast('File removed.');
+        this.presentToast("File removed.");
       });
     });
   }
@@ -256,27 +266,42 @@ export class CheckoutPage implements OnInit {
   }
 
   async selectImage() {
-    const actionSheet = await this.actionSheetController.create({
-      header: "Capture Receipt",
-      buttons: [
-      // {
-      //   text: 'Load from Library',
-      //   handler: () => {
-      //     this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-      //   }
-      // },
+    var buttonsOpt = [
       {
-        text: 'Use Camera',
+        text: "Load from Library",
+        handler: () => {
+          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      },
+      {
+        text: "Use Camera",
         handler: () => {
           this.takePicture(this.camera.PictureSourceType.CAMERA);
         }
       },
       {
-        text: 'Cancel',
-        role: 'cancel'
+        text: "Cancel",
+        role: "cancel"
       }
-      ]
-    });
+    ];
+    if (this.plt.is("android")) {
+      buttonsOpt = [
+        {
+          text: "Use Camera",
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.CAMERA);
+          }
+        },
+        {
+          text: "Cancel",
+          role: "cancel"
+        }
+      ];
+    }
+      const actionSheet = await this.actionSheetController.create({
+        header: "Capture Receipt",
+        buttons: buttonsOpt
+      });
     await actionSheet.present();
   }
 
@@ -289,25 +314,37 @@ export class CheckoutPage implements OnInit {
     };
 
     this.camera.getPicture(options).then(imagePath => {
-      if (this.plt.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-        this.filePath.resolveNativePath(imagePath)
-          .then(filePath => {
-            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-          });
+      if (
+        this.plt.is("android") &&
+        sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
+      ) {
+        this.filePath.resolveNativePath(imagePath).then(filePath => {
+          let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
+          let currentName = imagePath.substring(
+            imagePath.lastIndexOf("/") + 1,
+            imagePath.lastIndexOf("?")
+          );
+          this.copyFileToLocalDir(
+            correctPath,
+            currentName,
+            this.createFileName()
+          );
+        });
       } else {
-        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+        var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
+        this.copyFileToLocalDir(
+          correctPath,
+          currentName,
+          this.createFileName()
+        );
       }
     });
-
   }
-  
+
   pathForImage(img) {
     if (img === null) {
-      return '';
+      return "";
     } else {
       let converted = this.webview.convertFileSrc(img);
       return converted;
@@ -315,20 +352,26 @@ export class CheckoutPage implements OnInit {
   }
 
   copyFileToLocalDir(namePath, currentName, newFileName) {
-    this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-      this.updateStoredImages(newFileName);
-    }, error => {
-      this.presentToast('Error while storing file.');
-    });
+    this.file
+      .copyFile(namePath, currentName, this.file.dataDirectory, newFileName)
+      .then(
+        success => {
+          this.updateStoredImages(newFileName);
+        },
+        error => {
+          this.presentToast("Error while storing file.");
+        }
+      );
   }
 
   startUpload(imgEntry) {
-    this.file.resolveLocalFilesystemUrl(imgEntry.filePath)
+    this.file
+      .resolveLocalFilesystemUrl(imgEntry.filePath)
       .then(entry => {
-        (<FileEntry>entry).file(file => this.readFile(file))
+        (<FileEntry>entry).file(file => this.readFile(file));
       })
       .catch(err => {
-        this.presentToast('Error while reading file.');
+        this.presentToast("Error while reading file.");
       });
   }
 
@@ -352,8 +395,6 @@ export class CheckoutPage implements OnInit {
   //       }
   //     });
   // }
-
-
 
   loadStoredImages() {
     this.storage.get(STORAGE_KEY).then(images => {
@@ -379,7 +420,7 @@ export class CheckoutPage implements OnInit {
   async presentToast(text) {
     const toast = await this.toastController.create({
       message: text,
-      position: 'bottom',
+      position: "bottom",
       duration: 3000
     });
     toast.present();
@@ -388,5 +429,4 @@ export class CheckoutPage implements OnInit {
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
-
 }
