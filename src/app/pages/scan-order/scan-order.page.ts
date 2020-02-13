@@ -100,6 +100,9 @@ export class ScanOrderPage implements OnInit {
       .scan()
       .then(barcodeData => {
         this.barcode = barcodeData["text"];
+         if (!isNaN(Number(this.barcode))) {
+          this.serials.push({ serial_number: this.barcode, url: this.barcode });
+        } else {
         this.http
           .post("https://api.checknow.org/api/token", auth)
           .subscribe(data => {
@@ -125,6 +128,7 @@ export class ScanOrderPage implements OnInit {
                 this.serials.push(this.serial.serialNumber)
               });
           });
+        }
       })
       .catch(err => {
         this.barcode = JSON.stringify(err);
