@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
   }
 
   openBrowser() {
-    this.iab.create("http://app.meeracle.com.my/password/reset");
+    this.iab.create("https://app.meeracle.com.my/password/reset");
   }
 
   ionViewWillEnter() {
