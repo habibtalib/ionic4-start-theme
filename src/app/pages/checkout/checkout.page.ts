@@ -25,6 +25,7 @@ import { CartService } from "../../services/cart.service";
 import { AuthService } from "src/app/services/auth.service";
 import { EnvService } from "../../services/env.service";
 import { ThrowStmt } from "@angular/compiler";
+import { DomSanitizer } from "@angular/platform-browser"; 
 
 const STORAGE_KEY = "checkout";
 
@@ -45,6 +46,7 @@ export class CheckoutPage implements OnInit {
   items: any;
   note = "";
   formData = new FormData();
+  private imageSrc: string;
 
   constructor(
     public navCtrl: NavController,
@@ -64,7 +66,8 @@ export class CheckoutPage implements OnInit {
     public toastCtrl: ToastController,
     private cartService: CartService,
     private authService: AuthService,
-    private env: EnvService
+    private env: EnvService,
+    public domSanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -265,6 +268,23 @@ export class CheckoutPage implements OnInit {
     });
   }
 
+  openGallery() {
+    let cameraOptions = {
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 30,
+      targetWidth: 1000,
+      targetHeight: 1000,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true
+    };
+
+    this.camera.getPicture(cameraOptions).then(
+      file_uri => (this.imageSrc = file_uri),
+      err => console.log(err)
+    );
+  }
+
   async selectImage() {
     var buttonsOpt = [
       {
@@ -287,6 +307,12 @@ export class CheckoutPage implements OnInit {
     if (this.plt.is("android")) {
       buttonsOpt = [
         {
+          text: "Load from Library",
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        {
           text: "Use Camera",
           handler: () => {
             this.takePicture(this.camera.PictureSourceType.CAMERA);
@@ -298,10 +324,10 @@ export class CheckoutPage implements OnInit {
         }
       ];
     }
-      const actionSheet = await this.actionSheetController.create({
-        header: "Capture Receipt",
-        buttons: buttonsOpt
-      });
+    const actionSheet = await this.actionSheetController.create({
+      header: "Capture Receipt",
+      buttons: buttonsOpt
+    });
     await actionSheet.present();
   }
 
@@ -318,18 +344,39 @@ export class CheckoutPage implements OnInit {
         this.plt.is("android") &&
         sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
       ) {
-        this.filePath.resolveNativePath(imagePath).then(filePath => {
-          let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
-          let currentName = imagePath.substring(
-            imagePath.lastIndexOf("/") + 1,
-            imagePath.lastIndexOf("?")
-          );
-          this.copyFileToLocalDir(
-            correctPath,
-            currentName,
-            this.createFileName()
-          );
-        });
+        imagePath = "file://" + imagePath;
+        this.filePath
+          .resolveNativePath(imagePath)
+          .then(res => {
+            let correctPath = res.substr(0, res.lastIndexOf("/") + 1);
+            let currentName = imagePath
+              .substring(
+                imagePath.lastIndexOf("/") + 1,
+                imagePath.length
+              )
+              .toString();
+            this.copyFileToLocalDir(
+              correctPath,
+              currentName,
+              this.createFileName()
+            );
+          })
+          .catch(err => {
+            this.presentToast("unable to resolve file path issue" + err);
+            console.log("unable to resolve file path issue", err);
+          });
+        // this.filePath.resolveNativePath(imagePath).then(filePath => {
+        //   let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
+        //   let currentName = imagePath.substring(
+        //     imagePath.lastIndexOf("/") + 1,
+        //     imagePath.lastIndexOf("?")
+        //   );
+        //   this.copyFileToLocalDir(
+        //     correctPath,
+        //     currentName,
+        //     this.createFileName()
+        //   );
+        // });
       } else {
         var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
         var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
