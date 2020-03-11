@@ -46,6 +46,17 @@ export class ScanOrderPage implements OnInit {
     const loader = await this.loadingCtrl.create({
       duration: 2000
     });
+    if (this.serials.length === 0) {
+      const toast = await this.toastCtrl.create({
+        showCloseButton: true,
+        // cssClass: 'bg-profile',
+        message: 'Please Scan Item First',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+    }
     this.formData = new FormData();
     this.formData.append('serials', JSON.stringify(this.serials))
     loader.present();
