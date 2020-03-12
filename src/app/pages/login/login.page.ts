@@ -82,9 +82,9 @@ export class LoginPage implements OnInit {
       error => {
         console.log(error);
         if (error.status === 401) {
-          this.alertService.presentToast("Wrong Email or Password");
+          this.alertService.presentToast("Invalid Email or Password");
         }
-        if (error.status === 422) {
+        else if (error.status === 422) {
           this.alertService.presentToast("Invalid Format");
         } else {
           this.alertService.presentToast("Error: " + error.message);
