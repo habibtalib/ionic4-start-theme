@@ -344,39 +344,39 @@ export class CheckoutPage implements OnInit {
         this.plt.is("android") &&
         sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
       ) {
-        imagePath = "file://" + imagePath;
-        this.filePath
-          .resolveNativePath(imagePath)
-          .then(res => {
-            let correctPath = res.substr(0, res.lastIndexOf("/") + 1);
-            let currentName = imagePath
-              .substring(
-                imagePath.lastIndexOf("/") + 1,
-                imagePath.length
-              )
-              .toString();
-            this.copyFileToLocalDir(
-              correctPath,
-              currentName,
-              this.createFileName()
-            );
-          })
-          .catch(err => {
-            this.presentToast("unable to resolve file path issue" + err);
-            console.log("unable to resolve file path issue", err);
-          });
-        // this.filePath.resolveNativePath(imagePath).then(filePath => {
-        //   let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
-        //   let currentName = imagePath.substring(
-        //     imagePath.lastIndexOf("/") + 1,
-        //     imagePath.lastIndexOf("?")
-        //   );
-        //   this.copyFileToLocalDir(
-        //     correctPath,
-        //     currentName,
-        //     this.createFileName()
-        //   );
-        // });
+        // imagePath = "file://" + imagePath;
+        // this.filePath
+        //   .resolveNativePath(imagePath)
+        //   .then(res => {
+        //     let correctPath = res.substr(0, res.lastIndexOf("/") + 1);
+        //     let currentName = imagePath
+        //       .substring(
+        //         imagePath.lastIndexOf("/") + 1,
+        //         imagePath.length
+        //       )
+        //       .toString();
+        //     this.copyFileToLocalDir(
+        //       correctPath,
+        //       currentName,
+        //       this.createFileName()
+        //     );
+        //   })
+        //   .catch(err => {
+        //     this.presentToast("unable to resolve file path issue" + err);
+        //     console.log("unable to resolve file path issue", err);
+        //   });
+        this.filePath.resolveNativePath(imagePath).then(filePath => {
+          let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
+          let currentName = imagePath.substring(
+            imagePath.lastIndexOf("/") + 1,
+            imagePath.lastIndexOf("?")
+          );
+          this.copyFileToLocalDir(
+            correctPath,
+            currentName,
+            this.createFileName()
+          );
+        });
       } else {
         var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
         var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
