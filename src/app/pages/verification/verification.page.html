@@ -36,7 +36,8 @@
               </ion-button>
             </ion-item>
             <ion-item>
-              <ion-label>MyKAD / Passport</ion-label>
+              <ion-label *ngIf="user.role_id != 3">MyKAD / Passport</ion-label>
+              <ion-label *ngIf="user.role_id === 3">Dropship Payment Slip</ion-label>
               <ion-button fill="clear" expand="full" color="primary" (click)="selectImage()">
                 <ion-icon slot="start" name="camera"></ion-icon>
                 Select Image
