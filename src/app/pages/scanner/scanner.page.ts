@@ -16,7 +16,7 @@ const STORAGE_KEY = 'scanner';
 @Component({
   selector: "app-scanner",
   templateUrl: "./scanner.page.html",
-  styleUrls: ["./scanner.page.scss"]
+  styleUrls: ["./scanner.page.scss"],
 })
 export class ScannerPage implements OnInit {
   public barcode: string;
@@ -29,94 +29,126 @@ export class ScannerPage implements OnInit {
   address = "";
   phone = "";
   email = "";
+  state = "";
   formData = new FormData();
-  
+  states: any;
 
   constructor(
     private authService: AuthService,
     public navCtrl: NavController,
-    private env: EnvService, 
+    private env: EnvService,
     public menuCtrl: MenuController,
     public barcodescanner: BarcodeScanner,
     private http: HttpClient,
     private toastController: ToastController,
-    private storage: Storage, 
-    private loadingController: LoadingController,
+    private storage: Storage,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
+    this.getState();
+  }
+
+  getState() {
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json",
+      });
+      this.http
+        .get(this.env.API_URL + "states", {
+          headers: headers,
+        })
+        .subscribe(
+          (data) => {
+            this.states = data["states"];
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    });
   }
 
   async submit() {
-    if(!this.name || !this.address || !this.email || !this.phone) {
+    if (!this.name || !this.address || !this.email || !this.phone) {
       const toast = await this.toastController.create({
         showCloseButton: true,
         // cssClass: 'bg-profile',
-        message: 'Please Complete the form',
+        message: "Please Complete the form",
         duration: 3000,
-        position: 'bottom'
+        position: "bottom",
       });
 
       toast.present();
-    } else if(this.serials.length === 0){
+    } else if (this.serials.length === 0) {
       const toast = await this.toastController.create({
         showCloseButton: true,
         // cssClass: 'bg-profile',
-        message: 'Please Scan Item First',
+        message: "Please Scan Item First",
         duration: 3000,
-        position: 'bottom'
+        position: "bottom",
       });
 
       toast.present();
-    }
-     else {
+    } else {
       const loader = await this.loadingController.create({
-        duration: 2000
+        duration: 2000,
       });
-      this.formData.append('serials', JSON.stringify(this.serials));
-      this.formData.append('name', this.name);
-      this.formData.append('address', this.address);
-      this.formData.append('phone', this.phone);
-      this.formData.append('email', this.email);
-      this.formData.append('member', this.member);
+      this.formData.append("serials", JSON.stringify(this.serials));
+      this.formData.append("name", this.name);
+      this.formData.append("address", this.address);
+      this.formData.append("phone", this.phone);
+      this.formData.append("email", this.email);
+      this.formData.append("member", this.member);
+      this.formData.append("state", this.state);
       this.authService.getToken().then(() => {
         const headers = new HttpHeaders({
-          Authorization: this.authService.token["token_type"] + " " + this.authService.token["access_token"],
-          Accept: "application/json"
+          Authorization:
+            this.authService.token["token_type"] +
+            " " +
+            this.authService.token["access_token"],
+          Accept: "application/json",
         });
         loader.present();
         this.http
-          .post(this.env.API_URL + "scanner", this.formData, { headers: headers })
+          .post(this.env.API_URL + "scanner", this.formData, {
+            headers: headers,
+          })
           .subscribe(
-            data => {
+            (data) => {
               console.log(data);
               // loader.present();
-              this.storage.remove(STORAGE_KEY)
-              loader.onWillDismiss().then(async l => {
+              this.storage.remove(STORAGE_KEY);
+              loader.onWillDismiss().then(async (l) => {
                 const toast = await this.toastController.create({
                   showCloseButton: true,
                   // cssClass: 'bg-profile',
-                  message: 'Your Application has Been Submmited!',
+                  message: "Your Application has Been Submmited!",
                   duration: 3000,
-                  position: 'bottom'
+                  position: "bottom",
                 });
 
                 toast.present();
                 this.navCtrl.navigateRoot("/orders");
               });
-              this.images = []
-
+              this.images = [];
             },
-            error => {
+            (error) => {
               console.log(error);
               // loader.present();
-              loader.onWillDismiss().then(async l => {
+              loader.onWillDismiss().then(async (l) => {
                 const toast = await this.toastController.create({
                   showCloseButton: true,
                   // cssClass: 'bg-profile',
-                  message: 'Your Application failed to Submmit!, reasone' + error.message,
+                  message:
+                    "Your Application failed to Submmit!, reasone" +
+                    error.message,
                   duration: 3000,
-                  position: 'bottom'
+                  position: "bottom",
                 });
                 toast.present();
               });
@@ -127,13 +159,13 @@ export class ScannerPage implements OnInit {
   }
 
   updateMember(event) {
-     var member = this.user.child.find( child=>{
-       return child.id === event.target.value
-     })
-    this.name = member.name
-    this.phone = member.phone
-    this.email = member.email
-    this.address = member.address
+    var member = this.user.child.find((child) => {
+      return child.id === event.target.value;
+    });
+    this.name = member.name;
+    this.phone = member.phone;
+    this.email = member.email;
+    this.address = member.address;
   }
 
   getUser() {
@@ -143,17 +175,17 @@ export class ScannerPage implements OnInit {
           this.authService.token["token_type"] +
           " " +
           this.authService.token["access_token"],
-        Accept: "application/json"
+        Accept: "application/json",
       });
       this.http
         .get(this.env.API_URL + "auth/user", {
-          headers: headers
+          headers: headers,
         })
         .subscribe(
-          data => {
+          (data) => {
             this.user = data;
           },
-          error => {
+          (error) => {
             console.log(error);
           }
         );
@@ -164,34 +196,34 @@ export class ScannerPage implements OnInit {
     let auth = {
       username: "edelsteenapi",
       password: "9bAHKVsp!pLdhVxF",
-      companyCode: "MY4644"
+      companyCode: "MY4644",
     };
-    
+
     this.barcodescanner
       .scan()
-      .then(barcodeData => {
+      .then((barcodeData) => {
         this.barcode = barcodeData["text"];
         if (!isNaN(Number(this.barcode))) {
           this.serials.push({ serial_number: this.barcode, url: this.barcode });
         } else {
           this.http
             .post("https://api.checknow.org/api/token", auth)
-            .subscribe(data => {
+            .subscribe((data) => {
               console.log("token", data);
               const headers = new HttpHeaders({
                 Authorization: "Bearer " + data,
-                Accept: "application/json"
+                Accept: "application/json",
               });
               this.http
                 .get(
                   "https://api.checknow.org/api/v1/SerialNumber?QrLink=" +
                     this.barcode,
                   {
-                    headers: headers
+                    headers: headers,
                   }
                 )
                 .subscribe(
-                  data => {
+                  (data) => {
                     this.serial = data;
                     console.log("barcode", this.serial.serialNumber);
                     // if (!this.serials.find(serial => serial === this.serial.serialNumber)) {
@@ -199,15 +231,15 @@ export class ScannerPage implements OnInit {
                     // }
                     this.serials.push({
                       serial_number: this.serial.serialNumber,
-                      url: this.barcode
+                      url: this.barcode,
                     });
                   },
-                  error => {}
+                  (error) => {}
                 );
             });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         this.barcode = JSON.stringify(err);
       });
   }
@@ -215,8 +247,8 @@ export class ScannerPage implements OnInit {
   async presentToast(text) {
     const toast = await this.toastController.create({
       message: text,
-      position: 'bottom',
-      duration: 3000
+      position: "bottom",
+      duration: 3000,
     });
     toast.present();
   }

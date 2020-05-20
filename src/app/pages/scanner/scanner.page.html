@@ -69,6 +69,12 @@
         <ion-label position="floating">Address</ion-label>
         <ion-input [(ngModel)]="address" type="text" name="address"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label color="dark">State:</ion-label>
+        <ion-select [(ngModel)]="state">
+          <ion-select-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-card-content>
   </ion-card>
   <div class="ion-padding">
