@@ -9,7 +9,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   styleUrls: ["./orders.page.scss"]
 })
 export class OrdersPage implements OnInit {
-  orders: any;
+  orders = [];
+  currentPage: any;
 
   constructor(
     private authService: AuthService,
@@ -22,6 +23,7 @@ export class OrdersPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.currentPage = 1;
     this.getOrders();
   }
 
@@ -49,7 +51,7 @@ export class OrdersPage implements OnInit {
         })
         .subscribe(
           data => {
-            this.orders = data["orders"].data;
+            data["orders"].data.forEach((d) => {this.orders.push(d)});
             console.log(this.orders);
           },
           error => {
