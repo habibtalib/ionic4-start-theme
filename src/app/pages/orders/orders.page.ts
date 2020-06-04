@@ -49,7 +49,7 @@ export class OrdersPage implements OnInit {
         })
         .subscribe(
           data => {
-            this.orders = data["orders"];
+            this.orders = data["orders"].data;
             console.log(this.orders);
           },
           error => {
