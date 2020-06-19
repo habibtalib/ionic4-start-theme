@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Pending Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let order of orders">
+      <ion-label>
+        <h2 *ngIf="order.buyer">{{ order.buyer.name }}</h2>
+        <h2 *ngIf="order.customer">{{ order.customer.name }} [non-member]</h2>
+        <h3>{{ order.status.description }}</h3>
+        <p>{{ order.created_at }}</p>
+        <p>{{ order.total | currency: "RM":"symbol" }}</p>
+        <ion-button [routerLink]="['/scan-order', order.id]" *ngIf="order && order.status.id === 2">
+          <ion-icon slot="start" name="qr-scanner"></ion-icon>
+          Scan Item
+        </ion-button>
+        <ion-button [routerLink]="['/order', order.id]">
+          <ion-icon slot="start" name="paper"></ion-icon>
+          View Details
+        </ion-button>
+        <!-- <ion-button *ngIf="order.customer" [routerLink]="['/scanner']">
+          <ion-icon slot="start" name="cart"></ion-icon>
+          New Order
+        </ion-button> -->
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

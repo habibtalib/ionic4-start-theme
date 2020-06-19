@@ -67,6 +67,12 @@ export class AppComponent {
         icon: "clipboard"
       },
       {
+        title: "Pending Orders",
+        url: "/pending-orders",
+        direct: "forward",
+        icon: "clipboard"
+      },
+      {
         title: "Products",
         url: "/products",
         direct: "forward",

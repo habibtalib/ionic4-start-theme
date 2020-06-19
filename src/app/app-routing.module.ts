@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'forget-password', loadChildren: './pages/forget-password/forget-password.module#ForgetPasswordPageModule' },
   { path: 'serial-list/:id', loadChildren: './pages/serial-list/serial-list.module#SerialListPageModule' },
   { path: 'verification', loadChildren: './pages/verification/verification.module#VerificationPageModule' },
+  { path: 'pending-orders', loadChildren: './pages/pending-orders/pending-orders.module#PendingOrdersPageModule' },
 ];
 
 @NgModule({
