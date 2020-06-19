@@ -45,7 +45,7 @@ export class PendingOrdersPage implements OnInit {
         Accept: "application/json"
       });
       this.http
-        .get(this.env.API_URL + "order", {
+        .get(this.env.API_URL + "pending-order", {
           headers: headers
         })
         .subscribe(
