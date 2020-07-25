@@ -1,0 +1,10 @@
+POST https://api.checknow.org/api/token
+Content-Type: application/json
+
+{
+    "username": "edelsteenapi",
+    "password": "9bAHKVsp!pLdhVxF",
+    "companyCode": "MY4644"
+}
+###
+GET https://api.checknow.org/api/v1/SerialNumber?QrLink=
