@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Points & Rewards</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Total Point : {{points}}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Serials</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label *ngIf="barcode">
+            <p>URL : {{ barcode }}</p>
+            <p>SERIAL : {{ serial.serialNumber }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngFor="let s of serials; index as pos" text-wrap>
+          <ion-label>
+            {{ s.serial_number }} | {{ s.url }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="ion-padding">
+    <ion-button expand="block" color="primary" (click)="scan()">Scanner</ion-button>
+  </div>
+  <div class="ion-padding">
+    <ion-button expand="block" color="primary" (click)="submit()">Submit</ion-button>
+  </div>
+</ion-content>

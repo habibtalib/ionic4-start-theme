@@ -28,6 +28,8 @@ const routes: Routes = [
   { path: 'serial-list/:id', loadChildren: './pages/serial-list/serial-list.module#SerialListPageModule' },
   { path: 'verification', loadChildren: './pages/verification/verification.module#VerificationPageModule' },
   { path: 'pending-orders', loadChildren: './pages/pending-orders/pending-orders.module#PendingOrdersPageModule' },
+  { path: 'points', loadChildren: './pages/points/points.module#PointsPageModule' },
+  { path: 'scan-history', loadChildren: './pages/scan-history/scan-history.module#ScanHistoryPageModule' },
 ];
 
 @NgModule({

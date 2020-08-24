@@ -103,6 +103,12 @@ export class AppComponent {
         icon: "clock"
       },
       {
+        title: "Points & Rewards",
+        url: "/points",
+        direct: "forward",
+        icon: "gift"
+      },
+      {
         title: "Settings",
         url: "/edit-profile",
         direct: "forward",
