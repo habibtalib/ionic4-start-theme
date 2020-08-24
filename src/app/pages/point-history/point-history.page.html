@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
       <ion-back-button color="light"></ion-back-button>
     </ion-buttons>
     <ion-title>Points History</ion-title>
@@ -8,12 +9,16 @@
 </ion-header>
 
 <ion-content padding>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Total Point : {{total}}</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let point of points">
+      <ion-label>
+        <h2>{{ point.serial_number }}</h2>
+        <p>Date: {{ point.created_at}}</p>
+        <p>Points: {{ point.points }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

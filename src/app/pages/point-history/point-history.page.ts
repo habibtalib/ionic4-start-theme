@@ -20,6 +20,8 @@ import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
   styleUrls: ["./point-history.page.scss"],
 })
 export class PointHistoryPage implements OnInit {
+  points: any;
+
   constructor(
     private authService: AuthService,
     private env: EnvService,
@@ -30,4 +32,33 @@ export class PointHistoryPage implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.getPoints();
+  }
+
+  getPoints() {
+    this.authService.getToken().then(() => {
+      const headers = new HttpHeaders({
+        Authorization:
+          this.authService.token["token_type"] +
+          " " +
+          this.authService.token["access_token"],
+        Accept: "application/json",
+      });
+      this.http
+        .get(this.env.API_URL + "points", {
+          headers: headers,
+        })
+        .subscribe(
+          (data) => {
+            console.log(data["points"]);
+            this.points = data["points"];
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    });
+  }
 }
