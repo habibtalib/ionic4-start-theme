@@ -43,6 +43,8 @@ export class EditProfilePage implements OnInit {
   level: any;
   images = [];
   formData = new FormData();
+  lat: any;
+  long: any;
 
   constructor(
     public navCtrl: NavController,
@@ -97,6 +99,8 @@ export class EditProfilePage implements OnInit {
       .getMyLocation()
       .then((location: MyLocation) => {
         this.loading.dismiss();
+        this.user.latitude = location.latLng.lat;
+        this.user.longitude = location.latLng.lng;
         console.log(JSON.stringify(location, null, 2));
 
         // Move the map camera to the location with animation
@@ -108,8 +112,8 @@ export class EditProfilePage implements OnInit {
 
         // add a marker
         let marker: Marker = this.map.addMarkerSync({
-          title: "@ionic-native/google-maps plugin!",
-          snippet: "This plugin is awesome!",
+          title: "My Home",
+          snippet: "",
           position: location.latLng,
           animation: GoogleMapsAnimation.BOUNCE,
         });
@@ -118,9 +122,9 @@ export class EditProfilePage implements OnInit {
         marker.showInfoWindow();
 
         // If clicked it, display the alert
-        marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-          this.showToast("clicked!");
-        });
+        // marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+        //   this.showToast("clicked!");
+        // });
       })
       .catch((err) => {
         this.loading.dismiss();
