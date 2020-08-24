@@ -32,7 +32,8 @@ export class PointsPage implements OnInit {
   state = "";
   formData = new FormData();
   states: any;
-  points = 0;
+  points: any;
+  total = 0;
 
   constructor(
     private authService: AuthService,
@@ -101,7 +102,7 @@ export class PointsPage implements OnInit {
       });
   }
 
-  getUser() {
+  getPoints() {
     this.authService.getToken().then(() => {
       const headers = new HttpHeaders({
         Authorization:
@@ -116,7 +117,9 @@ export class PointsPage implements OnInit {
         })
         .subscribe(
           (data) => {
-            this.user = data;
+            console.log(data['points'])
+            this.points = data['points'];
+            this.total = data['total'];
           },
           (error) => {
             console.log(error);
@@ -197,7 +200,7 @@ export class PointsPage implements OnInit {
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
-    this.getUser();
+    this.getPoints();
   }
   
 }
