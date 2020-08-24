@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'verification', loadChildren: './pages/verification/verification.module#VerificationPageModule' },
   { path: 'pending-orders', loadChildren: './pages/pending-orders/pending-orders.module#PendingOrdersPageModule' },
   { path: 'points', loadChildren: './pages/points/points.module#PointsPageModule' },
-  { path: 'scan-history', loadChildren: './pages/scan-history/scan-history.module#ScanHistoryPageModule' },
+  { path: 'point-history', loadChildren: './pages/point-history/point-history.module#PointHistoryPageModule' },
 ];
 
 @NgModule({

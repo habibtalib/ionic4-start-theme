@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScanHistoryPage } from './scan-history.page';
+import { PointHistoryPage } from './point-history.page';
 
-describe('ScanHistoryPage', () => {
-  let component: ScanHistoryPage;
-  let fixture: ComponentFixture<ScanHistoryPage>;
+describe('PointHistoryPage', () => {
+  let component: PointHistoryPage;
+  let fixture: ComponentFixture<PointHistoryPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScanHistoryPage ],
+      declarations: [ PointHistoryPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScanHistoryPage);
+    fixture = TestBed.createComponent(PointHistoryPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

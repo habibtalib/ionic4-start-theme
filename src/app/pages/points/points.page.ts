@@ -14,9 +14,9 @@ import { Storage } from '@ionic/storage';
 const STORAGE_KEY = 'points';
 
 @Component({
-  selector: 'app-points',
-  templateUrl: './points.page.html',
-  styleUrls: ['./points.page.scss'],
+  selector: "app-points",
+  templateUrl: "./points.page.html",
+  styleUrls: ["./points.page.scss"],
 })
 export class PointsPage implements OnInit {
   public barcode: string;
@@ -45,10 +45,9 @@ export class PointsPage implements OnInit {
     private toastController: ToastController,
     private storage: Storage,
     private loadingController: LoadingController
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   scan() {
     let auth = {
@@ -75,7 +74,7 @@ export class PointsPage implements OnInit {
               this.http
                 .get(
                   "https://api.checknow.org/api/v1/SerialNumber?QrLink=" +
-                  this.barcode,
+                    this.barcode,
                   {
                     headers: headers,
                   }
@@ -92,7 +91,7 @@ export class PointsPage implements OnInit {
                       url: this.barcode,
                     });
                   },
-                  (error) => { }
+                  (error) => {}
                 );
             });
         }
@@ -100,6 +99,10 @@ export class PointsPage implements OnInit {
       .catch((err) => {
         this.barcode = JSON.stringify(err);
       });
+  }
+
+  pointHistory() {
+      this.navCtrl.navigateRoot("/point-history");
   }
 
   getPoints() {
@@ -117,9 +120,9 @@ export class PointsPage implements OnInit {
         })
         .subscribe(
           (data) => {
-            console.log(data['points'])
-            this.points = data['points'];
-            this.total = data['total'];
+            console.log(data["points"]);
+            this.points = data["points"];
+            this.total = data["total"];
           },
           (error) => {
             console.log(error);
@@ -127,7 +130,6 @@ export class PointsPage implements OnInit {
         );
     });
   }
-
 
   async submit() {
     if (this.serials.length === 0) {
@@ -173,7 +175,10 @@ export class PointsPage implements OnInit {
                 });
 
                 toast.present();
-                this.navCtrl.navigateRoot("/points");
+                this.serials = [];
+                this.serial = null;
+                this.barcode = null;
+                this.getPoints();
               });
               this.images = [];
             },
@@ -185,7 +190,7 @@ export class PointsPage implements OnInit {
                   showCloseButton: true,
                   // cssClass: 'bg-profile',
                   message:
-                    "Your Application failed to Submmit!, reasone" +
+                    "Your Application failed to Submmit!, reason" +
                     error.message,
                   duration: 3000,
                   position: "bottom",
@@ -202,5 +207,4 @@ export class PointsPage implements OnInit {
     this.menuCtrl.enable(true);
     this.getPoints();
   }
-  
 }
