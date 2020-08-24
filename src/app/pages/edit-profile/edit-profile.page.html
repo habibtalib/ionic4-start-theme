@@ -24,6 +24,11 @@
       </ion-button> -->
     </ion-card-content>
 
+      <div id="map_canvas">
+        <ion-button ion-button (click)="onButtonClick()">Locate Me</ion-button>
+      </div>
+
+
     <ion-grid fixed no-padding>
       <ion-row *ngIf="user">
         <ion-col size="12" padding>
@@ -113,18 +118,6 @@
               </ion-select>
             </ion-item>
 
-            <!-- <ion-item>
-              <ion-label color="dark">State</ion-label>
-              <ion-select>
-                <ion-select-option value="nes">NY</ion-select-option>
-                <ion-select-option value="n64">CA</ion-select-option>
-                <ion-select-option value="ps">Greater London</ion-select-option>
-                <ion-select-option value="genesis">Paris</ion-select-option>
-                <ion-select-option value="saturn">SP</ion-select-option>
-                <ion-select-option value="snes">Kantō</ion-select-option>
-                <ion-select-option value="snes">Delhi</ion-select-option>
-              </ion-select>
-            </ion-item> -->
           </ion-list>
           <ion-list>
             <ion-item *ngFor="let img of images; index as pos" text-wrap>
@@ -156,26 +149,6 @@
             </ion-item>
           </ion-list>
           <ion-list>
-            <!-- <ion-radio-group>
-              <ion-list-header color="light">
-                <ion-label class="fw700">User Type</ion-label>
-              </ion-list-header>
-          
-              <ion-item>
-                <ion-label color="primary">Customer</ion-label>
-                <ion-radio slot="start" value="customer" checked></ion-radio>
-              </ion-item>
-          
-              <ion-item>
-                <ion-label color="primary">Owner</ion-label>
-                <ion-radio slot="start" value="agent"></ion-radio>
-              </ion-item>
-            </ion-radio-group> -->
-
-            <!-- <ion-item>
-              <ion-label class="text-1x">Checkbox test</ion-label>
-              <ion-checkbox></ion-checkbox>
-            </ion-item> -->
             <ion-button
               size="large"
               expand="full"
@@ -206,7 +179,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-label fixed no-padding>
+    <!-- <ion-grid fixed no-padding>
       <ion-row *ngIf="user">
         <ion-col size="12" padding>
           <ion-list margin-bottom>
@@ -241,7 +214,7 @@
           </ion-list>
         </ion-col>
       </ion-row>
-    </ion-label>
+    </ion-grid> -->
 
     <ion-grid fixed no-padding>
       <ion-row *ngIf="user">
