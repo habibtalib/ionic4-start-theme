@@ -53,6 +53,14 @@
             </ion-item>
 
             <ion-item>
+              <ion-label color="dark">Gender:</ion-label>
+              <ion-select [(ngModel)]="user.gender">
+                <ion-select-option [value]="0">Female</ion-select-option>
+                <ion-select-option [value]="1">Male</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
               <ion-label color="dark" position="stacked">Email:</ion-label>
               <ion-input
                 [(ngModel)]="user.email"
@@ -185,7 +193,7 @@
             <ion-item>
               <ion-label color="dark" position="stacked">Password:</ion-label>
               <ion-input
-                [(ngModel)]="user.password"
+                [(ngModel)]="password"
                 type="password"
               ></ion-input>
             </ion-item>
@@ -194,7 +202,7 @@
                 >Confirm Password:</ion-label
               >
               <ion-input
-                [(ngModel)]="user.confirm_password"
+                [(ngModel)]="confirm_password"
                 type="password"
               ></ion-input>
             </ion-item>
@@ -218,6 +226,17 @@
             <ion-list-header color="light">
               <ion-label class="fw700">Upgrade Level</ion-label>
             </ion-list-header>
+            <ion-item>
+              <ion-label color="dark">Level:</ion-label>
+              <ion-select [(ngModel)]="user.request_upgrade">
+                <ion-select-option [value]="4">Master Stockist</ion-select-option>
+                <ion-select-option [value]="10">Stokist ( Black Diamond )</ion-select-option>
+                <ion-select-option [value]="6">Stockist (Diamond)</ion-select-option>
+                <ion-select-option [value]="5">Agent Ruby</ion-select-option>
+                <ion-select-option [value]="7">Agent Pearl</ion-select-option>
+                <ion-select-option [value]="3">Dropship</ion-select-option>
+              </ion-select>
+            </ion-item>
             <ion-button
               size="large"
               expand="full"
