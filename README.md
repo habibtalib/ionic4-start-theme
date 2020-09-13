@@ -71,3 +71,4 @@ and comment the line 370:
 //throw new CordovaError('Requirements check failed for JDK 1.8 or greater');
 This should do the trick ;)
 
+https://ionicframework.com/docs/v3/wkwebview/
