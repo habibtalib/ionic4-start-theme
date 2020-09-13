@@ -24,6 +24,7 @@
         <ion-input
           ngModel
           name="email"
+          [(ngModel)]="email"
           color="primary"
           type="email"
           formControlName="email"
@@ -83,11 +84,12 @@
 
     <!-- <p text-right tappable (click)="forgotPass()" class="paz"> -->
     <!-- <a text-right tappable class="paz" href="#" onclick="window.open('https://app.meeracle.com.my/password/reset', '_system', 'location=yes'); return false;"> -->
-    <a text-right tappable (click)="openBrowser()" class="paz">
+    <!-- <a text-right tappable (click)="openBrowser()" class="paz">
       <ion-text color="primary">
         <strong>Forgot Pass?</strong>
       </ion-text>
-    </a>
+    </a> -->
+    <a href="https://app.meeracle.com.my/password/reset">Reset Password</a>
 
     <div>
       <!-- <ion-button icon-left size="medium" expand="full" shape="round" color="primary" (click)="goToHome()" [disabled]="!onLoginForm.valid" tappable>

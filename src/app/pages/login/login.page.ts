@@ -14,7 +14,7 @@ import { RegisterPage } from "../register/register.page";
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
-import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: "app-login",
@@ -26,6 +26,8 @@ export class LoginPage implements OnInit {
   passwordType: string = "password";
   passwordIcon: string = "eye-off";
   formData = new FormData();
+  email:any;
+  password: any;
 
   constructor(
     public navCtrl: NavController,
@@ -39,7 +41,7 @@ export class LoginPage implements OnInit {
     private alertService: AlertService,
     private env: EnvService,
     private http: HttpClient,
-    private iab: InAppBrowser
+    private storage: NativeStorage,
   ) {}
 
   hideShowPassword() {
@@ -47,11 +49,13 @@ export class LoginPage implements OnInit {
     this.passwordIcon = this.passwordIcon === "eye-off" ? "eye" : "eye-off";
   }
 
-  openBrowser() {
-    this.iab.create("https://app.meeracle.com.my/password/reset");
-  }
+  // openBrowser() {
+  //   this.iab.create("https://app.meeracle.com.my/password/reset");
+  // }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    this.email = await this.storage.getItem('email');
+    this.password = await this.storage.getItem('password');
     this.authService.getToken().then(() => {
       if (this.authService.isLoggedIn) {
         // this.navCtrl.navigateRoot("/home-results");
@@ -92,6 +96,8 @@ export class LoginPage implements OnInit {
       },
       () => {
         // this.dismissLogin();
+        this.storage.setItem('email', form.value.email)
+        this.storage.setItem('password', form.value.password)
         this.navCtrl.navigateRoot("/home-results");
       }
     );
