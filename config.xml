@@ -1,15 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="my.com.meeracle" version="1.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MEERACLE PLUS</name>
-    <description>MEERACLE PLUS</description>
-    <author email="webadmin@meeracle.com.my" href="https://meeracle.com.my">MEERACLE PLUS</author>
+<widget id="my.com.meeracle" version="1.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MEERACLE</name>
+    <description>MEERACLE</description>
+    <author email="cyberx11@gmail.com" href="https://meeracle.com.my">MEERACLE</author>
     <content src="index.html" />
     <access origin="*" />
-    <preference name="WKWebViewOnly" value="true" />
-    <preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine" />
-    <feature name="CDVWKWebViewEngine">
-        <param name="ios-package" value="CDVWKWebViewEngine" />
-    </feature>
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -26,8 +21,6 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="loadUrlTimeoutValue" value="700000" />
-    <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyBBVmlCQTlXkBqdblTcLjzyIaW8oKqHpYw" />
-    <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyBBVmlCQTlXkBqdblTcLjzyIaW8oKqHpYw" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -84,18 +77,20 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
-        <preference name="WKWebViewOnly" value="true" />
-        <feature name="CDVWKWebViewEngine">
-            <param name="ios-package" value="CDVWKWebViewEngine" />
-        </feature>
-        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     </platform>
+    <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
+    <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
+    <plugin name="cordova-plugin-device" spec="2.0.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <feature name="SocialSharing">
         <param name="ios-package" value="SocialSharing" />
     </feature>
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
+    <engine name="android" spec="~7.0.0" />
     <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
         <string>Allow us to Use Your Camera for QR Code Reader</string>
     </edit-config>
@@ -105,30 +100,4 @@
     <platform name="ios">
         <preference name="CodePushDeploymentKey" value="r1fW06fl74e1Fm_Wft_MbyqQdleP3a096db7-ccf4-48a4-851f-53e09a32ff56" />
     </platform>
-    <plugin name="cordova-plugin-nativestorage" spec="^2.3.2" />
-    <plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
-    <plugin name="cordova-plugin-statusbar" spec="~2.4.2" />
-    <plugin name="cordova-plugin-device" spec="~2.0.2" />
-    <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
-    <plugin name="phonegap-plugin-barcodescanner" spec="~8.1.0" />
-    <plugin name="cordova-plugin-file" spec="~6.0.2" />
-    <plugin name="cordova-sqlite-storage" spec="~3.3.0" />
-    <plugin name="cordova-plugin-camera" spec="~4.1.0">
-        <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
-    </plugin>
-    <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />
-    <plugin name="cordova-clipboard" spec="~1.3.0" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="~5.4.7">
-        <variable name="PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION" value="This app requires photo library access to function properly." />
-        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="This app requires photo library access to function properly." />
-    </plugin>
-    <plugin name="com-sarriaroman-photoviewer" spec="~1.2.4" />
-    <plugin name="cordova-plugin-code-push" spec="^1.12.0" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~4.0.0" />
-    <plugin name="cordova-plugin-filepath" spec="~1.5.8" />
-    <plugin name="cordova-plugin-googlemaps" spec="~2.8.0-20200709-2008">
-        <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />
-        <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
-    </plugin>
-    <plugin name="cordova-plugin-ionic-keyboard" spec="~2.2.0" />
 </widget>
