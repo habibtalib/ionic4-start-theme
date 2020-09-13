@@ -372,7 +372,7 @@ export class EditProfilePage implements OnInit {
                 showCloseButton: true,
                 // cssClass: 'bg-profile',
                 message:
-                  "Request Upgreade Level has been Succefully Submittedm!",
+                  "Request Upgreade Level has been Succefully Submited!",
                 duration: 3000,
                 position: "bottom",
               });
@@ -455,7 +455,7 @@ export class EditProfilePage implements OnInit {
                 const toast = await this.toastCtrl.create({
                   showCloseButton: true,
                   // cssClass: 'bg-profile',
-                  message: "Your Update failed to Submmit!",
+                  message: "Your Update failed to Submit!",
                   duration: 3000,
                   position: "bottom",
                 });

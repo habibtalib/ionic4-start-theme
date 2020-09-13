@@ -103,7 +103,7 @@ export class LoginPage implements OnInit {
     );
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.onLoginForm = this.formBuilder.group({
       email: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])]
