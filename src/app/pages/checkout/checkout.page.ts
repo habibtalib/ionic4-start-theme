@@ -11,7 +11,8 @@ import {
   LoadingController
 } from "@ionic/angular";
 import { File, FileEntry } from "@ionic-native/File/ngx";
-import { WebView } from "@ionic-native/ionic-webview/ngx";
+// import { WebView } from "@ionic-native/ionic-webview/ngx";
+import { normalizeURL } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { FilePath } from "@ionic-native/file-path/ngx";
 import {
@@ -60,7 +61,7 @@ export class CheckoutPage implements OnInit {
     private filePath: FilePath,
     private camera: Camera,
     private file: File,
-    private webview: WebView,
+    // private webview: WebView,
     private actionSheetController: ActionSheetController,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
@@ -393,7 +394,8 @@ export class CheckoutPage implements OnInit {
     if (img === null) {
       return "";
     } else {
-      let converted = this.webview.convertFileSrc(img);
+      // let converted = this.webview.convertFileSrc(img);
+      let converted = normalizeURL(img);
       return converted;
     }
   }

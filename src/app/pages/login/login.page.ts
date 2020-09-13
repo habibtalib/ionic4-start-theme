@@ -14,7 +14,7 @@ import { RegisterPage } from "../register/register.page";
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
-import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+// import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 
 @Component({
   selector: "app-login",
@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
     private alertService: AlertService,
     private env: EnvService,
     private http: HttpClient,
-    private iab: InAppBrowser
+    // private iab: InAppBrowser
   ) {}
 
   hideShowPassword() {
@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
   }
 
   openBrowser() {
-    this.iab.create("https://app.meeracle.com.my/password/reset");
+    // this.iab.create("https://app.meeracle.com.my/password/reset");
   }
 
   ionViewWillEnter() {

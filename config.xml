@@ -7,6 +7,7 @@
     <access origin="*" />
     <preference name="WKWebViewOnly" value="true" />
     <preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine" />
+    <allow-navigation href="http://localhost:8080/*" />
     <feature name="CDVWKWebViewEngine">
         <param name="ios-package" value="CDVWKWebViewEngine" />
     </feature>
@@ -123,7 +124,6 @@
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="This app requires photo library access to function properly." />
     </plugin>
     <plugin name="com-sarriaroman-photoviewer" spec="~1.2.4" />
-    <plugin name="cordova-plugin-code-push" spec="^1.12.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="~4.0.0" />
     <plugin name="cordova-plugin-filepath" spec="~1.5.8" />
     <plugin name="cordova-plugin-googlemaps" spec="~2.8.0-20200709-2008">

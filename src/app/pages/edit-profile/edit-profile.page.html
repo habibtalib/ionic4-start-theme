@@ -66,6 +66,14 @@
             </ion-item>
 
             <ion-item>
+              <ion-label color="dark">Gender:</ion-label>
+              <ion-select [(ngModel)]="user.gender">
+                <ion-select-option value="0">Female</ion-select-option>
+                <ion-select-option value="1">Male</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
               <ion-label color="dark" position="stacked">Email:</ion-label>
               <ion-input
                 [(ngModel)]="user.email"

@@ -24,13 +24,13 @@ import { CodePush } from '@ionic-native/code-push/ngx';
 
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/File/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
+// import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+// import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @NgModule({
@@ -54,10 +54,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     NativeStorage,
     BarcodeScanner,
     SocialSharing,
-    InAppBrowser,
+    // InAppBrowser,
     Camera,
     File,
-    WebView,
+    // WebView,
     Clipboard,
     FilePath,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

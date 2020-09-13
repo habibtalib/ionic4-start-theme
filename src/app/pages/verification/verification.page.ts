@@ -10,7 +10,8 @@ import {
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EnvService } from "../../services/env.service";
-import { WebView } from "@ionic-native/ionic-webview/ngx";
+// import { WebView } from "@ionic-native/ionic-webview/ngx";
+import { normalizeURL } from "ionic-angular";
 import { Storage } from "@ionic/storage";
 import { FilePath } from "@ionic-native/file-path/ngx";
 import { File, FileEntry } from "@ionic-native/File/ngx";
@@ -47,7 +48,7 @@ export class VerificationPage implements OnInit {
     private plt: Platform,
     private camera: Camera,
     private file: File,
-    private webview: WebView,
+    // private webview: WebView,
     private toastController: ToastController
   ) { }
 
@@ -178,7 +179,8 @@ export class VerificationPage implements OnInit {
     if (img === null) {
       return "";
     } else {
-      let converted = this.webview.convertFileSrc(img);
+      // let converted = this.webview.convertFileSrc(img);
+      let converted = normalizeURL(img);
       return converted;
     }
   }
