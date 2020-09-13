@@ -62,3 +62,12 @@ ___
 <br>
 **Facebook Page:**
 [https://www.facebook.com/ionicthemecom](https://www.facebook.com/ionicthemecom)
+
+
+Go to
+/platforms/android/cordova/lib/check_reqs.js
+and comment the line 370:
+
+//throw new CordovaError('Requirements check failed for JDK 1.8 or greater');
+This should do the trick ;)
+
