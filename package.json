@@ -103,7 +103,8 @@
     "protractor": "^5.4.3",
     "ts-node": "^8.0.3",
     "tslint": "~5.12.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "cordova-plugin-ionic-webview": "^2.0.0"
   },
   "cordova": {
     "plugins": {
@@ -133,7 +134,8 @@
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
       },
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-ionic-webview": {}
     },
     "platforms": [
       "browser",
