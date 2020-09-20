@@ -88,6 +88,7 @@ export class PointsPage implements OnInit {
                     // }
                     this.serials.push({
                       serial_number: this.serial.serialNumber,
+                      product_name: this.serial.productName,
                       url: this.barcode,
                     });
                   },
