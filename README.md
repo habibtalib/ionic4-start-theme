@@ -72,3 +72,11 @@ and comment the line 370:
 This should do the trick ;)
 
 https://ionicframework.com/docs/v3/wkwebview/
+
+Deployment (CodePush)
+------------
+```
+nvm use 10.20
+sh codepush-ios.sh 
+sh codepush-android.sh
+```
