@@ -143,6 +143,38 @@ export class HomeResultsPage {
         ]
       });
       await alert.present();
+    } else if (!this.user.tnc_agree) {
+      const alert = await this.alertCtrl.create({
+        header: "Term & Condition",
+        subHeader: "Please Agree to Our Term & Conditions",
+        message: "Please Read <a href='https://hq.meeracle.com.my/img/TNC.pdf'>Here</a>",
+        buttons: [
+          {
+            text: "Diasagree",
+            handler: () => {
+               this.authService.logout().subscribe(
+                data => {
+                  // this.alertService.presentToast("Logged In");
+                  console.log("Logged Out", data);
+                },
+                error => {
+                  console.log("Logged Out Error ", error);
+                }
+              );
+              this.menuCtrl.enable(false);
+              this.navCtrl.navigateRoot("/");
+            }
+          },
+           {
+            text: "Agree",
+             handler: () => {
+               this.updateTnC();
+              this.navCtrl.navigateForward("/home-results");
+            }
+          },
+        ]
+      });
+      await alert.present();
     }
   }
 
@@ -278,6 +310,35 @@ export class HomeResultsPage {
       componentProps: { value: image }
     });
     return await modal.present();
+  }
+
+  async updateTnC() {
+        this.authService
+      .getToken()
+      .then(() => {
+        const headers = new HttpHeaders({
+          Authorization:
+            this.authService.token["token_type"] +
+            " " +
+            this.authService.token["access_token"],
+          Accept: "application/json"
+        });
+        this.http
+          .post(this.env.API_URL + "update-tnc", {
+            headers: headers
+          })
+          .subscribe(
+            data => {
+              console.log(data);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+      })
+      .catch(error => {
+        console.log("No Token", error);
+      });
   }
 
   // async notifications(ev: any) {

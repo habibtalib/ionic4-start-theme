@@ -96,6 +96,7 @@ export class MerchandisePage implements OnInit {
         .subscribe(
           data => {
             this.products = data["products"];
+            console.log(this.products)
           },
           error => {
             console.log(error);
