@@ -117,6 +117,7 @@ export class HomeResultsPage {
           header: "Sorry",
           subHeader: "Your Account not Verfied yet",
           message: "Please Upload Your Document to Verified.",
+          backdropDismiss: false,
           buttons: [
             {
               text: "OK",
@@ -133,6 +134,7 @@ export class HomeResultsPage {
         header: "Notice",
         subHeader: "Your Profiel is not Completed",
         message: "Please Complete your Profile.",
+        backdropDismiss: false,
         buttons: [
           {
             text: "OK",
@@ -147,7 +149,8 @@ export class HomeResultsPage {
       const alert = await this.alertCtrl.create({
         header: "Term & Condition",
         subHeader: "Please Agree to Our Term & Conditions",
-        message: "Please Read <a href='https://hq.meeracle.com.my/img/TNC.pdf'>Here</a>",
+        message: "Please Read <a href='https://hq.meeracle.com.my/img/TNC.pdf'>English</a> & <a href='https://hq.meeracle.com.my/img/TNC_BM.pdf'>Bahasa</a>",
+        backdropDismiss: false,
         buttons: [
           {
             text: "Diasagree",
@@ -324,7 +327,7 @@ export class HomeResultsPage {
           Accept: "application/json"
         });
         this.http
-          .post(this.env.API_URL + "update-tnc", {
+          .post(this.env.API_URL + "update-tnc", {}, {
             headers: headers
           })
           .subscribe(
