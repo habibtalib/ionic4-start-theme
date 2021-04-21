@@ -179,6 +179,23 @@ export class HomeResultsPage {
       });
       await alert.present();
     }
+    else if (!this.user.bestweb) {
+      const alert = await this.alertCtrl.create({
+        header: "Update Your Profile",
+        subHeader: "Please Update your latest Address",
+        message: "Please Update Your Profile  <a href='https://hq.meeracle.com.my'>Here</a> With Same Email & Password",
+        backdropDismiss: false,
+        buttons: [
+          {
+            text: "OK",
+            handler: () => {
+              this.navCtrl.navigateForward("/edit-profile");
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
   }
 
   async register() {

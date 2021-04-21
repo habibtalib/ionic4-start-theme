@@ -24,7 +24,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-slides #mySlider [options]="mySlideOptions" scroll="true" pager="true">
+  <ion-slides #mySlider [options]="mySlideOptions" scroll="true" pager="false">
     <ion-slide *ngFor="let p of products">
       <div>
         <!-- <div class="myOverlay">

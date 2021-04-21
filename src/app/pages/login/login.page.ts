@@ -108,6 +108,20 @@ export class LoginPage implements OnInit {
       email: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])]
     });
+    //     const alert = await this.alertCtrl.create({
+    //   header: "App Will be Under Maintenace",
+    //   message: "System Will be Under Maintenance from 2PM 2 Jan 2021 to 10am 8 Jan 2021.",
+    //   buttons: [
+    //     {
+    //       text: "Ok",
+    //       handler: async value => {
+
+    //       }
+    //     }
+    //   ]
+    // });
+
+    // await alert.present();
   }
 
   async forgotPass() {
