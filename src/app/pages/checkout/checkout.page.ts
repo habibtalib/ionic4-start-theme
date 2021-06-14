@@ -1,11 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import {
   NavController,
-  AlertController,
   MenuController,
   ToastController,
-  PopoverController,
-  ModalController,
   ActionSheetController,
   Platform,
   LoadingController
@@ -19,12 +16,10 @@ import {
   CameraOptions,
   PictureSourceType
 } from "@ionic-native/Camera/ngx";
-import { finalize } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CartService } from "../../services/cart.service";
 import { AuthService } from "src/app/services/auth.service";
 import { EnvService } from "../../services/env.service";
-import { ThrowStmt } from "@angular/compiler";
 import { DomSanitizer } from "@angular/platform-browser"; 
 
 const STORAGE_KEY = "checkout";

@@ -287,7 +287,7 @@ export class EditProfilePage implements OnInit {
         .subscribe(
           (data) => {
             console.log(data);
-            // loader.present();
+            loader.present();
             loader.onWillDismiss().then(async (l) => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
@@ -308,9 +308,9 @@ export class EditProfilePage implements OnInit {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
                 // cssClass: 'bg-profile',
-                message: "Your Update failed to Submmit!",
+                message: JSON.stringify(error),
                 duration: 3000,
-                position: "bottom",
+                position: "top",
               });
 
               toast.present();
@@ -469,26 +469,47 @@ export class EditProfilePage implements OnInit {
   }
 
   async selectImage() {
-    const actionSheet = await this.actionSheetController.create({
-      header: "Select Image source",
-      buttons: [
-        // {
-        //   text: "Load from Library",
-        //   handler: () => {
-        //     this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-        //   }
-        // },
+    var buttonsOpt = [
+      {
+        text: "Load from Library",
+        handler: () => {
+          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      },
+      {
+        text: "Use Camera",
+        handler: () => {
+          this.takePicture(this.camera.PictureSourceType.CAMERA);
+        }
+      },
+      {
+        text: "Cancel",
+        role: "cancel"
+      }
+    ];
+    if (this.plt.is("android")) {
+      buttonsOpt = [
+        {
+          text: "Load from Library",
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
         {
           text: "Use Camera",
           handler: () => {
             this.takePicture(this.camera.PictureSourceType.CAMERA);
-          },
+          }
         },
         {
           text: "Cancel",
-          role: "cancel",
-        },
-      ],
+          role: "cancel"
+        }
+      ];
+    }
+    const actionSheet = await this.actionSheetController.create({
+      header: "Capture Receipt",
+      buttons: buttonsOpt
     });
     await actionSheet.present();
   }

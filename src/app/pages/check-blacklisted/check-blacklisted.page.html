@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Check Blacklisted Agent</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<ion-grid fixed no-padding>
+  <ion-row >
+    <ion-col size="12" padding>
+      <ion-list margin-bottom>
+        <ion-list-header color="light">
+          <ion-label class="fw700">Search</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label color="dark" position="stacked">Name / NRIC / Phone No. / Email:</ion-label>
+          <ion-input [(ngModel)]="key" inputmode="text" placeholder="Ex..: Joe Doe"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-button size="medium" expand="half" color="dark" (click)="search()" no-margin>Search</ion-button>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-item *ngFor="let user of users">
+          <ion-label>
+            <h2 >{{ user.name }}</h2>
+            <h3>MEE{{ user.id }}</h3>
+            <p>Blacklisted</p>
+            <p></p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

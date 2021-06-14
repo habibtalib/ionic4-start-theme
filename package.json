@@ -69,6 +69,7 @@
     "phonegap-plugin-barcodescanner": "8.1.0",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.5.4",
+    "web": "0.0.2",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {

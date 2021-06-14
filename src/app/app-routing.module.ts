@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'pending-orders', loadChildren: './pages/pending-orders/pending-orders.module#PendingOrdersPageModule' },
   { path: 'points', loadChildren: './pages/points/points.module#PointsPageModule' },
   { path: 'point-history', loadChildren: './pages/point-history/point-history.module#PointHistoryPageModule' },
+  { path: 'check-blacklisted', loadChildren: './pages/check-blacklisted/check-blacklisted.module#CheckBlacklistedPageModule' },
 ];
 
 @NgModule({

@@ -189,7 +189,6 @@ export class HomeResultsPage {
           {
             text: "OK",
             handler: () => {
-              this.navCtrl.navigateForward("/edit-profile");
             }
           }
         ]

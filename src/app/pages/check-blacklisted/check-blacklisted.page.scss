@@ -1,0 +1,9 @@
+:host {
+     ion-card {
+         background:rgba(255,255,255,0.5);
+    } 
+
+    ion-content{
+     --background: url('/assets/img/background.png')  0 0/100% 100% no-repeat;
+    }
+}

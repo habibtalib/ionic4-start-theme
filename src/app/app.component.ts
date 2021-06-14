@@ -85,6 +85,12 @@ export class AppComponent {
         icon: "pricetags"
       },
       {
+        title: "Check Blackisted",
+        url: "/check-blacklisted",
+        direct: "forward",
+        icon: "person-add"
+      },
+      {
         title: "Genealogy",
         url: "/genealogy",
         direct: "forward",
