@@ -38,8 +38,8 @@ export class CheckBlacklistedPage implements OnInit {
           headers: headers,
         })
         .subscribe(
-          (data) => {
-            data.data.forEach((d) => {this.users.push(d)});
+          data => {
+            data["users"].data.forEach((d) => {this.users.push(d)});
             console.log(data);
           },
           (error) => {
