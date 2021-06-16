@@ -31,7 +31,8 @@
           <ion-label>
             <h2 >{{ user.name }}</h2>
             <h3>MEE{{ user.id }}</h3>
-            <p>Blacklisted</p>
+            <p *ngIf="user.active == 2">Blacklisted</p>
+            <p *ngIf="user.active == 1">Active</p>
             <p></p>
           </ion-label>
         </ion-item>
