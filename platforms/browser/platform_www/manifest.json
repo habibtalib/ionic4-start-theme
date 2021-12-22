@@ -1,12 +1,12 @@
 {
   "name": "MEERACLE",
   "short_name": "MEERACLE",
-  "description": "Description of your app from template",
+  "description": "Meeracle Beauty App",
   "start_url": "index.html",
   "scope": "index.html",
   "icons": [
     {
-      "src": "img/logo.png",
+      "src": "/assets/img/logo_text_trans.png",
       "sizes": "192x192",
       "type": "image/png"
     },

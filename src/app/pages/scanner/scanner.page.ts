@@ -89,7 +89,7 @@ export class ScannerPage implements OnInit {
                       // this.serials.push(this.serial.serialNumber)
                       this.serials.push({
                       serial_number: this.serial.serialNumber,
-                      url: this.barcode,
+                      url: result,
                     });
                     }
                     // this.serials.push({

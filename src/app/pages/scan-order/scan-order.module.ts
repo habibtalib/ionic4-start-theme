@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { ScanOrderPage } from './scan-order.page';
 
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ZXingScannerModule
   ],
   declarations: [ScanOrderPage]
 })
