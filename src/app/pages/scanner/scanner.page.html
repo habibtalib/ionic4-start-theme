@@ -29,9 +29,17 @@
     </ion-card-content>
   </ion-card>
   <div class="ion-padding">
-    <ion-button expand="block" color="primary" (click)="scan()"
-      >Scanner</ion-button
+    <zxing-scanner
+      #scanner
+      [formats]="['QR_CODE', 'EAN_13']"
+      (camerasFound)="cameraFound($event)"
+      (camerasNotFound)="camerasNotFound($event)"
+      (scanSuccess)="onScanSuccess($event)"
     >
+    </zxing-scanner>
+    <!-- <ion-button expand="block" color="primary" (click)="scan()"
+      >Scanner</ion-button
+    > -->
   </div>
   <ion-card *ngIf="user && user.child && user.child.length">
     <ion-card-header>

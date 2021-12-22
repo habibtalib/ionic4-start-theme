@@ -42,11 +42,66 @@ export class ScannerPage implements OnInit {
     private http: HttpClient,
     private toastController: ToastController,
     private storage: Storage,
-    private loadingController: LoadingController
-  ) {}
+    private loadingController: LoadingController,
+  ) {
+  }
 
   ngOnInit() {
     this.getState();
+  }
+
+  camerasNotFound(e: Event) {
+    // Display an alert modal here
+  }
+
+  cameraFound(e: Event) {
+    // Log to see if the camera was found
+  }
+
+  onScanSuccess(result: string) {
+    console.log(result);
+     let auth = {
+      username: "edelsteenapi",
+      password: "9bAHKVsp!pLdhVxF",
+      companyCode: "MY4644",
+     };
+    this.http
+            .post("https://api.checknow.org/api/token", auth)
+            .subscribe((data) => {
+              console.log("token", data);
+              const headers = new HttpHeaders({
+                Authorization: "Bearer " + data,
+                Accept: "application/json",
+              });
+              this.http
+                .get(
+                  "https://api.checknow.org/api/v1/SerialNumber?QrLink=" +
+                    result,
+                  {
+                    headers: headers,
+                  }
+                )
+                .subscribe(
+                  (data) => {
+                    this.serial = data;
+                    console.log("barcode", this.serial.serialNumber);
+                    if (!this.serials.find(serial => serial.serial_number === this.serial.serialNumber)) {
+                      // this.serials.push(this.serial.serialNumber)
+                      this.serials.push({
+                      serial_number: this.serial.serialNumber,
+                      url: this.barcode,
+                    });
+                    }
+                    // this.serials.push({
+                    //   serial_number: this.serial.serialNumber,
+                    //   url: this.barcode,
+                    // });
+                  },
+                  (error) => {}
+                );
+            });
+
+    
   }
 
   getState() {
