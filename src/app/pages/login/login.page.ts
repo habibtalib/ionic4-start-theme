@@ -98,7 +98,7 @@ export class LoginPage implements OnInit {
         // this.dismissLogin();
         this.storage.setItem('email', form.value.email)
         this.storage.setItem('password', form.value.password)
-        this.navCtrl.navigateRoot("/home-results");
+        this.navCtrl.navigateRoot("/dashboard");
       }
     );
   }
@@ -191,6 +191,6 @@ export class LoginPage implements OnInit {
   }
 
   goToHome() {
-    this.navCtrl.navigateRoot("/home-results");
+    this.navCtrl.navigateRoot("/dashboard");
   }
 }

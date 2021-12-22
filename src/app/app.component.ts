@@ -36,12 +36,12 @@ export class AppComponent {
     private codePush: CodePush,
   ) {
     this.appPages = [
-      {
-        title: "Home",
-        url: "/home-results",
-        direct: "root",
-        icon: "home"
-      },
+      // {
+      //   title: "Home",
+      //   url: "/home-results",
+      //   direct: "root",
+      //   icon: "home"
+      // },
       {
         title: "Dashboard",
         url: "/dashboard",
