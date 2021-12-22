@@ -8,9 +8,6 @@ frontend:
       commands:
         - 
   artifacts:
-    baseDirectory: platforms/browser/www
+    baseDirectory: platforms/browser
     files:
       - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
