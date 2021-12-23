@@ -16,7 +16,7 @@
       <ion-card-subtitle>Invite New Agent</ion-card-subtitle>
       <ion-card-title *ngIf="user">Your Reference Code is: {{ user.id }}</ion-card-title>
       <p  *ngIf="user" (click)="copyClipBoard('https://app.meeracle.com.my/invite/'+user.id)">
-        https://app.meeracle.con.my/invite/{{  user.id  }}
+        https://app.meeracle.com.my/invite/{{  user.id  }}
       </p>
     </ion-card-header>
   </ion-card>
@@ -37,7 +37,7 @@
           <ion-list *ngIf="share.shareData && isGroupShown(i)" lines="none">
             <ion-item *ngFor="let item of share.shareData; let j = index">
               <h3>{{item.title}}</h3>
-              <ion-button slot="end" class="btnSection" (click)="this[item.clickEvent](item, user)">Share</ion-button>
+              <ion-button *ngIf="user" slot="end" class="btnSection" href="https://app.meeracle.com.my/invite/{{  user.id  }}" target="_blank">Share</ion-button>
             </ion-item>
           </ion-list>
         </ion-label>
