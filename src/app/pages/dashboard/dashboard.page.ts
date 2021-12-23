@@ -4,7 +4,8 @@ import { EnvService } from "../../services/env.service";
 import { CartService } from "../../services/cart.service";
 import { AuthService } from "src/app/services/auth.service";
 import { tap } from "rxjs/operators";
-import { NavController } from "@ionic/angular";
+import { MenuController, NavController } from "@ionic/angular";
+
 
 @Component({
   selector: "app-dashboard",
@@ -17,13 +18,19 @@ export class DashboardPage implements OnInit {
     private http: HttpClient,
     private env: EnvService,
     private cartService: CartService,
-    private authService: AuthService
+    private authService: AuthService,
+    public menuCtrl: MenuController,
   ) {}
   stocks: any;
   sales: any;
   purchased: any;
   ngOnInit() {
     this.getRecords();
+  }
+
+   async ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+   
   }
   
   doRefresh(event) {
