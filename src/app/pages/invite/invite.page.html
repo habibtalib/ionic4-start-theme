@@ -37,7 +37,7 @@
           <ion-list *ngIf="share.shareData && isGroupShown(i)" lines="none">
             <ion-item *ngFor="let item of share.shareData; let j = index">
               <h3>{{item.title}}</h3>
-              <ion-button *ngIf="user" slot="end" class="btnSection" href="https://app.meeracle.com.my/invite/{{  user.id  }}" target="_blank">Share</ion-button>
+              <ion-button *ngIf="user" slot="end" class="btnSection" href="whatsapp://?text=https://app.meeracle.com.my/invite/{{  user.id  }}" target="_blank">Share</ion-button>
             </ion-item>
           </ion-list>
         </ion-label>
