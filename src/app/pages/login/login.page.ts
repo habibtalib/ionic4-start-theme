@@ -54,6 +54,7 @@ export class LoginPage implements OnInit {
   // }
 
   async ionViewWillEnter() {
+    this.menuCtrl.enable(false);
     this.email = await this.storage.getItem('email');
     this.password = await this.storage.getItem('password');
     this.authService.getToken().then(() => {
@@ -61,7 +62,7 @@ export class LoginPage implements OnInit {
         // this.navCtrl.navigateRoot("/home-results");
       }
     });
-    this.menuCtrl.enable(false);
+   
   }
 
   // Dismiss Login Modal
@@ -102,6 +103,8 @@ export class LoginPage implements OnInit {
       }
     );
   }
+
+  
 
   async ngOnInit() {
     this.onLoginForm = this.formBuilder.group({
